@@ -9,12 +9,12 @@ html {
 }
 
 body {
-  font-family: Karla, Helvetica, Arial, sans-serif;
-}
-
-.case-wrapper {
   font-family: Karla, Helvetica Neue, Helvetica, sans-serif;
 }
+
+/*.case-wrapper {
+  font-family: Karla, Helvetica Neue, Helvetica, sans-serif;
+}*/
 
 .case-wrapper h1 {
     text-align: left;
@@ -66,8 +66,8 @@ body {
 }
 
 .case-wrapper p {
-    font-size: 2.6rem;
-    line-height: 3.6rem;
+    font-size: 2.0rem;
+    line-height: 3.0rem;
     margin-bottom: 30px;
     opacity: .8;
 }
@@ -322,64 +322,6 @@ iframe {
   font-size: 16px;
   opacity: .6;
   font-style: italic;
-}
-
-/* Scroll down arrow starts here */
-.arrow span {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: 24px;
-	height: 24px;
-	margin-left: -12px;
-	border-left: 1px solid #fff;
-	border-bottom: 1px solid #fff;
-	-webkit-transform: rotate(-45deg);
-	transform: rotate(-45deg);
-	-webkit-animation: sdb07 4s infinite;
-	animation: sdb07 4s infinite;
-	opacity: 0;
-	box-sizing: border-box;
-}
-.arrow span:nth-of-type(1) {
-	-webkit-animation-delay: 2s;
-	animation-delay: 2s;
-}
-.arrow span:nth-of-type(2) {
-	top: 16px;
-	-webkit-animation-delay: 2.15s;
-	animation-delay: 2.15s;
-}
-.arrow span:nth-of-type(3) {
-	top: 32px;
-	-webkit-animation-delay: 2.3s;
-	animation-delay: 2.3s;
-}
-@-webkit-keyframes sdb07 {
-	0% {
-		opacity: 0;
-	}
-	50% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-@keyframes sdb07 {
-	0% {
-		opacity: 0;
-	}
-	50% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-
-.scroll {
-  position: relative;
 }
 
 /* Line seperator, hero cases */
