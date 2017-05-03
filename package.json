@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/davidbograd/davidbograd.com#readme",
   "dependencies": {
-    "flexboxgrid": "^6.3.1"
+    "tilt.js": "^1.1.19"
   }
 }
