@@ -1,0 +1,22 @@
+{
+  "name": "davidbograd.com",
+  "version": "1.0.0",
+  "description": "My portfolio ✨",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidbograd/davidbograd.com.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidbograd/davidbograd.com/issues"
+  },
+  "homepage": "https://github.com/davidbograd/davidbograd.com#readme",
+  "dependencies": {
+    "flexboxgrid": "^6.3.1"
+  }
+}
