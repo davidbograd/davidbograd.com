@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Easy Practice - David Bograd</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/skeleton.css">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+	<script src="js/animation.js"></script>
+
+	<script src="js/lazysizes.min.js" async></script>
+
+</head>
+
+<body>
+	<p class="back"><a href="index.html">← Back</a></p>
+	<!-- <p class="name"><a href="#">David Bograd</a></p> -->
+	<p class="about"><a href="#">About</a></p>
+	<div class="hero">
+		<div class="container">
+			<div class="row">
+				<div class="three columns">
+					<p></p>
+				</div>
+				<div class="nine columns">
+					<div class="title animated fadeInUp">
+						<h1>Easy Practice: Modular design</h1></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="three columns">
+					<h4 class="overview-header">
+					Role
+				</h4>
+					<p class="overview-text">
+						Designer
+					</p>
+				</div>
+				<div class="nine columns">
+					<div class="animated fadeInUp">
+						<p class="overview-text">Designer</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="case-wrapper">
+		<div class="content">
+
+
+			<!-- <div class="container">
+					 <div class="animated fadeIn">CONTENT</div>
+				<img data-src="images/Told/flow-feed.jpg" class="lazyload slow" data-expand="20"/>
+				<div id="element-to-animate" class="animated">
+					<h3>Intro</h3>
+					<p>
+					    Im working at the startup <a href="http://www.nordicbetalabs.com/">Nordic Beta Labs</a> where we are a small team of 3 (the two founders, Colin Tresler and Kim Burge Strand and me) trying to make awesome apps. The philosophy around
+					    the company is we do not know what is working, so we have to keep testing. Trail and error, trail and error until something works. We are currently working on the companies 3rd and by far biggest bet so far, a new take on video.
+					</p>
+				</div>
+				<img data-src="images/Told/flow-feed2.jpg" class="lazyload medium" data-expand="20"/>
+				<img data-src="images/Told/visualdesign-told.jpg" class="lazyload fast" data-expand="20"/>
+			</div> -->
+			<div class="first">
+				<div class="container">
+					<h3>Intro</h3>
+					<p>
+						I was approached by EasyPractice, a booking platform for therapists and clinicians. They have been growing fast — 6.000 clients in over 12 countries — and wanted a redesign of their website.
+					</p>
+
+					<p>
+						The old site was a one pager, without much information about the possibilities or how different kind of therapists and clinicians would benefit differently from the application.
+					</p>
+
+					<p>
+						These were the problems to solve:
+					</p>
+					<ol>
+						<li>
+							Make it easier to understand what features the application has and what they do
+						</li><br />
+						<li>
+							Show how the application can benefit you, no matter if you are a psychologist, acupuncturist, coach or some other professions in the industry
+						</li>
+					</ol>
+
+				</div>
+
+				<!-- SECOND________________________________________________________________ -->
+				<div class="second">
+					<div class="container">
+						<h3>Defining what’s needed</h3>
+						<p>
+							These problems could be solved with the same method: A specific page for each feature and for each profession.
+						</p>
+						<p>
+							This would provide great value for EasyPractice, since it would be a lot easier to market towards a specific profession and send them to the relevant landing page. It would also increase their visibility in search engines.
+						</p>
+						<p>
+							The solution sounds good, so how do we do it? It comes with a new challenge I had to tackle: How do we make over xxx more than xxx 35 pages, without having them being too similar?
+						</p>
+						<p>
+							This lead me to…
+						</p>
+						<h3>Modular design for unique pages</h3>
+						<p>
+							After testing a couple of different ideas, with content from a few pages I quickly realized that the content was too different to fit into one template. I had to come up with a system that would support all types of content, without being too heavy on
+							the design or development part.
+						</p>
+						<p>
+							This lead me to a modular design approach inspired by Brad Frosts’ <a href="http://bradfrost.com/blog/post/atomic-web-design/">Atomic design</a>. I mapped out all the different kind of content any page could contain and broke them down into smaller
+							pieces. </p>
+						<p>If we talk atomic design language I build organisms (modules), that the client themselves could use to put together different templates and achieve pages with different content and layout.
+						</p>
+
+						<blockquote>
+							We’re not designing pages, we’re designing systems of components. — Stephen Hay
+						</blockquote>
+
+						<p>
+							To test out the different components and how they could work together, I started with some lo-fi wireframes.
+						</p>
+
+						<img src="images/easypractice/easypractice-wireframe.jpg" />
+						<p class="caption">
+							Lo-fi wireframes of the organisms
+						</p>
+						<p>
+							After the initial wireframes, I could see that the organisms worked well together, as long as the person setting up the page was thinking about how they would structure the page.
+						</p>
+						<p>
+							I then moved on to the visual design. I went for minimal design, so the important thing would be in focus: The content.
+						</p>
+
+						<img src="images/easypractice/easypractice-visuals.jpg" />
+						<p class="caption">
+							The visual design for the different organisms. It was designed to fit into the existing identity for the company regarding colors. fonts and icons.
+						</p>
+						<p>
+							When the modules were all in place, I moved on to the rest of the pages. These pages were more “standard” and I will therefore not go into the process, but here are some visuals.
+						</p>
+						<img src="images/easypractice/easypractice-mockup.png" />
+						<p class="caption">
+							Different pages of EasyPractice
+						</p>
+						<p>
+							I was the sole designer on this project. The development was handled by <a href="https://www.html24.dk/">HTML24</a>.
+						</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>

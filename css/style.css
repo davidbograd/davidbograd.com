@@ -1,0 +1,486 @@
+@import url('https://fonts.googleapis.com/css?family=Karla:400,700|Playfair+Display');
+
+html {
+  font-size: 10px;
+}
+
+@media (max-width: 750px) {
+  html {font-size: 9px;}
+}
+
+body {
+  font-family: Karla, Helvetica, Arial, sans-serif;
+}
+
+.case-wrapper {
+  font-family: Karla, Helvetica Neue, Helvetica, sans-serif;
+}
+
+.case-wrapper h1 {
+    text-align: left;
+    font-size: 8rem;
+    letter-spacing: -1.5px;
+    display: block;
+    line-height: 8.2rem;
+    bottom: 160px;
+    display: block;
+}
+
+.case-wrapper h2 {
+    font-weight: normal;
+    text-align: left;
+    font-size: 3.6rem;
+    display: block;
+}
+
+.case-wrapper h3 {
+    font-size: 4.8rem;
+    display: block;
+    letter-spacing: 0px;
+    line-height: 5.6rem;
+    margin-bottom: 40px;
+    margin-top: 100px;
+}
+
+.case-wrapper h4 {
+    font-size: 4.0rem;
+    display: block;
+    margin: 0 0 10px 0;
+    font-weight: 200;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    line-height: 4.8rem;
+}
+
+.case-wrapper h5 {
+    font-weight: 500;
+    font-size: 2.8rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.case-wrapper li {
+    font-size: 2.8rem;
+    opacity: .8;
+    margin-bottom: 20px;
+}
+
+.case-wrapper p {
+    font-size: 2.6rem;
+    line-height: 3.6rem;
+    margin-bottom: 30px;
+    opacity: .8;
+}
+
+
+/* Frontpage */
+.bold {
+    font-weight: bold;
+}
+
+/* Name and contact info, frontpage */
+.contact-info {
+  position: fixed;
+  top: 50px;
+  left: 200px;
+  z-index: 1;
+  transform: translate3d(0px, 0px, 0px);
+  font-family: Karla, Helvetica, Arial, sans-serif;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+
+@media (max-width: 750px) {
+  .contact-info {left: 44px; top:30px;}
+}
+
+
+
+.bold {
+  font-weight: 700;
+}
+
+.contact-info h1 {
+  margin-bottom: 0;
+}
+
+.section {
+  position: relative;
+}
+
+@media (max-width: 750px) {
+  .section {top:-50px;}
+}
+
+
+.section .case-link {
+  width: 50vw;
+  height: 50vh;
+  margin: 0 auto;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  position: relative;
+}
+
+@media (max-width: 750px) {
+  .section .case-link { width: 70vw;}
+}
+
+.section .case-link .hover-elements {
+  width: 50vw;
+  height: 50vh;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.section .case-link .index {
+  font-size: 4em;
+  font-weight: 400;
+  font-family: Playfair Display, Garamond, serif;
+  position: absolute;
+  right: -30px;
+  bottom: -100px;
+  color: black;
+}
+
+@media (max-width: 750px) {
+  .section .case-link .index {
+    display: none;
+  }
+}
+
+.section .case-link .index::after {
+  content: '';
+  width: 1.8em;
+    height: 6px;
+    background: #ff6666;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%,-50%);
+}
+.section .rectangle {
+  position: absolute;
+  right: 25vw;
+  top: 25vh;
+  height: 50vh;
+  width: 25px;
+  z-index: 9990;
+}
+
+@media (max-width: 750px) {
+  .section .rectangle { right: 15vw;}
+}
+
+@media (max-width: 750px) {
+  .section .rectangle { width: 15px; }
+}
+
+.case-title{
+  font-size: 6em;
+  font-weight: 400;
+  font-family: Karla, Helvetica, Arial, sans-serif;
+  position: absolute;
+  left: -30px;
+  bottom: -55px;
+  color: #222;
+  line-height: 9rem;
+}
+
+@media (max-width: 750px) {
+  .case-title { left: -20px; bottom: -140px; font-size: 3em; line-height: 4.5rem;}
+}
+
+.index {
+  color: #222;
+
+}
+
+hr {
+  width: 120px;
+  height: 2px;
+  background: #000;
+  display: inline-block;
+  border: 0;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+@media (max-width: 550px) {
+  hr {width: 100px;}
+}
+
+.contact-info h1 {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+
+}
+
+.contact-info a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* Slide up */
+.link-slideup a {
+  overflow: hidden;
+  font-weight: 500;
+}
+
+.link-slideup a::before {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 10%;
+  background-color: rgba(255,102,102,0.7);
+  content: '';
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  -webkit-transform: translateY(95%);
+  transform: translateY(95%);
+}
+
+.link-slideup a:hover::before,
+.link-slideup a:focus::before {
+  -webkit-transform: translateY(15px);
+  transform: translateY(15px);
+}
+
+.nav-about {
+position: absolute;
+right: -96vh;
+bottom: 100vh;
+text-align: center;
+transform: rotate(90deg);
+transform-origin: left bottom 0;
+width: 100vh;
+overflow: hidden;
+margin: 0;
+z-index: 251;
+}
+
+.nav-contact {
+position: absolute;
+left: 0;
+bottom: 100vh;
+text-align: center;
+transform: rotate(90deg);
+transform-origin: left bottom 0;
+width: 100vh;
+height: 30px;
+overflow: hidden;
+margin: 0;
+z-index: 250;
+}
+
+.side-nav a{
+color: #222;
+text-decoration: none;
+font-family: Karla, Helvetica, Arial, sans-serif;
+font-weight: 700;
+letter-spacing: 1.7rem;
+}
+
+a {
+    text-decoration: none;
+    color: #222;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+}
+
+a:hover {
+    color: #222;
+}
+
+blockquote {
+    font-family: adelle, PT Serif, Georgia, serif;
+    font-size: 46px;
+    width: 100%;
+    line-height: 60px;
+    text-align: center;
+    opacity: .8;
+    font-weight: 100;
+    font-style: italic;
+}
+
+img {
+  max-width: 100%;
+}
+
+iframe {
+  max-width: 100%;
+}
+
+.caption {
+  font-size: 16px;
+  opacity: .6;
+  font-style: italic;
+}
+
+/* Scroll down arrow starts here */
+.arrow span {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 24px;
+	height: 24px;
+	margin-left: -12px;
+	border-left: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	-webkit-animation: sdb07 4s infinite;
+	animation: sdb07 4s infinite;
+	opacity: 0;
+	box-sizing: border-box;
+}
+.arrow span:nth-of-type(1) {
+	-webkit-animation-delay: 2s;
+	animation-delay: 2s;
+}
+.arrow span:nth-of-type(2) {
+	top: 16px;
+	-webkit-animation-delay: 2.15s;
+	animation-delay: 2.15s;
+}
+.arrow span:nth-of-type(3) {
+	top: 32px;
+	-webkit-animation-delay: 2.3s;
+	animation-delay: 2.3s;
+}
+@-webkit-keyframes sdb07 {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes sdb07 {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.scroll {
+  position: relative;
+}
+
+/* Line seperator, hero cases */
+.line {
+  max-width:100px;
+  height: 4px;
+  background-color: white;
+  margin: 20px 0 30px;
+}
+
+.hero {
+  width: 100vw;
+  height: 100vh;
+  background-color: #4dbe8b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero .title {
+  font-size: 4em;
+  font-weight: 600;
+  color: #fff;
+}
+.content {
+  height: 50vh;
+}
+
+
+/* fade image in after load */
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
+.lazyloaded {
+  opacity: 1;
+}
+.lazyloaded.slow {
+  transition: opacity 1s ease-in-out;
+}
+.lazyloaded.medium {
+  transition: opacity .5s ease-in-out;
+}
+.lazyloaded.fast {
+  transition: opacity .2s ease-in-out;
+}
+
+.back {
+  top: 20px;
+  text-align: left;
+  display: inline-block;
+  position: fixed;
+  left: 25px;
+  margin: 0 auto;
+  z-index: 6;
+  font-family: Karla, Helvetica, Arial, sans-serif;
+}
+
+@media (max-width: 750px) {
+  .back {left: 15px;}
+}
+
+.back a:hover{
+  text-decoration: underline;
+}
+
+/*.name {
+  top: 20px;
+  text-align: left;
+  display: inline-block;
+  position: fixed;
+  right: 110px;
+  margin: 0 auto;
+  z-index: 6;
+  font-family: Karla, Helvetica, Arial, sans-serif;
+}
+
+@media (max-width: 750px) {
+  .name {right: 80px;}
+}
+
+.name a:hover{
+  text-decoration: underline;
+}*/
+
+.about {
+  top: 20px;
+  text-align: left;
+  display: inline-block;
+  position: fixed;
+  right: 25px;
+  margin: 0 auto;
+  z-index: 6;
+  font-family: Karla, Helvetica, Arial, sans-serif;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+
+@media (max-width: 750px) {
+  .about {right: 15px;}
+}
+
+.about a:hover{
+  text-decoration: underline;
+}
