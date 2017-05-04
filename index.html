@@ -6,71 +6,74 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/skeleton.css">
-	<link rel="stylesheet" href="css/jquery.fullPage.css">
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="/node_modules/flexboxgrid/css/flexboxgrid.min.css" type="text/css">
 	<link rel="icon" type="image/png" href="images/favicon.png">
 
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="js/jquery.fullPage.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
 	<script src="js/animation.js"></script>
 	<script src="js/lazysizes.min.js" async></script>
+	<script src="js/tilt.jquery.js"></script>
 
 </head>
 <body>
-	<p class="fixed-case-nav resume animated fadeIn"><a href="resume-davidbograd.pdf" target="_blank">Resume</a></p>
-	<p class="fixed-case-nav about animated fadeIn"><a href="#">About</a></p>
+	<div class="fixed-case-nav animated fadeIn">
+		<a href="resume-davidbograd.pdf" target="_blank">Resume</a>
+		<a href="#">About</a>
+	</div>
 
 	<div class="contact-info link-slideup animated fadein-auto">
-		<h1>David Bograd<hr /><br><span class="notBold">Product designer from Denmark</span></h1>
-<a href="#">david.bograd@hyperisland.se</a> </div>
-
-	<div id="fullpage">
-
-<!-- Section, Easy Practice -->
-		<div class="section animated fadein-300">
-			<a href="./easyPractice.html" class="case-link" style="background-image: url('images/frontpage/baseimg-easyPractice.jpg')">
-					<p class="case-title">Easy Practice</p>
-
-				<div class="index">
-					web
-				</div>
-
-			</a>
-			<div class="rectangle easyPractice"></div>
-		</div>
-
-
-
-<!-- Section -->
-<div class="section animated fadein-300">
-	<a href="./microsoft.html" class="case-link" style="background-image: url('images/frontpage/baseimg-microsoft.jpg')">
-			<p class="case-title">Make your business play</p>
-
-		<div class="index">
-			web
-		</div>
-
-	</a>
-	<div class="rectangle microsoft"></div>
-</div>
-
-<!-- Section -->
-		<div class="section animated fadein-300">
-			<a href="./told.html" class="case-link" style="background-image: url('images/frontpage/baseimg-told.jpg')">
-					<p class="case-title">Told</p>
-
-				<div class="index">
-					app
-				</div>
-
-			</a>
-			<div class="rectangle told"></div>
-		</div>
-
+		<h1>
+			David Bograd
+			<hr />
+			<br>
+			<span class="notBold">Product designer from Denmark</span>
+		</h1>
+		<a href="#">david.bograd@hyperisland.se</a>
 	</div>
+
+	<!-- Section, Easy Practice -->
+	<div id="easyPractice" class="section animated fadein-300">
+		<a href="./easyPractice.html" class="case-link js-tilt" style="background-image: url('images/frontpage/baseimg-easyPractice.jpg')">
+				<p class="case-title">Easy Practice</p>
+
+			<div class="index">
+				web
+			</div>
+
+		</a>
+		<div class="rectangle easyPractice"></div>
+	</div>
+
+
+
+	<!-- Section -->
+	<div id="microsoft" class="section animated fadein-300">
+		<a href="./microsoft.html" class="case-link js-tilt" style="background-image: url('images/frontpage/baseimg-microsoft.jpg')">
+				<p class="case-title">Make your business play</p>
+
+			<div class="index">
+				web
+			</div>
+
+		</a>
+		<div class="rectangle microsoft"></div>
+	</div>
+
+	<!-- Section -->
+	<div id="told" class="section animated fadein-300">
+		<a href="./told.html" class="case-link js-tilt" style="background-image: url('images/frontpage/baseimg-told.jpg')">
+				<p class="case-title">Told</p>
+
+			<div class="index">
+				app
+			</div>
+
+		</a>
+		<div class="rectangle told"></div>
+	</div>
+
 	<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

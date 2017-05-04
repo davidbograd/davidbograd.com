@@ -1,13 +1,6 @@
 function init(){
-	fullPage();
 	caseLinkEventListener();
-}
-
-function fullPage(){
-	$('#fullpage').fullpage({
-		navigation: true,
-		navigationPosition: 'left'
-	});
+	$('.js-tilt').tilt();
 }
 
 function caseLinkEventListener(){
@@ -17,15 +10,28 @@ function caseLinkEventListener(){
 	});
 }
 
+function findAncestor (el, cls) {
+    while ((el = el.parentElement) && !el.classList.contains(cls));
+    return el;
+}
+
 function animateCaseLink(event){
+	var parentDiv = event.target;
+	parentDiv = findAncestor(parentDiv, "section");
+	parentDiv = parentDiv.getAttribute("id");
 	event.preventDefault();
+	$('html, body').animate({
+        scrollTop: $("#"+parentDiv).offset().top
+    }, 300);
+	$(".contact-info").addClass("fadeOutUp");
+	$(".fixed-case-nav").addClass("fadeOut");
 	var rectangle = $(this).parent().find('.rectangle');
 	rectangle.animate({
 		right: "0",
 	}, 'ease-in-out');
 	rectangle.animate({
 		top: "0",
-		height: "100vh",
+		height: "200vh",
 	}, function(){
 		$(".contact-info, .left").fadeOut();
 	});
