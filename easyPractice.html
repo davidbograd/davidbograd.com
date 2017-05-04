@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="css/skeleton.css">
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="/node_modules/flexboxgrid/css/flexboxgrid.min.css" type="text/css">
 	<link rel="icon" type="image/png" href="images/favicon.png">
 
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -24,8 +23,10 @@
 
 	<!-- Fixed case nav -->
 	<p class="fixed-case-nav back animated fadeIn"><a href="index.html">← Back</a></p>
-	<p class="fixed-case-nav resume animated fadeIn"><a href="resume-davidbograd.pdf" target="_blank">Resume</a></p>
-	<p class="fixed-case-nav about animated fadeIn"><a href="#">About</a></p>
+	<div class="fixed-case-nav animated fadeIn">
+		<a href="resume-davidbograd.pdf" target="_blank">Resume</a>
+		<a href="#">About</a>
+	</div>
 
 	<!-- Hero -->
 	<div class="hero easyPractice">
@@ -166,7 +167,24 @@
 				</div>
 			</div>
 		</div>
-
+	<div class="case-navigation">
+		<div class="container">
+			<a href="/told.html" class="btn-case prev">
+				<div class="case-text">
+					<div class="control">Previous</div>
+					<div class="label">Told App</div>
+				</div>
+				<div class="case-image" style="background-image: url('images/frontpage/baseimg-told.jpg')"></div>
+			</a>
+			<a href="/microsoft.html" class="btn-case next">
+				<div class="case-text">
+					<div class="control">Next</div>
+					<div class="label">Microsoft</div>
+				</div>
+				<div class="case-image" style="background-image: url('images/frontpage/baseimg-microsoft.jpg')"></div>
+			</a>
+		</div>
+	</div>
 
 </body>
 
