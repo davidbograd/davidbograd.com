@@ -178,7 +178,7 @@ hr {
 }
 
 @media (max-width: 750px) {
-  .section {top:-50px;}
+  .section {top:-50px; height: 60vh; }
 }
 
 .section .case-link {
@@ -236,7 +236,7 @@ hr {
 
 .section .rectangle {
   position: absolute;
-  right: 20vw;
+  right: 19vw;
   top: 25vh;
   height: 50vh;
   width: 25px;
@@ -247,10 +247,12 @@ hr {
   .section .case-link {
     height: 35vh;
   }
+
   .section .rectangle {
-    right: 15vw;
+    right: 13vw;
     height: 35vh;
-    top: 32.5vh;
+    top: 12.5vh;
+
   }
 }
 
@@ -264,7 +266,7 @@ hr {
 }
 
 @media (max-width: 750px) {
-  .case-title { left: -20px; bottom: -140px; font-size: 3em; line-height: 4.5rem;}
+  .case-title { left: -20px; bottom: -50px; font-size: 3em; line-height: 4.5rem;}
 }
 
 .caption {
@@ -328,6 +330,7 @@ hr {
   -webkit-align-items: flex-end;
   -ms-flex-align: end;
   align-items: flex-end;
+  margin-top: 30px;
 }
 
 .case-navigation .container .btn-case {
@@ -389,6 +392,7 @@ hr {
   opacity: .9;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
   filter: alpha(opacity=90);
+
 }
 
 .case-navigation .container .case-text .control {
@@ -431,7 +435,7 @@ hr {
 }
 
 .fixed-case-nav a{
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 .fixed-case-nav a:hover{
@@ -440,6 +444,11 @@ hr {
 
 .back {
   left: 25px;
+  margin-left: 0;
+}
+
+@media (max-width: 750px) {
+  .back {left: 10px;}
 }
 
 /* fade image in after load */
