@@ -193,7 +193,7 @@ hr {
 }
 
 @media (max-width: 750px) {
-  .section .case-link { width: 70vw;}
+  .section .case-link { width: 70vw; margin-top: 40vh;}
 }
 
 .section .case-link .hover-elements {
@@ -251,7 +251,7 @@ hr {
   .section .rectangle {
     right: 13vw;
     height: 35vh;
-    top: 12.5vh;
+    top: 32.5vh;
 
   }
 }
