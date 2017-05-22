@@ -190,39 +190,47 @@ hr {
   background-repeat: no-repeat;
   display: block;
   position: relative;
+
+}
+
+#told .case-link:hover {
+  color: #720AA3;
+}
+
+#microsoft .case-link:hover {
+  color: #F03C00;
+}
+
+#easyPractice .case-link:hover {
+  color: #4dbe8b;
 }
 
 @media (max-width: 750px) {
   .section .case-link { width: 70vw; margin-top: 40vh;}
 }
 
-.section .case-link .hover-elements {
-  width: 50vw;
-  height: 50vh;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .section .case-link .index {
-  font-size: 4em;
+  font-size: 2em;
   font-weight: 400;
-  font-family: Playfair Display, Garamond, serif;
   position: absolute;
-  right: -30px;
-  bottom: -100px;
-  color: black;
+  top: 50%;
+  left: 110%;
+  transform: translate(-50%, -50%);
+  color: #878787;
 }
 
 @media (max-width: 750px) {
   .section .case-link .index {
     display: none;
+    /*font-size: 1em;
+    right: -3.3em;
+    bottom: 115px;*/
   }
 }
 
-.section .case-link .index::after {
+/*.section .case-link .index::after {
   content: '';
   width: 2.4em;
     height: 6px;
@@ -232,7 +240,7 @@ hr {
     left: 50%;
     top: 60%;
     transform: translate(-50%,-50%);
-}
+}*/
 
 .section .rectangle {
   position: absolute;
@@ -257,17 +265,22 @@ hr {
 }
 
 .case-title{
+  font-family: Playfair Display, Garamond, serif;
   font-size: 6em;
   font-weight: 400;
-  position: absolute;
-  left: -30px;
-  bottom: -55px;
   line-height: 9rem;
+  text-align: center;
+  position: absolute;
+  top: 116%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
 }
 
 @media (max-width: 750px) {
-  .case-title { left: -20px; bottom: -50px; font-size: 3em; line-height: 4.5rem;}
+  .case-title {font-size: 3em; line-height: 4.5rem;}
 }
+
 
 .caption {
   font-size: 1.6rem;
@@ -415,7 +428,7 @@ hr {
 }
 
 .told {
-    background-color: #760086;
+    background-color: #720AA3;
 }
 
 .fixed-case-nav {
