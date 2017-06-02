@@ -91,17 +91,22 @@ img {
 }
 
 /* Name and contact info, frontpage */
+
+hr {
+  margin:0;
+}
 .contact-info {
   position: fixed;
-  top: 25px;
-  left: 200px;
+  top: 20px;
+  left: 30px;
   z-index: 1;
   font-size: 1.8rem;
   line-height: 2.4rem;
 }
 
 @media (max-width: 750px) {
-  .contact-info {left: 44px; top:30px;}
+  .contact-info {left: 10px; top:10px;}
+  .hideSmall {display: none;}
 }
 
 .contact-info h1 {
@@ -440,7 +445,7 @@ hr {
 }
 
 @media (max-width: 750px) {
-  .fixed-case-nav {top: 10px;}
+  .fixed-case-nav {top: 10px; right: 10px;}
 }
 
 .fixed-case-nav a{
@@ -452,12 +457,12 @@ hr {
 }
 
 .back {
-  left: 25px;
+  left: 15px;
   margin-left: 0;
 }
 
 @media (max-width: 750px) {
-  .back {left: 10px;}
+  .back {left: -5px;}
 }
 
 /* fade image in after load */
