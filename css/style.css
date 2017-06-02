@@ -13,6 +13,10 @@ body {
   font-family: Source Sans Pro, Helvetica Neue, Helvetica, sans-serif;
 }
 
+.content {
+  width:100%;
+}
+
 
 h1 {
     text-align: left;
@@ -38,7 +42,7 @@ h3 {
     letter-spacing: 0px;
     line-height: 5.6rem;
     margin-bottom: 2rem;
-    margin-top: 100px;
+    margin-top: 5rem;
 }
 
 h4 {
@@ -292,6 +296,7 @@ hr {
 .caption {
   font-size: 1.6rem;
   line-height: 2.4rem;
+  text-align: center;
 }
 
 /* Line seperator, hero cases */
@@ -321,7 +326,7 @@ hr {
 }
 
 .overview-text {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin: 0 0 10px 0;
     line-height: 1.3;
     opacity: 0.8;
@@ -476,6 +481,8 @@ hr {
 iframe {
   width: 375px;
   height: 667px;
+  display: block;
+  margin: 0 auto;
 }
 
 @media (max-width: 435px) {
