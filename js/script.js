@@ -28,7 +28,7 @@ function animateCaseLink(event){
 	var rectangle = $(this).parent().find('.rectangle');
 	rectangle.animate({
 		right: "0",
-	}, 'ease-in-out');
+	}, 'ease-in');
 	rectangle.animate({
 		top: "0",
 		height: "200vh",
