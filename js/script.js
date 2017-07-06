@@ -40,6 +40,7 @@ function animateCaseLink(event){
 	}, function(){
 		window.location = $(this).parent().find('.case-link').attr('href');
 	});
+
 }
 
 $(document).ready(init);
