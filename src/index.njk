@@ -1,0 +1,136 @@
+---
+layout: layouts/base.njk
+title: "David Bograd: Product Designer"
+socialImage: david-bush.jpg
+---
+
+<section class="hero">
+  <div class="shell">
+    <div class="hero__grid">
+      <div class="hero__intro">
+        <p class="eyebrow hero__eyebrow">
+          <span class="hero__status" aria-hidden="true"></span>
+          {{ site.role }} &nbsp;/&nbsp; {{ site.location }}
+        </p>
+
+        <h1 class="hero__title">
+          I&rsquo;m a Danish Product Designer living in Perth, Australia.
+          I make a positive impact through <em>great design</em>.
+        </h1>
+
+        <p class="hero__body">
+          Currently at <a href="https://simplywall.st/" target="_blank" rel="noopener">Simply Wall St</a>
+          making investing easier for 7M users. Previously at
+          <a href="https://envato.com/" target="_blank" rel="noopener">Envato</a>
+          (now part of Shutterstock).
+        </p>
+      </div>
+
+      <figure class="hero__portrait">
+        {% image "david-bush.jpg", "David Bograd", "portrait", true %}
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="work">
+  <div class="shell">
+    <div class="section-head">
+      <h2 class="section-head__title">Work</h2>
+      <div class="section-head__meta">
+        <span class="section-head__rule" aria-hidden="true"></span>
+        <span class="section-head__sub">In-depth cases of my latest work</span>
+      </div>
+    </div>
+
+    <div class="work-grid">
+      {% for item in collections.casesVisible %}
+      <article class="case-card reveal" style="--case-accent: {{ item.data.accent }}">
+        <div class="case-card__media">
+          {% if loop.first %}
+            {% image item.data.thumb, "", "thumbWide", true %}
+          {% else %}
+            {% image item.data.thumb, "", "thumb" %}
+          {% endif %}
+        </div>
+
+        <div class="case-card__body">
+          <div class="case-card__tags">
+            {% for tag in item.data.tags_display %}
+            <span class="eyebrow case-card__tag">
+              {% if loop.first %}<span class="case-card__dot"></span>{% endif %}{{ tag }}
+            </span>
+            {% endfor %}
+          </div>
+
+          <h3 class="case-card__title">{{ item.data.cardTitle }}</h3>
+
+          <span class="case-card__cta">
+            Read case study
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+          </span>
+        </div>
+
+        <a class="case-card__link" href="{{ item.url }}">{{ item.data.cardTitle }}</a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="shell">
+    <div class="section-head">
+      <h2 class="section-head__title">About me</h2>
+      <div class="section-head__meta">
+        <span class="section-head__rule" aria-hidden="true"></span>
+        <span class="section-head__sub">If you fancy reading more, here&rsquo;s my short story.</span>
+      </div>
+    </div>
+
+    <div class="about__grid">
+      <div class="about__aside">
+        <figure class="about__photo">
+          {% image "david-wall.jpg", "David Bograd", "aboutPhoto" %}
+        </figure>
+
+        <div class="about__contact">
+          <p>Don&rsquo;t be a stranger&mdash;Reach me at</p>
+          <a class="about__email" href="mailto:{{ site.email }}">&rarr; {{ site.email }}</a>
+          <p class="about__ps">PS. I don&rsquo;t always pose awkwardly in front of walls.</p>
+        </div>
+
+        <div class="about__social">
+          {% for link in site.social %}
+          <a class="pill" href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}</a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="about__text">
+        <p>
+          I currently work at <a href="https://simplywall.st/" target="_blank" rel="noopener">Simply Wall St</a>.
+          We&rsquo;re making investing easier for over 7,000,000 users worldwide.
+        </p>
+        <p>
+          Previously, I worked at <a href="https://envato.com/" target="_blank" rel="noopener">Envato</a>
+          where I built tools for Envato&rsquo;s marketplaces and contributors.
+        </p>
+        <p>
+          Throughout my 10+ year of experience I&rsquo;ve worked for a handful of tech companies,
+          designed websites for clients such as Microsoft, and freelanced for more than 100 clients.
+        </p>
+        <p>
+          I&rsquo;m a self-taught Designer and had been working in the industry for a handful of years,
+          before I went to Hyper Island where I studied Digital Data Strategy to broaden my skillset.
+        </p>
+        <p>
+          When not working you can catch traveling and meeting new cultures. I like to stay active and
+          spend time at the gym. If I&rsquo;m lucky and find a snowy mountain you&rsquo;d probably see me
+          shredding slopes on my snowboard.
+        </p>
+        <p>I&rsquo;m based in Perth, Australia but originate from Copenhagen, Denmark.</p>
+      </div>
+    </div>
+  </div>
+</section>

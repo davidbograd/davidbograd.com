@@ -1,0 +1,19 @@
+{
+  "name": "davidbograd-personal-website",
+  "version": "1.0.0",
+  "description": "Personal portfolio of David Bograd, Product Designer.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "eleventy --serve",
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy-img": "^7.0.0",
+    "markdown-it": "^15.0.1",
+    "markdown-it-attrs": "^5.0.1"
+  }
+}

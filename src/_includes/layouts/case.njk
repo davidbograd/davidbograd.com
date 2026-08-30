@@ -1,0 +1,84 @@
+---
+layout: layouts/base.njk
+---
+<article class="case" style="--case-accent: {{ accent }}">
+
+  <header class="case-hero">
+    <div class="shell">
+      <a class="back-link" href="/#work">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
+        All work
+      </a>
+
+      <div class="case-hero__tags">
+        {% for tag in tags_display %}
+        <span class="eyebrow case-card__tag">
+          {% if loop.first %}<span class="case-card__dot"></span>{% endif %}{{ tag }}
+        </span>
+        {% endfor %}
+      </div>
+
+      <h1 class="case-hero__title">{{ heading }}</h1>
+
+      <div class="case-hero__intro">
+        {% for paragraph in intro %}<p>{{ paragraph | safe }}</p>{% endfor %}
+      </div>
+
+      {% if meta %}
+      <dl class="case-meta">
+        {% for item in meta %}
+        <div class="case-meta__item">
+          <dt class="eyebrow">{{ item.label }}</dt>
+          <dd class="case-meta__value">{{ item.value | safe }}</dd>
+        </div>
+        {% endfor %}
+      </dl>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if cover %}
+  <div class="shell">
+    <figure class="case-cover reveal">
+      {% image cover, coverAlt or "", "cover", true %}
+    </figure>
+  </div>
+  {% endif %}
+
+  <div class="case-body">
+    <div class="shell">
+      <div class="case-body__inner">
+        {{ content | safe }}
+      </div>
+    </div>
+  </div>
+
+</article>
+
+{% set others = collections.cases | otherCases(page.url) %}
+{% if others.length %}
+<aside class="more-cases">
+  <div class="shell">
+    <div class="section-head">
+      <h2 class="section-head__title">More case studies</h2>
+    </div>
+
+    <div class="more-cases__grid">
+      {% for item in others %}
+      <a class="more-card reveal" href="{{ item.url }}">
+        <div class="more-card__media">
+          {% image item.data.thumb, "", "moreCard" %}
+        </div>
+        <div class="more-card__body">
+          <span class="eyebrow case-card__tag">
+            <span class="case-card__dot" style="background: {{ item.data.accent }}"></span>
+            {{ item.data.tags_display[0] }}
+          </span>
+          <span class="more-card__title">{{ item.data.cardTitle }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</aside>
+{% endif %}

@@ -1,0 +1,7 @@
+{
+  "layout": "layouts/case.njk",
+  "permalink": "/work/{{ page.fileSlug }}/index.html",
+  "eleventyComputed": {
+    "title": "{{ pageTitle }}"
+  }
+}
