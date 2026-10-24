@@ -29,18 +29,32 @@ const PRESETS = {
     widths: [480, 704, 1024, 1408],
     sizes: "(max-width: 744px) 100vw, 704px",
   },
-  // Work card thumbnails: the first card is full width, the rest are halves.
-  thumb: {
-    widths: [560, 800, 1120, 1600],
-    sizes: "(max-width: 720px) 100vw, (max-width: 1240px) 50vw, 560px",
+  // Logo that stands in for the pointer: 36px at 1x, 2x and 3x.
+  cursor: {
+    widths: [36, 72, 108],
+    sizes: "36px",
+    highQuality: true,
   },
-  thumbWide: {
-    widths: [640, 960, 1280, 1600],
-    sizes: "(max-width: 1240px) 100vw, 1120px",
-  },
+  // Portrait that stands in for the pointer over my name. The square source is
+  // cropped to fill a 164px-tall card, so these cover it at 1x–3x.
   portrait: {
-    widths: [280, 400, 560, 680],
-    sizes: "(max-width: 820px) 240px, 340px",
+    widths: [164, 328, 492],
+    sizes: "164px",
+    highQuality: true,
+  },
+  // Homepage work images, up to 1240px wide with a small inset below that.
+  work: {
+    widths: [800, 1240, 1920, 2480],
+    sizes: "(max-width: 1280px) 100vw, 1240px",
+    quality: 88,
+  },
+  // Circular portrait and logos set inline in the hero sentence. Renders
+  // ~36px on mobile and ~80px on desktop, so these widths cover up to 3x.
+  // They are tiny files anyway, so they skip the usual compression.
+  chip: {
+    widths: [80, 160, 240],
+    sizes: "(max-width: 620px) 40px, 80px",
+    highQuality: true,
   },
   aboutPhoto: {
     widths: [300, 460, 600],
@@ -72,17 +86,29 @@ async function renderImage(src, options = {}) {
     formats: ["webp", isPng ? "png" : "jpeg"],
     outputDir: "_site/assets/img/",
     urlPath: "/assets/img/",
-    sharpJpegOptions: { quality: 80, mozjpeg: true },
-    sharpWebpOptions: { quality: 78 },
-    sharpPngOptions: { compressionLevel: 9, palette: true },
+    ...(config.highQuality
+      ? {
+          sharpJpegOptions: { quality: 95, mozjpeg: true, chromaSubsampling: "4:4:4" },
+          sharpWebpOptions: isPng ? { lossless: true } : { quality: 95, smartSubsample: true },
+          sharpPngOptions: { compressionLevel: 9 },
+        }
+      : {
+          sharpJpegOptions: { quality: config.quality || 80, mozjpeg: true },
+          sharpWebpOptions: { quality: config.quality || 78 },
+          sharpPngOptions: { compressionLevel: 9, palette: true },
+        }),
+    // Keeps high-quality renders from colliding with cached default ones.
     filenameFormat: (id, source, width, format) =>
-      `${path.basename(source, path.extname(source))}-${width}.${format}`,
+      `${path.basename(source, path.extname(source))}-${width}${
+        config.highQuality ? "-hq" : config.quality ? `-q${config.quality}` : ""
+      }.${format}`,
   });
 
   return Image.generateHTML(metadata, {
     alt,
     sizes: config.sizes,
-    class: className,
+    // Only pass `class` when set, otherwise it renders as class="undefined".
+    ...(className ? { class: className } : {}),
     loading: eager ? "eager" : "lazy",
     decoding: eager ? "sync" : "async",
     ...(eager ? { fetchpriority: "high" } : {}),
@@ -119,6 +145,24 @@ export default function (eleventyConfig) {
   // Bare responsive <picture>, for use inside templates.
   eleventyConfig.addAsyncShortcode("image", async function (src, alt, preset, eager) {
     return renderImage(src, { alt, preset, eager: Boolean(eager) });
+  });
+
+  // Social card source. Sources live outside the passthrough directory, so the
+  // file has to go through the pipeline to get a URL that actually resolves.
+  eleventyConfig.addAsyncFilter("ogImage", async function (src) {
+    if (!src) return "";
+
+    const metadata = await Image(IMAGE_SOURCE + src, {
+      widths: [1200],
+      formats: ["jpeg"],
+      outputDir: "_site/assets/img/",
+      urlPath: "/assets/img/",
+      sharpJpegOptions: { quality: 82, mozjpeg: true },
+      filenameFormat: (id, source) =>
+        `${path.basename(source, path.extname(source))}-og.jpeg`,
+    });
+
+    return metadata.jpeg[0].url;
   });
 
   // Figure with optional caption. `size` sets both the measure and the preset.

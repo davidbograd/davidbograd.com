@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,11 +12,11 @@
 <meta property="og:title" content="{{ title }}">
 <meta property="og:description" content="{{ description or site.description }}">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-{% if socialImage %}<meta property="og:image" content="{{ site.url }}/assets/img/{{ socialImage }}">{% endif %}
+{% if socialImage %}<meta property="og:image" content="{{ site.url }}{{ socialImage | ogImage }}">{% endif %}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ title }}">
 <meta name="twitter:description" content="{{ description or site.description }}">
-{% if socialImage %}<meta name="twitter:image" content="{{ site.url }}/assets/img/{{ socialImage }}">{% endif %}
+{% if socialImage %}<meta name="twitter:image" content="{{ site.url }}{{ socialImage | ogImage }}">{% endif %}
 
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 <link rel="icon" href="/assets/img/favicon-portfolio.png">
@@ -24,25 +24,16 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/TimelessSerifVF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/TimelessSansVF.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css">
-
-<script>
-  // Set the theme before first paint so there is no flash of the wrong theme.
-  (function () {
-    try {
-      var stored = localStorage.getItem("theme");
-      var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      document.documentElement.setAttribute("data-theme", theme);
-    } catch (e) {}
-  })();
-</script>
 </head>
 
 <body class="{{ bodyClass }}">
 <a class="skip-link" href="#main">Skip to content</a>
 
-{% include "partials/nav.njk" %}
+{% if site.show.nav %}{% include "partials/nav.njk" %}{% endif %}
 
 <main id="main">
   {{ content | safe }}

@@ -5,36 +5,47 @@ socialImage: david-bush.jpg
 ---
 
 <section class="hero">
+  {% if site.show.heroGraphics and site.show.work %}
+  <a class="dial" href="#work">
+    <svg class="dial__ring" viewBox="0 0 200 200" aria-hidden="true">
+      {% for i in range(0, 72) %}
+      <line x1="100" y1="3" x2="100" y2="{{ 15 if i % 6 == 0 else 10 }}" transform="rotate({{ i * 5 }} 100 100)"/>
+      {% endfor %}
+    </svg>
+    <span class="dial__label">Selected work</span>
+  </a>
+  {% endif %}
+
   <div class="shell">
-    <div class="hero__grid">
-      <div class="hero__intro">
-        <p class="eyebrow hero__eyebrow">
-          <span class="hero__status" aria-hidden="true"></span>
-          {{ site.role }} &nbsp;/&nbsp; {{ site.location }}
-        </p>
-
-        <h1 class="hero__title">
-          I&rsquo;m a Danish Product Designer living in Perth, Australia.
-          I make a positive impact through <em>great design</em>.
-        </h1>
-
-        <p class="hero__body">
-          Currently at <a href="https://simplywall.st/" target="_blank" rel="noopener">Simply Wall St</a>
-          making investing easier for 7M users. Previously at
-          <a href="https://envato.com/" target="_blank" rel="noopener">Envato</a>
-          (now part of Shutterstock).
-        </p>
-      </div>
-
-      <figure class="hero__portrait">
-        {% image "david-bush.jpg", "David Bograd", "portrait", true %}
-      </figure>
-    </div>
+    <h1 class="hero__title" data-split-words>
+      I&rsquo;m <span class="word" data-cursor="me-cursor">David&nbsp;Bograd,</span><br>
+      a product designer making<br>
+      <em data-sparkle>beautiful software</em>.
+      <span class="hero__sub">
+        Currently designing at <span class="word" data-cursor="canva-cursor">Canva.</span>
+        Based in <span class="word" data-cursor="au-cursor">Perth, Australia.</span>
+      </span>
+    </h1>
   </div>
+
+  {# These stand in for the pointer over my name, "Canva" and "Perth, Australia".
+     They picture words already in the sentence, so they carry no alt text. #}
+  <span class="cursor-chip cursor-chip--photo" id="me-cursor" aria-hidden="true" data-swing>
+    <span class="cursor-chip__inner">{% image "david-avatar.jpg", "", "portrait", true %}</span>
+  </span>
+  <span class="cursor-chip" id="canva-cursor" aria-hidden="true">
+    <span class="cursor-chip__inner">{% image "logo-canva.png", "", "cursor", true %}</span>
+  </span>
+  <span class="cursor-chip" id="au-cursor" aria-hidden="true">
+    <span class="cursor-chip__inner">{% include "partials/flag-au.svg" %}</span>
+  </span>
+
+  {% if site.show.heroGraphics %}{% include "partials/collage.njk" %}{% endif %}
 </section>
 
-<section class="section" id="work">
-  <div class="shell">
+{% if site.show.work %}
+<section class="section work" id="work">
+  <div class="work-shell">
     <div class="section-head">
       <h2 class="section-head__title">Work</h2>
       <div class="section-head__meta">
@@ -42,41 +53,42 @@ socialImage: david-bush.jpg
         <span class="section-head__sub">In-depth cases of my latest work</span>
       </div>
     </div>
+  </div>
 
-    <div class="work-grid">
-      {% for item in collections.casesVisible %}
-      <article class="case-card reveal" style="--case-accent: {{ item.data.accent }}">
-        <div class="case-card__media">
-          {% if loop.first %}
-            {% image item.data.thumb, "", "thumbWide", true %}
-          {% else %}
-            {% image item.data.thumb, "", "thumb" %}
-          {% endif %}
+  <div class="work-list">
+    {% for item in collections.casesVisible %}
+    <article class="work-item reveal" style="--case-accent: {{ item.data.accent }}">
+      <a class="work-item__link" href="{{ item.url }}">
+        <div class="work-item__media">
+          {% image item.data.thumb, "", "work", loop.first %}
         </div>
-
-        <div class="case-card__body">
-          <div class="case-card__tags">
-            {% for tag in item.data.tags_display %}
-            <span class="eyebrow case-card__tag">
-              {% if loop.first %}<span class="case-card__dot"></span>{% endif %}{{ tag }}
-            </span>
-            {% endfor %}
-          </div>
-
-          <h3 class="case-card__title">{{ item.data.cardTitle }}</h3>
-
-          <span class="case-card__cta">
-            Read case study
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-          </span>
+        <div class="work-shell work-item__caption">
+          <h3 class="work-item__title">{{ item.data.cardTitle }}</h3>
+          <p class="work-item__meta">{{ item.data.tags_display | join(" • ") }}</p>
         </div>
-
-        <a class="case-card__link" href="{{ item.url }}">{{ item.data.cardTitle }}</a>
-      </article>
-      {% endfor %}
-    </div>
+      </a>
+    </article>
+    {% endfor %}
   </div>
 </section>
+{% else %}
+<section class="section work" id="work">
+  <div class="work-shell">
+    <div class="section-head">
+      <h2 class="section-head__title">Work</h2>
+      <div class="section-head__meta">
+        <span class="section-head__rule" aria-hidden="true"></span>
+        <span class="section-head__sub">Ten years of designing products used by millions, from creative marketplaces to investing.</span>
+      </div>
+    </div>
+  </div>
+
+  {# Holds the place of the case study images until they're ready. #}
+  <div class="work-item__media work-soon">
+    <p class="work-soon__label">Coming soon</p>
+  </div>
+</section>
+{% endif %}
 
 <section class="section" id="about">
   <div class="shell">
@@ -109,11 +121,14 @@ socialImage: david-bush.jpg
 
       <div class="about__text">
         <p>
-          I currently work at <a href="https://simplywall.st/" target="_blank" rel="noopener">Simply Wall St</a>.
-          We&rsquo;re making investing easier for over 7,000,000 users worldwide.
+          I currently work at <a class="link--canva" href="https://www.canva.com/" target="_blank" rel="noopener">Canva</a>.
         </p>
         <p>
-          Previously, I worked at <a href="https://envato.com/" target="_blank" rel="noopener">Envato</a>
+          Previously, I worked at <a href="https://simplywall.st/" target="_blank" rel="noopener">Simply Wall St</a>,
+          where we made investing easier for over 7,000,000 users worldwide.
+        </p>
+        <p>
+          Before that, I worked at <a href="https://envato.com/" target="_blank" rel="noopener">Envato</a>
           where I built tools for Envato&rsquo;s marketplaces and contributors.
         </p>
         <p>
