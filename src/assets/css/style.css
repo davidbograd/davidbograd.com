@@ -54,7 +54,7 @@
   --styl: 100;
   --ital: 0;
 
-  --shell: 1180px;
+  --shell: 1100px;
   --prose: 44rem;
   --gutter: clamp(1.25rem, 5vw, 3.5rem);
   /* Left rail. The menu's top shares --content-start with the hero. */
@@ -248,10 +248,9 @@ p:last-child {
 /* --- Layout primitives --------------------------------------------------- */
 
 .shell {
-  width: 100%;
-  max-width: var(--shell);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
+  width: min(100% - 2 * var(--gutter), var(--shell));
+  margin-left: var(--gutter);
+  margin-right: auto;
 }
 
 .prose {
@@ -1468,13 +1467,10 @@ p:last-child {
 /* One case per row: a wide image with big corners, then a caption row with
    the title left and the tags right. The heading and captions share the
    image's width so every left edge lines up. */
-.work {
-  --inset: clamp(0.5rem, 1.2vw, 1rem);
-}
-
 .work-shell {
-  width: min(1240px, 100% - 2 * var(--inset));
-  margin-inline: auto;
+  width: min(100% - 2 * var(--gutter), var(--shell));
+  margin-left: var(--gutter);
+  margin-right: auto;
 }
 
 .work-list {
@@ -1489,8 +1485,9 @@ p:last-child {
 }
 
 .work-item__media {
-  width: min(1240px, 100% - 2 * var(--inset));
-  margin-inline: auto;
+  width: min(100% - 2 * var(--gutter), var(--shell));
+  margin-left: var(--gutter);
+  margin-right: auto;
   overflow: hidden;
   border-radius: clamp(1.25rem, 2.6vw, 2.5rem);
   background: var(--case-accent, var(--bg-sunken));
@@ -1535,11 +1532,6 @@ p:last-child {
 @media (max-width: 720px) {
   .work-item__media {
     aspect-ratio: 4 / 3;
-  }
-
-  .work-shell .section-head,
-  .work-item__caption {
-    padding-inline: calc(var(--gutter) - var(--inset));
   }
 }
 
