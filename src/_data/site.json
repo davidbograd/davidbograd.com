@@ -1,0 +1,16 @@
+{
+  "name": "David Bograd",
+  "role": "Product Designer",
+  "url": "https://www.davidbograd.com",
+  "email": "david.bjorn.bograd@gmail.com",
+  "location": "Perth, Australia",
+  "description": "I'm David, a product designer. I strive to make a positive impact through good design. This portfolio showcases some of my work.",
+  "social": [
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/davidbograd/" }
+  ],
+  "show": {
+    "nav": false,
+    "heroGraphics": false,
+    "work": false
+  }
+}

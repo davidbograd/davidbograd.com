@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /work/told/
+
+Sitemap: https://www.davidbograd.com/sitemap.xml

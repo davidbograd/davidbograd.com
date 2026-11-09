@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>{{ title }}</title>
+<meta name="description" content="{{ description or site.description }}">
+{% if hidden %}<meta name="robots" content="noindex, nofollow">{% endif %}
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description or site.description }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+{% if socialImage %}<meta property="og:image" content="{{ site.url }}{{ socialImage | ogImage }}">{% endif %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ title }}">
+<meta name="twitter:description" content="{{ description or site.description }}">
+{% if socialImage %}<meta name="twitter:image" content="{{ site.url }}{{ socialImage | ogImage }}">{% endif %}
+
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<link rel="icon" href="/assets/img/favicon-portfolio.png">
+<link rel="apple-touch-icon" href="/assets/img/favicon-portfolio.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/TimelessSerifVF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/TimelessSansVF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body class="{{ bodyClass }}">
+<a class="skip-link" href="#main">Skip to content</a>
+
+{% if site.show.nav %}{% include "partials/nav.njk" %}{% endif %}
+
+<main id="main">
+  {{ content | safe }}
+</main>
+
+{% include "partials/footer.njk" %}
+
+<script src="/assets/js/theme.js" defer></script>
+</body>
+</html>
