@@ -244,7 +244,7 @@
     var sectionLink = function () {
       var about = document.getElementById("about");
       var aboutLink = linkForHash("#about");
-      var workLink = linkForHash("#work") || links[0];
+      var workLink = linkForHash("#top") || links[0];
 
       if (!about || !aboutLink) return workLink;
 
