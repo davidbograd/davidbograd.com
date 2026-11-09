@@ -1535,15 +1535,37 @@ p:last-child {
   }
 }
 
-/* Placeholder card in the shape of a case study image, shown while the work
-   section is switched off. Tall enough to read as content on the page. */
-.work-soon {
+/* Empty case study card. Same frame as a finished image, with no picture yet. */
+.work-list .work-soon {
   display: grid;
   place-items: center;
-  height: 80vh;
-  min-height: 20rem;
-  max-height: 56rem;
-  aspect-ratio: auto;
+  aspect-ratio: 2212 / 1004;
+  background: var(--bg-sunken);
+}
+
+.case--empty .eyebrow {
+  margin-bottom: 1.25rem;
+}
+
+.case-empty__note {
+  max-width: 36rem;
+  margin: 0.75rem 0 0;
+  color: var(--text-soft);
+}
+
+@media (max-width: 720px) {
+  .work-list .work-soon,
+  .case-empty__panel {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.case-empty__panel {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2212 / 1004;
+  border-radius: clamp(1.25rem, 2.6vw, 2.5rem);
+  background: var(--bg-sunken);
 }
 
 .work-soon__label {

@@ -134,7 +134,15 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("casesVisible", (collection) =>
     collection
       .getFilteredByGlob("src/work/*.md")
-      .filter((item) => !item.data.hidden)
+      .filter((item) => !item.data.hidden && !item.data.placeholder)
+      .sort((a, b) => a.data.order - b.data.order)
+  );
+
+  // Empty company cards shown while the finished case studies are switched off.
+  eleventyConfig.addCollection("casesPlaceholder", (collection) =>
+    collection
+      .getFilteredByGlob("src/work/*.md")
+      .filter((item) => item.data.placeholder)
       .sort((a, b) => a.data.order - b.data.order)
   );
 

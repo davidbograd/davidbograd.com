@@ -84,9 +84,20 @@ bodyClass: is-work
     </div>
   </div>
 
-  {# Holds the place of the case study images until they're ready. #}
-  <div class="work-item__media work-soon">
-    <p class="work-soon__label">Coming soon</p>
+  <div class="work-list">
+    {% for item in collections.casesPlaceholder %}
+    <article class="work-item" style="--case-accent: {{ item.data.accent }}">
+      <a class="work-item__link" href="{{ item.url }}">
+        <div class="work-item__media work-soon">
+          <p class="work-soon__label">Coming soon</p>
+        </div>
+        <div class="work-shell work-item__caption">
+          <h3 class="work-item__title">{{ item.data.cardTitle }}</h3>
+          <p class="work-item__meta">{{ item.data.tags_display | join(" • ") }}</p>
+        </div>
+      </a>
+    </article>
+    {% endfor %}
   </div>
 </section>
 {% endif %}

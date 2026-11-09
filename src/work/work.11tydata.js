@@ -3,8 +3,11 @@ export default {
   bodyClass: "is-work",
   eleventyComputed: {
     title: (data) => data.pageTitle,
-    // Case studies aren't published at all while site.show.work is off.
+    // Finished case studies stay unpublished while site.show.work is off.
+    // Placeholders stay up so the empty cards have a page to open.
     permalink: (data) =>
-      data.site.show.work ? `/work/${data.page.fileSlug}/index.html` : false,
+      data.placeholder || data.site.show.work
+        ? `/work/${data.page.fileSlug}/index.html`
+        : false,
   },
 };

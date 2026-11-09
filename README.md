@@ -33,7 +33,11 @@ src/
     ├── envato-review-tool.md
     ├── soundry.md
     ├── epidemic-sound.md
-    └── told.md                Hidden — see below
+    ├── told.md                Hidden — see below
+    ├── canva.md               Empty state — see below
+    ├── betashares.md
+    ├── envato.md
+    └── epidemic-sound-case.md
 ```
 
 ## Editing content
@@ -64,6 +68,17 @@ removes it from everywhere a visitor could find it: the homepage work grid, the
 
 `told.md` is hidden. It is complete and can be brought back by deleting that one
 line from its front matter (and the `Disallow` line in `src/static/robots.txt`).
+
+### Empty case studies
+
+`placeholder: true` is a company card with no write-up yet. These stay published
+while `site.show.work` is off, and they are what the homepage work list shows in
+that state. Each one is `hidden`, so it stays out of the finished work grid,
+"More case studies", and the sitemap.
+
+`canva.md`, `betashares.md`, `envato.md`, and `epidemic-sound-case.md` are the
+current empty states. Filling one in means removing `placeholder` and `hidden`,
+then adding the usual `thumb`, `cover`, and body.
 
 ### Shortcodes
 

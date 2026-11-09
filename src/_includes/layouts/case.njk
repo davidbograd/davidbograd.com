@@ -1,6 +1,28 @@
 ---
 layout: layouts/base.njk
 ---
+{% if placeholder %}
+<article class="case case--empty" style="--case-accent: {{ accent }}">
+  <header class="case-hero">
+    <div class="shell">
+      <a class="back-link" href="/#work">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
+        All work
+      </a>
+
+      <p class="eyebrow">Case study</p>
+      <h1 class="case-hero__title">{{ heading }}</h1>
+      <p class="case-empty__note">This write-up is on its way.</p>
+    </div>
+  </header>
+
+  <div class="shell">
+    <div class="case-empty__panel">
+      <p class="work-soon__label">Coming soon</p>
+    </div>
+  </div>
+</article>
+{% else %}
 <article class="case" style="--case-accent: {{ accent }}">
 
   <header class="case-hero">
@@ -54,9 +76,10 @@ layout: layouts/base.njk
   </div>
 
 </article>
+{% endif %}
 
 {% set others = collections.cases | otherCases(page.url) %}
-{% if others.length %}
+{% if others.length and not placeholder %}
 <aside class="more-cases">
   <div class="shell">
     <div class="section-head">
