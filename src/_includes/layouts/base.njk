@@ -33,13 +33,15 @@
 <body class="{{ bodyClass }}">
 <a class="skip-link" href="#main">Skip to content</a>
 
-{% if site.show.nav %}{% include "partials/nav.njk" %}{% endif %}
-
-<main id="main">
-  {{ content | safe }}
-</main>
-
-{% include "partials/footer.njk" %}
+<div class="frame">
+  {% include "partials/nav.njk" %}
+  <div class="frame__main">
+    <main id="main">
+      {{ content | safe }}
+    </main>
+    {% include "partials/footer.njk" %}
+  </div>
+</div>
 
 <script src="/assets/js/theme.js" defer></script>
 </body>

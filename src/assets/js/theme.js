@@ -207,6 +207,112 @@
     });
   });
 
+  /* --- Active menu marker ------------------------------------------------ */
+
+  var menu = document.querySelector(".mast__nav");
+
+  if (menu) {
+    var marker = menu.querySelector(".mast__marker");
+    var links = Array.prototype.slice.call(menu.querySelectorAll("a"));
+    var activeLink = null;
+    var lockedLink = null;
+
+    var placeMarker = function (link, animate) {
+      links.forEach(function (item) {
+        if (item === link) item.setAttribute("aria-current", "page");
+        else item.removeAttribute("aria-current");
+      });
+
+      var x = link.offsetLeft;
+      var y = link.offsetTop + (link.offsetHeight - marker.offsetHeight) / 2;
+
+      if (!animate) marker.style.transition = "none";
+      marker.style.transform = "translate(" + x + "px, " + y + "px)";
+      if (!animate) {
+        marker.getBoundingClientRect();
+        marker.style.transition = "";
+      }
+    };
+
+    var linkForHash = function (hash) {
+      return links.find(function (link) {
+        return link.getAttribute("href").endsWith(hash);
+      });
+    };
+
+    var sectionLink = function () {
+      var about = document.getElementById("about");
+      var aboutLink = linkForHash("#about");
+      var workLink = linkForHash("#work") || links[0];
+
+      if (!about || !aboutLink) return workLink;
+
+      // About takes over once its heading has climbed into the top half.
+      if (about.getBoundingClientRect().top < window.innerHeight * 0.45) {
+        return aboutLink;
+      }
+
+      return workLink;
+    };
+
+    var syncMarker = function (animate) {
+      var next = sectionLink();
+
+      if (lockedLink) {
+        if (next === lockedLink) lockedLink = null;
+        else next = lockedLink;
+      }
+
+      if (!next || (animate && next === activeLink)) return;
+      var moved = Boolean(activeLink && activeLink !== next);
+      activeLink = next;
+      placeMarker(next, animate && moved);
+    };
+
+    var lockScroll = window.scrollY;
+
+    links.forEach(function (link) {
+      link.addEventListener("click", function () {
+        lockedLink = link;
+        lockScroll = window.scrollY;
+        syncMarker(true);
+      });
+    });
+
+    window.addEventListener("hashchange", function () {
+      var link = linkForHash(window.location.hash);
+      if (!link) return;
+      lockedLink = link;
+      lockScroll = window.scrollY;
+      syncMarker(true);
+    });
+
+    window.addEventListener("scroll", function () {
+      if (lockedLink) {
+        var aboutLink = linkForHash("#about");
+        var towardAbout = lockedLink === aboutLink;
+        var reversed = towardAbout
+          ? window.scrollY < lockScroll - 24
+          : window.scrollY > lockScroll + 24;
+        if (reversed) lockedLink = null;
+        else lockScroll = window.scrollY;
+      }
+      syncMarker(true);
+    }, { passive: true });
+
+    window.addEventListener("resize", function () {
+      if (!activeLink) return;
+      placeMarker(activeLink, false);
+    });
+
+    if (window.location.hash) {
+      var hashed = linkForHash(window.location.hash);
+      if (hashed) lockedLink = hashed;
+    }
+
+    syncMarker(false);
+  }
+
   /* --- Nav hairline on scroll ------------------------------------------- */
 
   var nav = document.querySelector(".nav");
