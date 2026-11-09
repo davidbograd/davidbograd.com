@@ -339,8 +339,8 @@ p:last-child {
   position: absolute;
   top: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: var(--hot);
   pointer-events: none;
@@ -348,7 +348,6 @@ p:last-child {
 }
 
 .mast__nav a {
-  padding-left: 14px;
   font-size: 0.9375rem;
   line-height: 1;
   color: var(--text-faint);

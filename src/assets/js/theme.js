@@ -223,7 +223,8 @@
         else item.removeAttribute("aria-current");
       });
 
-      var x = link.offsetLeft;
+      // Sit just outside the label, so the words stay flush with the name.
+      var x = link.offsetLeft - marker.offsetWidth - 6;
       var y = link.offsetTop + (link.offsetHeight - marker.offsetHeight) / 2;
 
       if (!animate) marker.style.transition = "none";
