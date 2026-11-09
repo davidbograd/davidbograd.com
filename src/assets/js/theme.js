@@ -218,8 +218,12 @@
     var lockedLink = null;
 
     var placeMarker = function (link, animate) {
+      var sub = menu.querySelector(".mast__sub");
+      var workLink = linkForHash("#top") || links[0];
+
       links.forEach(function (item) {
-        if (item === link) item.setAttribute("aria-current", "page");
+        var current = item === link || (item === workLink && sub && sub.contains(link));
+        if (current) item.setAttribute("aria-current", "page");
         else item.removeAttribute("aria-current");
       });
 
@@ -241,19 +245,40 @@
       });
     };
 
+    var workLink = linkForHash("#top") || links[0];
+    var aboutLink = linkForHash("#about");
+    var sub = menu.querySelector(".mast__sub");
+
     var sectionLink = function () {
-      var about = document.getElementById("about");
-      var aboutLink = linkForHash("#about");
-      var workLink = linkForHash("#top") || links[0];
-
-      if (!about || !aboutLink) return workLink;
-
       // About takes over once its heading has climbed into the top half.
-      if (about.getBoundingClientRect().top < window.innerHeight * 0.45) {
-        return aboutLink;
+      if (aboutLink) {
+        var about = document.getElementById("about");
+        if (about && about.getBoundingClientRect().top < window.innerHeight * 0.45) {
+          return aboutLink;
+        }
       }
 
-      return workLink;
+      var current = workLink;
+      if (!sub) return current;
+
+      sub.querySelectorAll("a").forEach(function (link) {
+        var id = (link.getAttribute("href") || "").split("#")[1];
+        var section = id && document.getElementById(id);
+        if (!section) return;
+        if (section.getBoundingClientRect().top < window.innerHeight * 0.4) {
+          current = link;
+        }
+      });
+
+      return current;
+    };
+
+    // The case-study links only exist in the layout while Work is active, so
+    // the marker is measured after that list opens or closes.
+    var setWorkOpen = function (open) {
+      var changed = menu.classList.contains("is-work") !== open;
+      menu.classList.toggle("is-work", open);
+      return changed;
     };
 
     var syncMarker = function (animate) {
@@ -266,8 +291,10 @@
 
       if (!next || (animate && next === activeLink)) return;
       var moved = Boolean(activeLink && activeLink !== next);
+      var layoutChanged = setWorkOpen(next !== aboutLink);
+
       activeLink = next;
-      placeMarker(next, animate && moved);
+      placeMarker(next, animate && moved && !layoutChanged);
     };
 
     var lockScroll = window.scrollY;

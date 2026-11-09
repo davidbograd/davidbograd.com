@@ -10,6 +10,7 @@ tags_display:
   - "Case study"
 accent: "#111111"
 years: "2017 - 2019"
+anchor: epidemic-sound
 logo: logo-epidemic-sound.png
 logoHeight: 52px
 intro:

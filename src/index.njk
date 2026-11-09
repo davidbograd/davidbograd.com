@@ -48,7 +48,8 @@ bodyClass: is-work
   <div class="work-list">
     {% set studies = collections.casesVisible if site.show.work else collections.casesPlaceholder %}
     {% for item in studies %}
-    <article class="study" style="--case-accent: {{ item.data.accent }}; --logo-h: {{ item.data.logoHeight or '32px' }}">
+    {% set anchor = item.data.anchor or item.fileSlug %}
+    <article class="study" id="{{ anchor }}" style="--case-accent: {{ item.data.accent }}; --logo-h: {{ item.data.logoHeight or '32px' }}">
       <div class="study__copy">
         <header class="study__mast">
           {% if item.data.logo %}
