@@ -83,10 +83,9 @@
   --accent-told: #6c3ce9;
 }
 
-/* Palette after timeless.co/type: cool grey page, black ink, white cards and
-   a single hot orange used sparingly. */
+/* Palette: white page, black ink, and a single hot orange used sparingly. */
 :root {
-  --bg: #e6e7e9;
+  --bg: #ffffff;
   --bg-raised: #ffffff;
   --bg-sunken: #dddddd;
   --text: #000000;
