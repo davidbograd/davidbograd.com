@@ -357,19 +357,6 @@ p:last-child {
   color: var(--text);
 }
 
-/* Case studies, shown under Work only while that section is active. */
-.mast__sub {
-  display: none;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.65rem;
-  padding-left: 0.9rem;
-}
-
-.mast__nav.is-work .mast__sub {
-  display: flex;
-}
-
 @media (max-width: 699px) {
   .mast__nav {
     flex-direction: row;

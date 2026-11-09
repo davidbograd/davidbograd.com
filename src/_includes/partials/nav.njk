@@ -1,17 +1,8 @@
 <header class="mast">
   <a class="mast__name" href="/">{{ site.name }}</a>
-  <nav class="mast__nav{% if bodyClass == "is-work" %} is-work{% endif %}" aria-label="Primary">
+  <nav class="mast__nav" aria-label="Primary">
     <span class="mast__marker" aria-hidden="true"></span>
     <a href="/#top" {% if bodyClass == "is-work" %}aria-current="page"{% endif %}>Work</a>
-    {% set studies = collections.casesVisible if site.show.work else collections.casesPlaceholder %}
-    {% if studies.length %}
-    <div class="mast__sub">
-      {% for item in studies %}
-      {% set anchor = item.data.anchor or item.fileSlug %}
-      <a href="/#{{ anchor }}">{{ item.data.cardTitle }}</a>
-      {% endfor %}
-    </div>
-    {% endif %}
     <a href="/#about">About</a>
   </nav>
 </header>
