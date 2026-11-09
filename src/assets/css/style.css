@@ -1475,7 +1475,99 @@ p:last-child {
 .work-list {
   display: flex;
   flex-direction: column;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
+  gap: clamp(4.5rem, 9vw, 8rem);
+}
+
+/* A case study on the homepage. The write-up is half the visual width, and
+   both share the shell's left edge. The logo sits at the left of the copy,
+   the years at its right. */
+.study {
+  width: min(100% - 2 * var(--gutter), var(--shell));
+  margin-left: var(--gutter);
+  margin-right: auto;
+}
+
+.study__copy {
+  width: min(100%, calc(var(--shell) / 2));
+}
+
+.study__mast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.study__logo {
+  min-width: 0;
+}
+
+.study__logo img {
+  display: block;
+  height: var(--logo-h, 32px);
+  width: auto;
+}
+
+.study__name {
+  margin: 0;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.study__years {
+  flex: none;
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.study__title {
+  margin-top: 1.75rem;
+  font-size: clamp(1.5rem, 1.15rem + 1vw, 1.875rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.study__body {
+  margin-top: 1.35rem;
+  color: var(--text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.study__body p {
+  margin: 0;
+}
+
+.study__body p + p {
+  margin-top: 1rem;
+}
+
+.study__visual {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  overflow: hidden;
+  border-radius: clamp(1.25rem, 2.6vw, 2rem);
+  background: #f2f2f2;
+}
+
+.study__visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.study__visual--empty {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2212 / 1004;
 }
 
 .work-item__link {
@@ -1554,7 +1646,8 @@ p:last-child {
 
 @media (max-width: 720px) {
   .work-list .work-soon,
-  .case-empty__panel {
+  .case-empty__panel,
+  .study__visual--empty {
     aspect-ratio: 4 / 3;
   }
 }

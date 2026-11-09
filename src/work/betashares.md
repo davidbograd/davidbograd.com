@@ -8,5 +8,10 @@ heading: "Betashares"
 cardTitle: "Betashares"
 tags_display:
   - "Case study"
-accent: "#0077c8"
+accent: "#fa4c03"
+years: "2021 - 2023"
+logo: logo-betashares.png
+logoHeight: 32px
+intro:
+  - "This case study is on its way."
 ---

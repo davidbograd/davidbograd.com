@@ -44,63 +44,49 @@ bodyClass: is-work
   {% if site.show.heroGraphics %}{% include "partials/collage.njk" %}{% endif %}
 </section>
 
-{% if site.show.work %}
 <section class="section work" id="work">
-  <div class="work-shell">
-    <div class="section-head">
-      <h2 class="section-head__title">Work</h2>
-      <div class="section-head__meta">
-        <span class="section-head__rule" aria-hidden="true"></span>
-        <span class="section-head__sub">In-depth cases of my latest work</span>
-      </div>
-    </div>
-  </div>
-
   <div class="work-list">
-    {% for item in collections.casesVisible %}
-    <article class="work-item reveal" style="--case-accent: {{ item.data.accent }}">
-      <a class="work-item__link" href="{{ item.url }}">
-        <div class="work-item__media">
-          {% image item.data.thumb, "", "work", loop.first %}
+    {% set studies = collections.casesVisible if site.show.work else collections.casesPlaceholder %}
+    {% for item in studies %}
+    <article class="study" style="--case-accent: {{ item.data.accent }}; --logo-h: {{ item.data.logoHeight or '32px' }}">
+      <div class="study__copy">
+        <header class="study__mast">
+          {% if item.data.logo %}
+          <div class="study__logo">
+            {% image item.data.logo, item.data.cardTitle, "logo", true %}
+          </div>
+          {% else %}
+          <p class="study__name">{{ item.data.cardTitle }}</p>
+          {% endif %}
+          {% if item.data.years %}
+          <p class="study__years">{{ item.data.years }}</p>
+          {% endif %}
+        </header>
+
+        {% if item.data.heading and item.data.heading != item.data.cardTitle %}
+        <h2 class="study__title">{{ item.data.heading }}</h2>
+        {% endif %}
+
+        {% if item.data.intro %}
+        <div class="study__body">
+          {% for paragraph in item.data.intro %}<p>{{ paragraph | safe }}</p>{% endfor %}
         </div>
-        <div class="work-shell work-item__caption">
-          <h3 class="work-item__title">{{ item.data.cardTitle }}</h3>
-          <p class="work-item__meta">{{ item.data.tags_display | join(" • ") }}</p>
-        </div>
-      </a>
+        {% endif %}
+      </div>
+
+      {% if item.data.cover or item.data.thumb %}
+      <div class="study__visual">
+        {% image item.data.cover or item.data.thumb, item.data.coverAlt or "", "work", loop.first %}
+      </div>
+      {% elif item.data.placeholder %}
+      <div class="study__visual study__visual--empty">
+        <p class="work-soon__label">Coming soon</p>
+      </div>
+      {% endif %}
     </article>
     {% endfor %}
   </div>
 </section>
-{% else %}
-<section class="section work" id="work">
-  <div class="work-shell">
-    <div class="section-head">
-      <h2 class="section-head__title">Work</h2>
-      <div class="section-head__meta">
-        <span class="section-head__rule" aria-hidden="true"></span>
-        <span class="section-head__sub">Ten years of designing products used by millions, from creative marketplaces to investing.</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="work-list">
-    {% for item in collections.casesPlaceholder %}
-    <article class="work-item" style="--case-accent: {{ item.data.accent }}">
-      <a class="work-item__link" href="{{ item.url }}">
-        <div class="work-item__media work-soon">
-          <p class="work-soon__label">Coming soon</p>
-        </div>
-        <div class="work-shell work-item__caption">
-          <h3 class="work-item__title">{{ item.data.cardTitle }}</h3>
-          <p class="work-item__meta">{{ item.data.tags_display | join(" • ") }}</p>
-        </div>
-      </a>
-    </article>
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
 
 <section class="section" id="about">
   <div class="shell">

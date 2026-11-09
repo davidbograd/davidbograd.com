@@ -8,5 +8,10 @@ heading: "Epidemic Sound"
 cardTitle: "Epidemic Sound"
 tags_display:
   - "Case study"
-accent: "#e5384c"
+accent: "#111111"
+years: "2017 - 2019"
+logo: logo-epidemic-sound.png
+logoHeight: 52px
+intro:
+  - "This case study is on its way."
 ---

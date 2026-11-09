@@ -8,5 +8,10 @@ heading: "Envato"
 cardTitle: "Envato"
 tags_display:
   - "Case study"
-accent: "#0f8a83"
+accent: "#81b441"
+years: "2019 - 2021"
+logo: logo-envato.png
+logoHeight: 30px
+intro:
+  - "This case study is on its way."
 ---
