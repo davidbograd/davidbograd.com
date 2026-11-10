@@ -514,7 +514,7 @@ p:last-child {
 .cursor-chip--preview {
   width: min(20rem, 72vw);
   height: auto;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1200 / 630;
   margin: 0;
 }
 
