@@ -1864,7 +1864,7 @@ p:last-child {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--hot);
+  background: var(--text);
 }
 
 .job__body {
