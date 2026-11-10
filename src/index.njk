@@ -19,9 +19,8 @@ bodyClass: is-work
 
   <div class="shell">
     <h1 class="hero__title" data-split-words>
-      I&rsquo;m <span class="word" data-cursor="me-cursor">David&nbsp;Bograd,</span><br>
-      I&rsquo;m a Product designer making<br>
-      <em data-sparkle>beautiful software</em>.
+      I&rsquo;m a Product designer<br>
+      making <em data-sparkle>beautiful software</em>.
     </h1>
 
     <div class="hero__roles">
@@ -41,12 +40,8 @@ bodyClass: is-work
     </div>
   </div>
 
-  {# These stand in for the pointer over my name and "Perth, Australia",
-     and for the company names. They picture words already on the page, so
-     they carry no alt text. #}
-  <span class="cursor-chip cursor-chip--photo" id="me-cursor" aria-hidden="true" data-swing>
-    <span class="cursor-chip__inner">{% image "david-avatar.jpg", "", "portrait", true %}</span>
-  </span>
+  {# These stand in for the pointer over "Perth, Australia" and the company
+     names. They picture words already on the page, so they carry no alt text. #}
   <span class="cursor-chip" id="au-cursor" aria-hidden="true">
     <span class="cursor-chip__inner">{% include "partials/flag-au.svg" %}</span>
   </span>
