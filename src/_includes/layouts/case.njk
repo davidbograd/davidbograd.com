@@ -4,7 +4,7 @@ layout: layouts/base.njk
 {% set companyName = company or (tags_display[1] if (tags_display | length) > 1 else cardTitle) %}
 {% if placeholder %}
 <article class="case case--empty" style="--case-accent: {{ accent }}">
-  <h1 class="case-name" data-fit-width style="--name-length: {{ companyName | length }}"><span>{{ companyName }}</span></h1>
+  <h1 class="case-name"><span>{{ companyName }}</span></h1>
   <header class="case-hero">
     <div class="shell">
       <p class="case-empty__note">This write-up is on its way.</p>
@@ -20,7 +20,7 @@ layout: layouts/base.njk
 {% else %}
 <article class="case" style="--case-accent: {{ accent }}">
 
-  <h1 class="case-name" data-fit-width style="--name-length: {{ companyName | length }}"><span>{{ companyName }}</span></h1>
+  <h1 class="case-name"><span>{{ companyName }}</span></h1>
 
   <header class="case-hero">
     <div class="shell">

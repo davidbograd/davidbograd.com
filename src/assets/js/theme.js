@@ -344,43 +344,6 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  /* --- Company name fills the 1100px image width ------------------------ */
-
-  var caseNames = document.querySelectorAll("[data-fit-width]");
-
-  function fitCaseNames() {
-    caseNames.forEach(function (heading) {
-      var text = heading.querySelector("span");
-      if (!text) return;
-      var target = heading.clientWidth;
-      if (!target) return;
-
-      var min = 8;
-      var max = target;
-      var best = min;
-
-      for (var i = 0; i < 18; i++) {
-        var mid = (min + max) / 2;
-        text.style.fontSize = mid + "px";
-        // A few pixels short of the edge, so the last glyph is not clipped.
-        if (text.getBoundingClientRect().width <= target - 8) {
-          best = mid;
-          min = mid;
-        } else {
-          max = mid;
-        }
-      }
-
-      text.style.fontSize = best + "px";
-    });
-  }
-
-  if (caseNames.length) {
-    fitCaseNames();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitCaseNames);
-    window.addEventListener("resize", fitCaseNames);
-  }
-
   /* --- Reveal on scroll ------------------------------------------------- */
 
   var targets = document.querySelectorAll(".reveal");

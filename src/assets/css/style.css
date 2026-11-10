@@ -1835,17 +1835,14 @@ p:last-child {
 
 /* --- Case study page ----------------------------------------------------- */
 
-/* Company name, sized in JS so the words fill the same 1100px width as the images. */
+/* Company name. A fixed size, in the same column as the images. */
 .case-name {
   --styl: 0;
   font-family: var(--font-serif);
-  container-type: inline-size;
   width: min(100% - 2 * var(--gutter), var(--shell));
   margin: 0 0 0 var(--gutter);
   padding: 1.5rem 0 0;
   line-height: 0.9;
-  white-space: nowrap;
-  text-wrap: nowrap;
 }
 
 @media (min-width: 900px) {
@@ -1856,12 +1853,18 @@ p:last-child {
 
 .case-name span {
   display: inline-block;
+  max-width: 100%;
   /* Pull the cap height up to the Work link. The line box sits above the letters. */
   margin-top: -0.18em;
-  font-size: calc(100cqi / var(--name-length, 10) * 1.45);
+  font-size: 200px;
   line-height: 0.9;
   letter-spacing: -0.045em;
-  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .case-name span {
+    font-size: min(200px, 22vw);
+  }
 }
 
 .case-hero {
