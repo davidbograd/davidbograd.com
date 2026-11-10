@@ -1827,8 +1827,16 @@ p:last-child {
   text-wrap: nowrap;
 }
 
+@media (min-width: 900px) {
+  .case-name {
+    padding-top: var(--content-start);
+  }
+}
+
 .case-name span {
   display: inline-block;
+  /* Pull the cap height up to the Work link. The line box sits above the letters. */
+  margin-top: -0.18em;
   font-size: calc(100cqi / var(--name-length, 10) * 1.45);
   line-height: 0.9;
   letter-spacing: -0.045em;
