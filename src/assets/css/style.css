@@ -1854,17 +1854,18 @@ p:last-child {
 }
 
 .job__logo--mark {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
   background: #f2f2f2;
 }
 
-.job__logo--mark::after {
-  content: "";
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--text);
+.job__logo--mark span {
+  width: 4px;
+  height: 4px;
+  background: var(--text-faint);
+  border-radius: 1px;
 }
 
 .job__body {
