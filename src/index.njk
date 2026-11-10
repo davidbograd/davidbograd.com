@@ -126,15 +126,12 @@ bodyClass: is-work
     <h2 class="about__label">Experience</h2>
     <div class="cv">
       {% set roles = [
-        { company: "Canva", href: "https://www.canva.com/", years: "2025 - 2026", role: "Product Designer", detail: "GenAI, APIs, and growth design." },
-        { company: "Simply Wall St", href: "https://simplywall.st/", years: "2024 - 2025", role: "Senior Product Designer", detail: "Making investing better for over 7,000,000 people worldwide." },
-        { company: "Betashares", href: "https://www.betashares.com.au/", years: "2021 - 2023", role: "Senior Product Designer", detail: "Designed a new investing experience for Australians. iOS and Android, 0 → 1." },
-        { company: "Envato", href: "https://www.envato.com/", years: "2021", role: "Senior Product Designer", detail: "I work on tools for Envato’s marketplaces and creators. Built a content review tool that saves Envato +$1 million every year." },
-        { company: "Envato", href: "https://www.envato.com/", years: "2019 - 2021", role: "Product Designer" },
-        { company: "Epidemic Sound", href: "https://www.epidemicsound.com/", years: "2017 - 2019", role: "Product Designer", detail: "Led the design and launched a music streaming platform for businesses, on web and iOS. Over 3,000 businesses signed up within months. Epidemic grew from 80 to 400 people while I was there." },
-        { company: "Nordic Beta Labs", years: "2017", role: "Product Designer", detail: "Nordic Beta Labs is a startup doing a video app. I worked on concept, wireframing, prototyping, identity and branding, and visual design." },
-        { company: "Plant", years: "2015 - 2016", role: "Digital Designer", detail: "Plant is a digital agency. I designed for web and apps. Clients include Microsoft, Red Cross, DR, and Copenhagen Airport." },
-        { company: "Conferize", years: "2015", role: "Junior Digital Designer", detail: "Designed and prototyped web designs, made a style guide from scratch, and optimized how Conferize designed for social media." }
+        { company: "Canva", href: "https://www.canva.com/", years: "2025 - 2026", role: "Product Designer" },
+        { company: "Simply Wall St", href: "https://simplywall.st/", years: "2024 - 2025", role: "Senior Product Designer" },
+        { company: "Betashares", href: "https://www.betashares.com.au/", years: "2021 - 2023", role: "Senior Product Designer" },
+        { company: "Envato", href: "https://www.envato.com/", years: "2019 - 2021", role: "Senior Product Designer" },
+        { company: "Epidemic Sound", href: "https://www.epidemicsound.com/", years: "2017 - 2019", role: "Product Designer" },
+        { company: "Various startups and agencies", years: "2015 - 2017", role: "Designer" }
       ] %}
       {% for item in roles %}
       <div class="cv__row">
@@ -153,7 +150,6 @@ bodyClass: is-work
         </div>
         <div class="cv__role">
           <p class="cv__title">{{ item.role }}</p>
-          {% if item.detail %}<p class="cv__detail">{{ item.detail }}</p>{% endif %}
         </div>
       </div>
       {% endfor %}
