@@ -47,9 +47,9 @@ page header and how the case appears in listings:
 | Field          | What it does                                                  |
 | -------------- | ------------------------------------------------------------- |
 | `order`        | Position in the work grid and in "More case studies"          |
-| `heading`      | The `<h1>` on the case study page                             |
+| `heading`      | The title under the company name on the case study page       |
 | `cardTitle`    | The shorter title used on cards                               |
-| `tags_display` | The monospace labels above the title (project, then client)   |
+| `tags_display` | Project, then client. The client is the page's company name   |
 | `accent`       | Hex colour for the tag dot and tinted sections                |
 | `thumb`        | Card image, from `src/_images/`                               |
 | `cover`        | Full-width image under the header. Omit it to skip the cover  |

@@ -1,17 +1,12 @@
 ---
 layout: layouts/base.njk
 ---
+{% set companyName = company or (tags_display[1] if (tags_display | length) > 1 else cardTitle) %}
 {% if placeholder %}
 <article class="case case--empty" style="--case-accent: {{ accent }}">
+  <h1 class="case-name" data-fit-width style="--name-length: {{ companyName | length }}"><span>{{ companyName }}</span></h1>
   <header class="case-hero">
     <div class="shell">
-      <a class="back-link" href="/#work">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
-        All work
-      </a>
-
-      <p class="eyebrow">Case study</p>
-      <h1 class="case-hero__title">{{ heading }}</h1>
       <p class="case-empty__note">This write-up is on its way.</p>
     </div>
   </header>
@@ -25,22 +20,13 @@ layout: layouts/base.njk
 {% else %}
 <article class="case" style="--case-accent: {{ accent }}">
 
+  <h1 class="case-name" data-fit-width style="--name-length: {{ companyName | length }}"><span>{{ companyName }}</span></h1>
+
   <header class="case-hero">
     <div class="shell">
-      <a class="back-link" href="/#work">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
-        All work
-      </a>
-
-      <div class="case-hero__tags">
-        {% for tag in tags_display %}
-        <span class="eyebrow case-card__tag">
-          {% if loop.first %}<span class="case-card__dot"></span>{% endif %}{{ tag }}
-        </span>
-        {% endfor %}
-      </div>
-
-      <h1 class="case-hero__title">{{ heading }}</h1>
+      {% if heading != companyName %}
+      <h2 class="case-hero__title">{{ heading }}</h2>
+      {% endif %}
 
       <div class="case-hero__intro">
         {% for paragraph in intro %}<p>{{ paragraph | safe }}</p>{% endfor %}
