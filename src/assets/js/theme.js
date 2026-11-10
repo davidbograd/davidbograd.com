@@ -260,15 +260,16 @@
     };
 
     var sectionLink = function () {
-      var about = document.getElementById("about");
-      var aboutLink = linkForHash("#about");
       var workLink = linkForHash("#top") || links[0];
+      var stops = ["#experience", "#about"];
 
-      if (!about || !aboutLink) return workLink;
-
-      // About takes over once its heading has climbed into the top half.
-      if (about.getBoundingClientRect().top < window.innerHeight * 0.45) {
-        return aboutLink;
+      for (var i = 0; i < stops.length; i++) {
+        var id = stops[i].slice(1);
+        var section = document.getElementById(id);
+        var link = linkForHash(stops[i]);
+        if (section && link && section.getBoundingClientRect().top < window.innerHeight * 0.45) {
+          return link;
+        }
       }
 
       return workLink;
@@ -308,9 +309,12 @@
 
     window.addEventListener("scroll", function () {
       if (lockedLink) {
-        var aboutLink = linkForHash("#about");
-        var towardAbout = lockedLink === aboutLink;
-        var reversed = towardAbout
+        var hash = lockedLink.getAttribute("href") || "";
+        var id = hash.indexOf("#") >= 0 ? hash.slice(hash.indexOf("#") + 1) : "";
+        var target = id && id !== "top" ? document.getElementById(id) : null;
+        var targetY = target ? window.scrollY + target.getBoundingClientRect().top : 0;
+        var goingDown = targetY >= lockScroll;
+        var reversed = goingDown
           ? window.scrollY < lockScroll - 24
           : window.scrollY > lockScroll + 24;
         if (reversed) lockedLink = null;

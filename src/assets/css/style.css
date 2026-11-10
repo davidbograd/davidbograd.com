@@ -1698,7 +1698,7 @@ p:last-child {
 
 .about__grid {
   display: grid;
-  grid-template-columns: clamp(220px, 26vw, 300px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) clamp(220px, 26vw, 300px);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: start;
 }
@@ -1791,11 +1791,20 @@ p:last-child {
   background: var(--bg-raised);
 }
 
+.about__label {
+  margin: 0 0 0.35rem;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: var(--text-faint);
+}
+
 .about__text {
-  max-width: var(--prose);
-  font-size: var(--step-lg);
-  line-height: 1.62;
-  color: var(--text-soft);
+  max-width: 36rem;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--text);
 }
 
 .about__text a {
@@ -1807,6 +1816,84 @@ p:last-child {
 
 .about__text a:hover {
   border-bottom-color: var(--text);
+}
+
+/* --- Experience ---------------------------------------------------------- */
+
+.cv {
+  margin-top: 0.85rem;
+}
+
+.cv__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: 1.5rem;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cv__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cv__company {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+a.cv__company:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cv__arrow {
+  flex: none;
+  color: var(--text-faint);
+  transition: transform 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+a.cv__company:hover .cv__arrow {
+  color: var(--text);
+  transform: translate(1px, -1px);
+}
+
+.cv__years,
+.cv__title,
+.cv__detail {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.cv__years {
+  margin-top: 0.15rem;
+  color: var(--text-faint);
+}
+
+.cv__title {
+  color: var(--text);
+}
+
+.cv__detail {
+  margin-top: 0.2rem;
+  color: var(--text-soft);
+}
+
+@media (max-width: 700px) {
+  .cv__row {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
 }
 
 /* --- Footer -------------------------------------------------------------- */

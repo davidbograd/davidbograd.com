@@ -85,15 +85,21 @@ bodyClass: is-work
 
 <section class="section" id="about">
   <div class="shell">
-    <div class="section-head">
-      <h2 class="section-head__title">About me</h2>
-      <div class="section-head__meta">
-        <span class="section-head__rule" aria-hidden="true"></span>
-        <span class="section-head__sub">If you fancy reading more, here&rsquo;s my short story.</span>
-      </div>
-    </div>
-
     <div class="about__grid">
+      <div class="about__text">
+        <h2 class="about__label">About me</h2>
+        <p>
+          I most recently designed at <a class="link--canva" href="https://www.canva.com/" target="_blank" rel="noopener">Canva</a>, a design tool with over 265 million monthly users.
+        </p>
+        <p>
+          Throughout my 12+ year of experience I&rsquo;ve worked for a handful of tech companies, designed websites and for clients such as Microsoft, and freelanced for more than 100 clients.
+        </p>
+        <p>
+          When not working, I like to stay active and spend time at the gym. If it&rsquo;s windy I&rsquo;ll be on the water kitesurfing.
+        </p>
+        <p>I&rsquo;m based in Perth, Australia but originate from Copenhagen, Denmark.</p>
+      </div>
+
       <div class="about__aside">
         <figure class="about__photo">
           {% image "david-wall.jpg", "David Bograd", "aboutPhoto" %}
@@ -111,19 +117,46 @@ bodyClass: is-work
           {% endfor %}
         </div>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div class="about__text">
-        <p>
-          I most recently designed at <a class="link--canva" href="https://www.canva.com/" target="_blank" rel="noopener">Canva</a>, a design tool with over 265 million monthly users.
-        </p>
-        <p>
-          Throughout my 12+ year of experience I&rsquo;ve worked for a handful of tech companies, designed websites and for clients such as Microsoft, and freelanced for more than 100 clients.
-        </p>
-        <p>
-          When not working, I like to stay active and spend time at the gym. If it&rsquo;s windy I&rsquo;ll be on the water kitesurfing.
-        </p>
-        <p>I&rsquo;m based in Perth, Australia but originate from Copenhagen, Denmark.</p>
+<section class="section" id="experience">
+  <div class="shell">
+    <h2 class="about__label">Experience</h2>
+    <div class="cv">
+      {% set roles = [
+        { company: "Canva", href: "https://www.canva.com/", years: "2025 - 2026", role: "Product Designer", detail: "GenAI, APIs, and growth design." },
+        { company: "Simply Wall St", href: "https://simplywall.st/", years: "2024 - 2025", role: "Senior Product Designer", detail: "Making investing better for over 7,000,000 people worldwide." },
+        { company: "Betashares", href: "https://www.betashares.com.au/", years: "2021 - 2023", role: "Senior Product Designer", detail: "Designed a new investing experience for Australians. iOS and Android, 0 → 1." },
+        { company: "Envato", href: "https://www.envato.com/", years: "2021", role: "Senior Product Designer", detail: "I work on tools for Envato’s marketplaces and creators. Built a content review tool that saves Envato +$1 million every year." },
+        { company: "Envato", href: "https://www.envato.com/", years: "2019 - 2021", role: "Product Designer" },
+        { company: "Epidemic Sound", href: "https://www.epidemicsound.com/", years: "2017 - 2019", role: "Product Designer", detail: "Led the design and launched a music streaming platform for businesses, on web and iOS. Over 3,000 businesses signed up within months. Epidemic grew from 80 to 400 people while I was there." },
+        { company: "Nordic Beta Labs", years: "2017", role: "Product Designer", detail: "Nordic Beta Labs is a startup doing a video app. I worked on concept, wireframing, prototyping, identity and branding, and visual design." },
+        { company: "Plant", years: "2015 - 2016", role: "Digital Designer", detail: "Plant is a digital agency. I designed for web and apps. Clients include Microsoft, Red Cross, DR, and Copenhagen Airport." },
+        { company: "Conferize", years: "2015", role: "Junior Digital Designer", detail: "Designed and prototyped web designs, made a style guide from scratch, and optimized how Conferize designed for social media." }
+      ] %}
+      {% for item in roles %}
+      <div class="cv__row">
+        <div class="cv__left">
+          {% if item.href %}
+          <a class="cv__company" href="{{ item.href }}" target="_blank" rel="noopener">
+            {{ item.company }}
+            <svg class="cv__arrow" width="11" height="11" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M3 7L7 3M3.5 3H7V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          {% else %}
+          <span class="cv__company">{{ item.company }}</span>
+          {% endif %}
+          <span class="cv__years">{{ item.years }}</span>
+        </div>
+        <div class="cv__role">
+          <p class="cv__title">{{ item.role }}</p>
+          {% if item.detail %}<p class="cv__detail">{{ item.detail }}</p>{% endif %}
+        </div>
       </div>
+      {% endfor %}
     </div>
   </div>
 </section>
