@@ -71,9 +71,12 @@
 
   /* --- Picture cursor over a word --------------------------------------- */
 
-  document.querySelectorAll("[data-cursor]").forEach(function (target) {
-    var chip = document.getElementById(target.getAttribute("data-cursor"));
+  document.querySelectorAll("[data-cursor], [data-preview]").forEach(function (target) {
+    var chip = document.getElementById(
+      target.getAttribute("data-cursor") || target.getAttribute("data-preview")
+    );
     if (!chip) return;
+    var preview = chip.classList.contains("cursor-chip--preview");
 
     // Chips marked data-swing lean into horizontal movement and hold that
     // lean when the pointer stops; moving back the other way undoes it. The
@@ -107,8 +110,23 @@
     }
 
     function place(event) {
-      chip.style.setProperty("--cursor-x", event.clientX + "px");
-      chip.style.setProperty("--cursor-y", event.clientY + "px");
+      var x = event.clientX;
+      var y = event.clientY;
+
+      // Sit the screenshot just past the pointer, and flip it back inside
+      // the window when the pointer is near an edge.
+      if (preview) {
+        var gap = 16;
+        var width = chip.offsetWidth;
+        var height = chip.offsetHeight;
+        x += gap;
+        y += gap + 8;
+        if (x + width > window.innerWidth - 12) x = event.clientX - width - gap;
+        if (y + height > window.innerHeight - 12) y = event.clientY - height - gap;
+      }
+
+      chip.style.setProperty("--cursor-x", x + "px");
+      chip.style.setProperty("--cursor-y", y + "px");
 
       if (!swings || calm.matches) return;
       if (lastX !== null) {

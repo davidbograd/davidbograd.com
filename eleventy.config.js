@@ -64,6 +64,12 @@ const PRESETS = {
     widths: [320, 480, 640],
     sizes: "(max-width: 700px) 100vw, 320px",
   },
+  // Website preview that follows the pointer over a company name.
+  preview: {
+    widths: [360, 720],
+    sizes: "360px",
+    quality: 82,
+  },
   // Small logos and emoji-scale art.
   logo: { widths: [160, 320], sizes: "160px" },
   icon: { widths: [80, 160], sizes: "80px" },

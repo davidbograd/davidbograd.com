@@ -28,28 +28,35 @@ bodyClass: is-work
       <div class="hero__role">
         <p class="hero__role-label">Currently</p>
         <p class="hero__role-text">
-          Looking for my next role. Remote or based in <span data-cursor="au-cursor">Perth, Australia</span>.
+          Looking for my next role. Remote or <span data-cursor="au-cursor">Perth, Australia</span>.
         </p>
       </div>
       <div class="hero__role">
         <p class="hero__role-label">Previously</p>
         <p class="hero__role-text">
-          Design @ <span data-cursor="canva-cursor">Canva</span>, Envato, Betashares and more. Over the 12 years of experience.
+          Design @ <span data-preview="canva-preview">Canva</span>, <span data-preview="envato-preview">Envato</span>, <span data-preview="betashares-preview">Betashares</span> and more. Over the 12 years of experience.
         </p>
       </div>
     </div>
   </div>
 
-  {# These stand in for the pointer over my name, "Canva" and "Perth, Australia".
-     They picture words already on the page, so they carry no alt text. #}
+  {# These stand in for the pointer over my name and "Perth, Australia",
+     and for the company names. They picture words already on the page, so
+     they carry no alt text. #}
   <span class="cursor-chip cursor-chip--photo" id="me-cursor" aria-hidden="true" data-swing>
     <span class="cursor-chip__inner">{% image "david-avatar.jpg", "", "portrait", true %}</span>
   </span>
-  <span class="cursor-chip" id="canva-cursor" aria-hidden="true">
-    <span class="cursor-chip__inner">{% image "logo-canva.png", "", "cursor", true %}</span>
-  </span>
   <span class="cursor-chip" id="au-cursor" aria-hidden="true">
     <span class="cursor-chip__inner">{% include "partials/flag-au.svg" %}</span>
+  </span>
+  <span class="cursor-chip cursor-chip--preview" id="canva-preview" aria-hidden="true">
+    <span class="cursor-chip__inner">{% image "preview-canva.jpg", "", "preview", true %}</span>
+  </span>
+  <span class="cursor-chip cursor-chip--preview" id="envato-preview" aria-hidden="true">
+    <span class="cursor-chip__inner">{% image "preview-envato.jpg", "", "preview", true %}</span>
+  </span>
+  <span class="cursor-chip cursor-chip--preview" id="betashares-preview" aria-hidden="true">
+    <span class="cursor-chip__inner">{% image "preview-betashares.jpg", "", "preview", true %}</span>
   </span>
 
   {% if site.show.heroGraphics %}{% include "partials/collage.njk" %}{% endif %}
