@@ -1856,14 +1856,20 @@ p:last-child {
   max-width: 100%;
   /* Pull the cap height up to the Work link. The line box sits above the letters. */
   margin-top: -0.18em;
-  font-size: 200px;
+  font-size: 140px;
   line-height: 0.9;
   letter-spacing: -0.045em;
 }
 
+@media (max-width: 900px) {
+  .case-name span {
+    font-size: 88px;
+  }
+}
+
 @media (max-width: 640px) {
   .case-name span {
-    font-size: min(200px, 22vw);
+    font-size: 52px;
   }
 }
 
