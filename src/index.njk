@@ -68,41 +68,21 @@ bodyClass: is-work
     {% set studies = collections.casesVisible if site.show.work else collections.casesPlaceholder %}
     {% for item in studies %}
     {% set anchor = item.data.anchor or item.fileSlug %}
-    <article class="study" id="{{ anchor }}" style="--case-accent: {{ item.data.accent }}; --logo-h: {{ item.data.logoHeight or '32px' }}">
-      <div class="study__copy">
-        <header class="study__mast">
-          {% if item.data.logo %}
-          <div class="study__logo">
-            {% image item.data.logo, item.data.cardTitle, "logo", true %}
-          </div>
+    {% set company = item.data.company or item.data.cardTitle %}
+    <article class="study" id="{{ anchor }}" style="--case-accent: {{ item.data.accent }}">
+      {% if item.url %}<a class="study__link" href="{{ item.url }}">{% endif %}
+        <span class="study__visual{% if not item.data.cover and not item.data.thumb %} study__visual--empty{% endif %}">
+          {% if item.data.cover or item.data.thumb %}
+          {% image item.data.cover or item.data.thumb, item.data.coverAlt or company, "work", loop.first %}
           {% else %}
-          <p class="study__name">{{ item.data.cardTitle }}</p>
+          <p class="work-soon__label">Coming soon</p>
           {% endif %}
-          {% if item.data.years %}
-          <p class="study__years">{{ item.data.years }}</p>
-          {% endif %}
-        </header>
-
-        {% if item.data.heading and item.data.heading != item.data.cardTitle %}
-        <h2 class="study__title">{{ item.data.heading }}</h2>
-        {% endif %}
-
-        {% if item.data.intro %}
-        <div class="study__body">
-          {% for paragraph in item.data.intro %}<p>{{ paragraph | safe }}</p>{% endfor %}
-        </div>
-        {% endif %}
-      </div>
-
-      {% if item.url %}
-      <a class="study__visual{% if not item.data.cover and not item.data.thumb %} study__visual--empty{% endif %}" href="{{ item.url }}" aria-label="{{ item.data.heading or item.data.cardTitle }}">
-        {% if item.data.cover or item.data.thumb %}
-        {% image item.data.cover or item.data.thumb, item.data.coverAlt or "", "work", loop.first %}
-        {% else %}
-        <p class="work-soon__label">Coming soon</p>
-        {% endif %}
-      </a>
-      {% endif %}
+        </span>
+        <p class="study__meta">
+          <span class="study__company">{{ company }}</span>
+          {% if item.data.years %}<span class="study__years">{{ item.data.years }}</span>{% endif %}
+        </p>
+      {% if item.url %}</a>{% endif %}
     </article>
     {% endfor %}
   </div>

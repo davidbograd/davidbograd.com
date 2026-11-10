@@ -9,6 +9,7 @@ tags_display:
   - "Soundry"
   - "Epidemic Sound"
 accent: "#5b2278"
+company: "Epidemic Sound"
 years: "2017 - 2019"
 anchor: epidemic-sound
 logo: logo-epidemic-sound.png

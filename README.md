@@ -53,7 +53,7 @@ page header and how the case appears in listings:
 | `accent`       | Hex colour for the tag dot and tinted sections                |
 | `thumb`        | Card image, from `src/_images/`                               |
 | `cover`        | Full-width image under the header. Omit it to skip the cover  |
-| `intro`        | List of paragraphs. On the homepage these sit in the 550px column |
+| `intro`        | List of paragraphs under the title on the case study page      |
 | `logo`         | Wordmark shown at the left of a homepage case study           |
 | `logoHeight`   | Rendered height of that wordmark, e.g. `32px`                 |
 | `years`        | Range shown in the pill at the right, e.g. `2025 - 2026`      |
@@ -75,14 +75,14 @@ line from its front matter (and the `Disallow` line in `src/static/robots.txt`).
 ### Empty case studies
 
 `placeholder: true` is a company case study with no write-up yet. While
-`site.show.work` is off, these are the studies on the homepage: logo at the
-left, years at the right, text at 550px, and the visual at 1100px. Each one is
+`site.show.work` is off, these are the studies on the homepage: a thumbnail at
+1100px, then the company name and years on one line at the left. Each one is
 `hidden`, so it stays out of the finished work grid, "More case studies", and
 the sitemap.
 
 `canva.md`, `betashares.md`, and `envato.md` are the current empty states.
-`soundry.md` fills the Epidemic Sound slot (`home: true`): same masthead, with
-its cover linking to `/work/soundry/`. Filling another empty state means removing
+`soundry.md` fills the Epidemic Sound slot (`home: true`): its cover links to
+`/work/soundry/`. Filling another empty state means removing
 `placeholder` and `hidden`, then adding the usual `thumb`, `cover`, and body.
 
 ### Shortcodes
