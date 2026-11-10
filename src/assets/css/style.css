@@ -1853,8 +1853,18 @@ p:last-child {
   object-fit: cover;
 }
 
-.job__logo--empty {
-  background: #ececec;
+.job__logo--mark {
+  display: grid;
+  place-items: center;
+  background: #f2f2f2;
+}
+
+.job__logo--mark::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--hot);
 }
 
 .job__body {

@@ -131,14 +131,14 @@ bodyClass: is-work
         { company: "Betashares", href: "https://www.betashares.com.au/", years: "Oct 2021 - Oct 2023", role: "Senior Product Designer", logo: "logo-betashares-icon.png" },
         { company: "Envato", href: "https://www.envato.com/", years: "Sep 2019 - Sep 2021", role: "Senior Product Designer", logo: "logo-envato-icon.png" },
         { company: "Epidemic Sound", href: "https://www.epidemicsound.com/", years: "Aug 2017 - Aug 2019", role: "Product Designer", logo: "logo-epidemic-icon.png" },
-        { company: "Various startups and agencies", years: "Jan 2015 - Jun 2017", role: "Designer" }
+        { company: "Various startups and agencies", years: "Aug 2014 - Jun 2017", role: "Designer" }
       ] %}
       {% for item in roles %}
       <div class="job">
         {% if item.logo %}
         <span class="job__logo">{% image item.logo, "", "job" %}</span>
         {% else %}
-        <span class="job__logo job__logo--empty" aria-hidden="true"></span>
+        <span class="job__logo job__logo--mark" aria-hidden="true"></span>
         {% endif %}
         <div class="job__body">
           <div class="job__line">
@@ -162,7 +162,7 @@ bodyClass: is-work
     <div class="cv">
       {% set projects = [
         { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - today", detail: "Over 100,000 people has used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding." },
-        { name: "Do Good Movement", years: "2022 - 2025", detail: "Started a charity with two friends. We had ~500 members and donated a total of ~$65,000 AUD to help 14,702 in need." }
+        { name: "Do Good Movement", href: "https://dogoodmovement.earth/", years: "2022 - 2025", detail: "Started a charity with two friends. We had ~500 members and donated a total of ~$65,000 AUD to help 14,702 in need." }
       ] %}
       {% for item in projects %}
       <div class="cv__row">
