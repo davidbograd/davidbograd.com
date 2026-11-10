@@ -1820,6 +1820,123 @@ p:last-child {
 
 /* --- Experience ---------------------------------------------------------- */
 
+.jobs {
+  display: grid;
+  gap: 1.15rem;
+  margin-top: 1.15rem;
+}
+
+.job {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.job__logo,
+.job__logo picture {
+  display: block;
+  width: 36px;
+  height: 36px;
+  flex: none;
+}
+
+.job__logo {
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f2f2f2;
+}
+
+.job__logo img {
+  display: block;
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+}
+
+.job__logo--empty {
+  background: #ececec;
+}
+
+.job__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.job__line {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.job__title,
+.job__company,
+.job__dates {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.job__title {
+  flex: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.job__lead {
+  flex: 1;
+  min-width: 1.25rem;
+  height: 3px;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.28) 0.8px, transparent 0.9px);
+  background-size: 7px 3px;
+  background-repeat: repeat-x;
+  background-position: left center;
+}
+
+.job__dates {
+  flex: none;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.job__company {
+  color: var(--text-faint);
+}
+
+.job__company a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.job__company a:hover {
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .job__body {
+    display: grid;
+  }
+
+  .job__line {
+    display: contents;
+  }
+
+  .job__lead {
+    display: none;
+  }
+
+  .job__title {
+    order: 1;
+  }
+
+  .job__company {
+    order: 2;
+  }
+
+  .job__dates {
+    order: 3;
+  }
+}
+
 .cv {
   margin-top: 0.85rem;
 }

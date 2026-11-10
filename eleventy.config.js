@@ -67,6 +67,12 @@ const PRESETS = {
   // Small logos and emoji-scale art.
   logo: { widths: [160, 320], sizes: "160px" },
   icon: { widths: [80, 160], sizes: "80px" },
+  // Experience marks. Shown at 36px, kept sharp through 3x.
+  job: {
+    widths: [36, 72, 108],
+    sizes: "36px",
+    highQuality: true,
+  },
 };
 
 async function renderImage(src, options = {}) {
