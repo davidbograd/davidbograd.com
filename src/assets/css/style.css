@@ -1848,12 +1848,12 @@ p:last-child {
 
 /* --- Case study page ----------------------------------------------------- */
 
-/* Company name, sized in JS so the words fill the page column exactly. */
+/* Company name, sized in JS so the words fill the same 1100px width as the images. */
 .case-name {
   --styl: 0;
   container-type: inline-size;
-  width: 100%;
-  margin: 0;
+  width: min(100% - 2 * var(--gutter), var(--shell));
+  margin: 0 0 0 var(--gutter);
   padding: 1.5rem 0 0;
   line-height: 0.9;
   white-space: nowrap;

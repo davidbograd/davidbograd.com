@@ -344,7 +344,7 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  /* --- Company name fills the page width -------------------------------- */
+  /* --- Company name fills the 1100px image width ------------------------ */
 
   var caseNames = document.querySelectorAll("[data-fit-width]");
 
