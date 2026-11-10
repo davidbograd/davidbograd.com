@@ -1,5 +1,6 @@
 ---
-order: 2
+order: 4
+home: true
 pageTitle: "Case: Soundry - music streaming for businesses"
 description: "A case study of Product Design work done on Soundry.com - a music streaming platform specifically designed for businesses. By David Bograd."
 heading: "Soundry. A music streaming service for business"
@@ -8,6 +9,10 @@ tags_display:
   - "Soundry"
   - "Epidemic Sound"
 accent: "#5b2278"
+years: "2017 - 2019"
+anchor: epidemic-sound
+logo: logo-epidemic-sound.png
+logoHeight: 52px
 thumb: soundry-2x.jpg
 cover: soundry-intro-image.jpg
 coverAlt: "Soundry playing in a business"

@@ -36,8 +36,7 @@ src/
     ├── told.md                Hidden — see below
     ├── canva.md               Empty state — see below
     ├── betashares.md
-    ├── envato.md
-    └── epidemic-sound-case.md
+    └── envato.md
 ```
 
 ## Editing content
@@ -59,6 +58,7 @@ page header and how the case appears in listings:
 | `logoHeight`   | Rendered height of that wordmark, e.g. `32px`                 |
 | `years`        | Range shown in the pill at the right, e.g. `2025 - 2026`      |
 | `hidden`       | Unlists the case study — see below                            |
+| `home`         | Shows a finished study on the homepage while other work is off |
 | `meta`         | Optional `label`/`value` pairs shown as a strip under `intro` |
 
 ### Hidden case studies
@@ -80,9 +80,10 @@ left, years at the right, text at 550px, and the visual at 1100px. Each one is
 `hidden`, so it stays out of the finished work grid, "More case studies", and
 the sitemap.
 
-`canva.md`, `betashares.md`, `envato.md`, and `epidemic-sound-case.md` are the
-current empty states. Filling one in means removing `placeholder` and `hidden`,
-then adding the usual `thumb`, `cover`, and body.
+`canva.md`, `betashares.md`, and `envato.md` are the current empty states.
+`soundry.md` fills the Epidemic Sound slot (`home: true`): same masthead, with
+its cover linking to `/work/soundry/`. Filling another empty state means removing
+`placeholder` and `hidden`, then adding the usual `thumb`, `cover`, and body.
 
 ### Shortcodes
 

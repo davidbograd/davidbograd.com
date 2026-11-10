@@ -28,7 +28,8 @@ bodyClass: is-work
       <div class="hero__role">
         <p class="hero__role-label">Currently</p>
         <p class="hero__role-text">
-          Looking for my next role. Remote or <span data-cursor="au-cursor">Perth, Australia</span>.
+          Looking for my next role.<br>
+          Remote or <span data-cursor="au-cursor">Perth, Australia</span>.
         </p>
       </div>
       <div class="hero__role">
@@ -93,14 +94,14 @@ bodyClass: is-work
         {% endif %}
       </div>
 
-      {% if item.data.cover or item.data.thumb %}
-      <div class="study__visual">
+      {% if item.url %}
+      <a class="study__visual{% if not item.data.cover and not item.data.thumb %} study__visual--empty{% endif %}" href="{{ item.url }}" aria-label="{{ item.data.heading or item.data.cardTitle }}">
+        {% if item.data.cover or item.data.thumb %}
         {% image item.data.cover or item.data.thumb, item.data.coverAlt or "", "work", loop.first %}
-      </div>
-      {% elif item.data.placeholder %}
-      <div class="study__visual study__visual--empty">
+        {% else %}
         <p class="work-soon__label">Coming soon</p>
-      </div>
+        {% endif %}
+      </a>
       {% endif %}
     </article>
     {% endfor %}

@@ -139,15 +139,18 @@ export default function (eleventyConfig) {
   );
 
   // Empty company cards shown while the finished case studies are switched off.
+  // `home` is a finished study that still belongs on that page, in a company slot.
   eleventyConfig.addCollection("casesPlaceholder", (collection) =>
     collection
       .getFilteredByGlob("src/work/*.md")
-      .filter((item) => item.data.placeholder)
+      .filter((item) => item.data.placeholder || item.data.home)
       .sort((a, b) => a.data.order - b.data.order)
   );
 
   eleventyConfig.addFilter("otherCases", function (cases, currentUrl) {
-    return cases.filter((item) => item.url !== currentUrl && !item.data.hidden);
+    return cases.filter(
+      (item) => item.url && item.url !== currentUrl && !item.data.hidden
+    );
   });
 
   // Bare responsive <picture>, for use inside templates.

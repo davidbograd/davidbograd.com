@@ -1607,10 +1607,13 @@ p:last-child {
 }
 
 .study__visual {
+  display: block;
   margin-top: clamp(2rem, 4vw, 3rem);
   overflow: hidden;
   border-radius: 4px;
   background: #f2f2f2;
+  color: inherit;
+  text-decoration: none;
 }
 
 .study__visual img {

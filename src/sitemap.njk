@@ -8,12 +8,12 @@ eleventyExcludeFromCollections: true
     <loc>{{ site.url }}/</loc>
     <priority>1.0</priority>
   </url>
-  {%- if site.show.work %}
-  {%- for item in collections.casesVisible %}
+  {%- for item in collections.cases %}
+  {%- if item.url and not item.data.hidden %}
   <url>
     <loc>{{ site.url }}{{ item.url }}</loc>
     <priority>0.8</priority>
   </url>
-  {%- endfor %}
   {%- endif %}
+  {%- endfor %}
 </urlset>

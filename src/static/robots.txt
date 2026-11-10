@@ -4,6 +4,5 @@ Disallow: /work/told/
 Disallow: /work/canva/
 Disallow: /work/betashares/
 Disallow: /work/envato/
-Disallow: /work/epidemic-sound-case/
 
 Sitemap: https://www.davidbograd.com/sitemap.xml
