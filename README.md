@@ -110,8 +110,8 @@ Sizing presets are defined at the top of `eleventy.config.js`.
 
 ## Design
 
-- **Type** — Timeless Sans for text and headings, JetBrains Mono for the small
-  uppercase labels.
+- **Type** — Timeless Sans for text, Timeless Serif for the hero and case
+  study names, JetBrains Mono for the small uppercase labels.
 - **Theme** — Light and dark, driven by CSS custom properties. Follows the OS by
   default; the toggle stores an explicit choice in `localStorage`.
 - **Colour** — A warm neutral base. Each case study carries its own accent,
