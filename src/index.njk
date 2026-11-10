@@ -22,16 +22,26 @@ bodyClass: is-work
       I&rsquo;m <span class="word" data-cursor="me-cursor">David&nbsp;Bograd,</span><br>
       a product designer making<br>
       <em data-sparkle>beautiful software</em>.
-      <span class="hero__sub">
-        Most recently designing at <span class="word" data-cursor="canva-cursor">Canva.</span>
-        Looking for my next role.
-        Based in <span class="word" data-cursor="au-cursor">Perth, Australia.</span>
-      </span>
     </h1>
+
+    <div class="hero__roles">
+      <div class="hero__role">
+        <p class="hero__role-label">Currently</p>
+        <p class="hero__role-text">
+          Looking for my next role. Remote or based in <span data-cursor="au-cursor">Perth, Australia</span>.
+        </p>
+      </div>
+      <div class="hero__role">
+        <p class="hero__role-label">Previously</p>
+        <p class="hero__role-text">
+          Design @ <span data-cursor="canva-cursor">Canva</span>, Envato, Betashares and more. Over the 12 years of experience.
+        </p>
+      </div>
+    </div>
   </div>
 
   {# These stand in for the pointer over my name, "Canva" and "Perth, Australia".
-     They picture words already in the sentence, so they carry no alt text. #}
+     They picture words already on the page, so they carry no alt text. #}
   <span class="cursor-chip cursor-chip--photo" id="me-cursor" aria-hidden="true" data-swing>
     <span class="cursor-chip__inner">{% image "david-avatar.jpg", "", "portrait", true %}</span>
   </span>

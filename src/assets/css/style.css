@@ -420,13 +420,38 @@ p:last-child {
   letter-spacing: -0.02em;
 }
 
-.hero__sub {
+.hero__roles {
   --styl: 100;
-  display: block;
-  margin-top: 2em;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 22rem);
+  gap: 1.25rem clamp(2rem, 5vw, 4.5rem);
+  max-width: 42rem;
+  margin-top: clamp(2.25rem, 4vw, 3.25rem);
   font-family: var(--font-sans);
-  font-size: 1.25rem;
-  letter-spacing: -0.01em;
+}
+
+.hero__role-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--text-faint);
+}
+
+.hero__role-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+@media (max-width: 640px) {
+  .hero__roles {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
 /* A round logo that replaces the pointer over a word. The outer element
