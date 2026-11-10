@@ -261,7 +261,7 @@
 
     var sectionLink = function () {
       var workLink = linkForHash("#top") || links[0];
-      var stops = ["#experience", "#about"];
+      var stops = ["#side-projects", "#experience", "#about"];
 
       for (var i = 0; i < stops.length; i++) {
         var id = stops[i].slice(1);

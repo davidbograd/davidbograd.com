@@ -160,3 +160,35 @@ bodyClass: is-work
     </div>
   </div>
 </section>
+
+<section class="section" id="side-projects">
+  <div class="shell">
+    <h2 class="about__label">Side projects</h2>
+    <div class="cv">
+      {% set projects = [
+        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - today", detail: "Over 100,000 people has used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding." },
+        { name: "Do Good Movement", years: "2022 - 2025", detail: "Started a charity with two friends. We had ~500 members and donated a total of ~$65,000 AUD to help 14,702 in need." }
+      ] %}
+      {% for item in projects %}
+      <div class="cv__row">
+        <div class="cv__left">
+          {% if item.href %}
+          <a class="cv__company" href="{{ item.href }}" target="_blank" rel="noopener">
+            {{ item.name }}
+            <svg class="cv__arrow" width="11" height="11" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M3 7L7 3M3.5 3H7V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          {% else %}
+          <span class="cv__company">{{ item.name }}</span>
+          {% endif %}
+          <span class="cv__years">{{ item.years }}</span>
+        </div>
+        <div class="cv__role">
+          <p class="cv__title">{{ item.detail }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
