@@ -6,22 +6,6 @@
 
 /* Timeless, from timeless.co. Licensed for embedding only: these files must
    not be redistributed or committed to a public repository. */
-@font-face {
-  font-family: "Timeless Serif";
-  src: url("/assets/fonts/TimelessSerifVF.woff2") format("woff2");
-  font-weight: 200 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Timeless Serif";
-  src: url("/assets/fonts/TimelessSerifItalicVF.woff2") format("woff2");
-  font-weight: 300 700;
-  font-style: italic;
-  font-display: swap;
-}
-
 /* One file holds both styles. The italic face is declared so the browser does
    not fake a slant on top of the font's own `ital` axis. */
 @font-face {
@@ -45,12 +29,9 @@
 :root {
   --font-sans: "Timeless Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-serif: "Timeless Serif", Georgia, serif;
 
-  /* Both families have a `STYL` axis. In the serif, 0 is Display and 100 is
-     Text, cut for small sizes. In the sans, 0 is Grotesk and 100 is Sans. The
-     sans `ital` axis runs 0 to 100, so browsers can't drive it from
-     `font-style` and it is set here too. */
+  /* Timeless Sans: 0 is Grotesk and 100 is Sans. The `ital` axis runs 0 to
+     100, so browsers can't drive it from `font-style` and it is set here too. */
   --styl: 100;
   --ital: 0;
 
@@ -174,17 +155,11 @@ h2,
 h3,
 h4 {
   margin: 0;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 400;
   letter-spacing: -0.015em;
   line-height: 1.1;
   text-wrap: balance;
-}
-
-/* Display cut for large headings; small ones keep the sturdier Text cut. */
-h1,
-h2 {
-  --styl: 0;
 }
 
 p {
@@ -408,7 +383,7 @@ p:last-child {
 .hero__title {
   position: relative;
   z-index: 1;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(2.5rem, 1.1rem + 3.9vw, 5rem);
   font-weight: 400;
   letter-spacing: -0.035em;
@@ -865,8 +840,7 @@ p:last-child {
 
 .pc-doc__title {
   margin: 1.2em 0 0.6em;
-  font-family: var(--font-serif);
-  --styl: 0;
+  font-family: var(--font-sans);
   font-size: 1.6em;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -945,8 +919,7 @@ p:last-child {
 
 .pc-cover__title {
   margin: 0;
-  font-family: var(--font-serif);
-  --styl: 0;
+  font-family: var(--font-sans);
   font-size: 1.55em;
   letter-spacing: -0.03em;
   line-height: 1.02;
@@ -1074,8 +1047,7 @@ p:last-child {
 
 .pc-spread__page--words p {
   margin: 0;
-  font-family: var(--font-serif);
-  --styl: 0;
+  font-family: var(--font-sans);
   font-size: 1.3em;
   letter-spacing: -0.03em;
   line-height: 1.08;
@@ -1114,8 +1086,7 @@ p:last-child {
 }
 
 .pc-music__art span {
-  font-family: var(--font-serif);
-  --styl: 0;
+  font-family: var(--font-sans);
   font-size: 1.35em;
   letter-spacing: -0.03em;
 }
@@ -1285,8 +1256,7 @@ p:last-child {
 
 .pc-phone__title {
   margin: 1.2em 0 0;
-  font-family: var(--font-serif);
-  --styl: 0;
+  font-family: var(--font-sans);
   font-size: 1.9em;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -1427,8 +1397,7 @@ p:last-child {
 
 .pc-poster__mid {
   margin: auto 0 0;
-  font-family: var(--font-serif);
-  --styl: 0;
+  font-family: var(--font-sans);
   font-size: 1.3em;
   font-style: italic;
   letter-spacing: -0.02em;
@@ -1502,8 +1471,7 @@ p:last-child {
 
 .pc--temp p {
   margin: 0;
-  font-family: var(--font-serif);
-  --styl: 0;
+  font-family: var(--font-sans);
   font-size: 2.4em;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -1850,7 +1818,6 @@ p:last-child {
 
 /* Company name, sized in JS so the words fill the same 1100px width as the images. */
 .case-name {
-  --styl: 0;
   container-type: inline-size;
   width: min(100% - 2 * var(--gutter), var(--shell));
   margin: 0 0 0 var(--gutter);
