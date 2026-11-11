@@ -8,8 +8,11 @@ heading: "Betashares"
 cardTitle: "Betashares"
 tags_display:
   - "Case study"
-accent: "#fa4c03"
+accent: "#e476b3"
 years: "2021 - 2023"
+video: "/assets/video/betashares-portfolio-thumbnail.mp4"
+poster: /assets/img/poster-betashares.jpg
+videoPause: 5
 logo: logo-betashares.png
 logoHeight: 32px
 intro:

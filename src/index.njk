@@ -18,8 +18,8 @@ bodyClass: is-work
   {% endif %}
 
   <div class="shell">
-    <h1 class="hero__title" data-split-words>
-      I&rsquo;m a Product designer<br>
+    <h1 class="hero__title">
+      I&rsquo;m <span data-cursor="david-cursor">David</span>, a product designer<br>
       making <em data-sparkle>beautiful software</em>.
     </h1>
 
@@ -42,6 +42,9 @@ bodyClass: is-work
 
   {# These stand in for the pointer over "Perth, Australia" and the company
      names. They picture words already on the page, so they carry no alt text. #}
+  <span class="cursor-chip cursor-chip--photo" id="david-cursor" data-swing aria-hidden="true">
+    <span class="cursor-chip__inner">{% image "david-avatar.jpg", "", "portrait", true %}</span>
+  </span>
   <span class="cursor-chip" id="au-cursor" aria-hidden="true">
     <span class="cursor-chip__inner">{% include "partials/flag-au.svg" %}</span>
   </span>
@@ -54,6 +57,9 @@ bodyClass: is-work
   <span class="cursor-chip cursor-chip--preview" id="betashares-preview" aria-hidden="true">
     <span class="cursor-chip__inner"><img src="/assets/img/preview-betashares.jpg" alt="" width="4058" height="2000"></span>
   </span>
+  <span class="cursor-chip cursor-chip--label" id="soon-cursor" aria-hidden="true">
+    <span class="cursor-chip__inner">Coming soon</span>
+  </span>
 
   {% if site.show.heroGraphics %}{% include "partials/collage.njk" %}{% endif %}
 </section>
@@ -65,12 +71,12 @@ bodyClass: is-work
     {% set anchor = item.data.anchor or item.fileSlug %}
     {% set company = item.data.company or item.data.cardTitle %}
     <article class="study" id="{{ anchor }}" style="--case-accent: {{ item.data.accent }}">
-      {% if item.url %}<a class="study__link" href="{{ item.url }}">{% endif %}
+      <div class="study__link" data-cursor="soon-cursor">
         {% set media = item.data.cover or item.data.thumb %}
         {% set video = item.data.video if (item.data.video and (item.data.video | assetExists)) else "" %}
         <span class="study__visual{% if not video and not media %} study__visual--empty{% endif %}">
           {% if video %}
-          <video src="{{ video }}" muted loop playsinline autoplay preload="metadata"></video>
+          <video poster="{{ item.data.poster }}" muted playsinline{% if item.data.videoPause %} data-replay-delay="{{ item.data.videoPause }}"{% else %} loop{% endif %}{% if loop.first %} src="{{ video }}" autoplay preload="auto"{% else %} data-src="{{ video }}" preload="none"{% endif %}></video>
           {% elif media %}
           {% image media, item.data.coverAlt or company, "work", loop.first %}
           {% else %}
@@ -81,7 +87,7 @@ bodyClass: is-work
           <span class="study__company">{{ company }}</span>
           {% if item.data.years %}<span class="study__years">{{ item.data.years }}</span>{% endif %}
         </p>
-      {% if item.url %}</a>{% endif %}
+      </div>
     </article>
     {% endfor %}
   </div>
@@ -102,6 +108,11 @@ bodyClass: is-work
           When not working, I like to stay active and spend time at the gym. If it&rsquo;s windy I&rsquo;ll be on the water kitesurfing.
         </p>
         <p>I&rsquo;m based in Perth, Australia and grew up in Copenhagen, Denmark.</p>
+        <div class="about__reach">
+          <p>
+            Reach me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>{% for link in site.social %} or <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}</a>{% endfor %}
+          </p>
+        </div>
       </div>
 
       <div class="about__aside">
@@ -109,17 +120,7 @@ bodyClass: is-work
           {% image "david-wall.jpg", "David Bograd", "aboutPhoto" %}
         </figure>
 
-        <div class="about__contact">
-          <p>Don&rsquo;t be a stranger&mdash;Reach me at</p>
-          <a class="about__email" href="mailto:{{ site.email }}">&rarr; {{ site.email }}</a>
-          <p class="about__ps">PS. I don&rsquo;t always pose awkwardly in front of walls.</p>
-        </div>
-
-        <div class="about__social">
-          {% for link in site.social %}
-          <a class="pill" href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}</a>
-          {% endfor %}
-        </div>
+        <p class="about__ps">PS. I don&rsquo;t always pose awkwardly in front of walls.</p>
       </div>
     </div>
   </div>
@@ -163,30 +164,31 @@ bodyClass: is-work
 <section class="section" id="side-projects">
   <div class="shell">
     <h2 class="about__label">Side projects</h2>
-    <div class="cv">
+    <div class="side-projects">
       {% set projects = [
-        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - today", detail: "Over 100,000 people has used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding." },
-        { name: "Do Good Movement", href: "https://dogoodmovement.earth/", years: "2022 - 2025", detail: "Started a charity with two friends. We had ~500 members and donated a total of ~$65,000 AUD to help 14,702 in need." }
+        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - today", detail: "Over 100,000 people has used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding.", video: "/assets/video/fysfinder-pingpong.mp4", poster: "/assets/img/poster-fysfinder.jpg" },
+        { name: "Do Good Movement", href: "https://dogoodmovement.earth/", years: "2022 - 2025", detail: "Co-founded a charity with two friends. A community of ~500 members donated over $65,000 AUD to help 14,702 people in need.", video: "/assets/video/compressed-dgm.mp4", poster: "/assets/img/poster-dgm.jpg" }
       ] %}
       {% for item in projects %}
-      <div class="cv__row">
-        <div class="cv__left">
-          {% if item.href %}
-          <a class="cv__company" href="{{ item.href }}" target="_blank" rel="noopener">
+      <a class="side-project study__link" href="{{ item.href }}" target="_blank" rel="noopener">
+        <span class="study__visual{% if item.inset %} study__visual--inset{% endif %}{% if item.logo %} study__visual--logo{% endif %}">
+          {% if item.video %}
+          <video poster="{{ item.poster }}" muted playsinline loop data-src="{{ item.video }}" preload="none"></video>
+          {% else %}
+          <img src="{{ item.image }}" alt="" width="{{ item.imageWidth or 1200 }}" height="{{ item.imageHeight or 675 }}">
+          {% endif %}
+        </span>
+        <p class="study__meta">
+          <span class="study__company">
             {{ item.name }}
-            <svg class="cv__arrow" width="11" height="11" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <svg class="side-project__arrow" width="11" height="11" viewBox="0 0 10 10" fill="none" aria-hidden="true">
               <path d="M3 7L7 3M3.5 3H7V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-          </a>
-          {% else %}
-          <span class="cv__company">{{ item.name }}</span>
-          {% endif %}
-          <span class="cv__years">{{ item.years }}</span>
-        </div>
-        <div class="cv__role">
-          <p class="cv__title">{{ item.detail }}</p>
-        </div>
-      </div>
+          </span>
+          <span class="study__years">{{ item.years }}</span>
+        </p>
+        <p class="side-project__detail">{{ item.detail }}</p>
+      </a>
       {% endfor %}
     </div>
   </div>

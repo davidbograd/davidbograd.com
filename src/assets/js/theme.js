@@ -2,43 +2,6 @@
   var root = document.documentElement;
   root.classList.add("js");
 
-  /* --- Split headings into words for the staggered reveal ---------------- */
-
-  // Walks text nodes rather than rewriting innerHTML, so inline markup such as
-  // <em> survives intact.
-  document.querySelectorAll("[data-split-words]").forEach(function (heading) {
-    var walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT, null);
-    var textNodes = [];
-    while (walker.nextNode()) textNodes.push(walker.currentNode);
-
-    textNodes.forEach(function (node) {
-      if (!node.nodeValue.trim()) return;
-      // Elements marked as a word already animate as one unit.
-      if (node.parentElement.closest(".word")) return;
-
-      var fragment = document.createDocumentFragment();
-
-      // Splits on ordinary whitespace only, so &nbsp; keeps names together.
-      node.nodeValue.split(/([ \t\n\r]+)/).forEach(function (chunk) {
-        if (!chunk) return;
-        if (/^[ \t\n\r]+$/.test(chunk)) {
-          fragment.appendChild(document.createTextNode(" "));
-          return;
-        }
-        var span = document.createElement("span");
-        span.className = "word";
-        span.textContent = chunk;
-        fragment.appendChild(span);
-      });
-
-      node.parentNode.replaceChild(fragment, node);
-    });
-
-    heading.querySelectorAll(".word").forEach(function (word, i) {
-      word.style.setProperty("--delay", i * 26 + "ms");
-    });
-  });
-
   /* --- Drag to pan the hero collage ------------------------------------- */
 
   // Trackpads and touch scroll it natively; this adds click-and-drag for mice.
@@ -77,6 +40,7 @@
     );
     if (!chip) return;
     var preview = chip.classList.contains("cursor-chip--preview");
+    var label = chip.classList.contains("cursor-chip--label");
 
     // Chips marked data-swing lean into horizontal movement and hold that
     // lean when the pointer stops; moving back the other way undoes it. The
@@ -115,14 +79,16 @@
 
       // Sit the screenshot just past the pointer, and flip it back inside
       // the window when the pointer is near an edge.
-      if (preview) {
+      if (preview || label) {
         var gap = 16;
         var width = chip.offsetWidth;
         var height = chip.offsetHeight;
-        x += gap;
-        y += gap + 8;
-        if (x + width > window.innerWidth - 12) x = event.clientX - width - gap;
-        if (y + height > window.innerHeight - 12) y = event.clientY - height - gap;
+        var shiftX = label ? 16 : gap;
+        var shiftY = label ? 14 : gap + 8;
+        x += shiftX;
+        y += shiftY;
+        if (x + width > window.innerWidth - 12) x = event.clientX - width - shiftX;
+        if (y + height > window.innerHeight - 12) y = event.clientY - height - shiftY;
       }
 
       chip.style.setProperty("--cursor-x", x + "px");
@@ -163,30 +129,32 @@
 
   /* --- Sparkles over a phrase ------------------------------------------- */
 
-  var sparkleColours = ["#fa4c03", "#ffb800", "#ff5fa2", "#3d7bff"];
+  var sparkleColours = ["#e476b3", "#ffb800", "#ff5fa2", "#3d7bff"];
 
   document.querySelectorAll("[data-sparkle]").forEach(function (phrase) {
     // Each letter gets its own box so the letters can hop in turn. Screen
     // readers get the plain words instead of letter-by-letter spans.
     var index = 0;
-    phrase.querySelectorAll(".word").forEach(function (word) {
-      var text = word.textContent;
-      var letters = document.createElement("span");
-      letters.setAttribute("aria-hidden", "true");
-      Array.from(text).forEach(function (letter) {
-        var span = document.createElement("span");
-        span.className = "char";
-        span.textContent = letter;
-        span.style.setProperty("--i", index++);
-        letters.appendChild(span);
-      });
-      var spoken = document.createElement("span");
-      spoken.className = "visually-hidden";
-      spoken.textContent = text;
-      word.textContent = "";
-      word.appendChild(letters);
-      word.appendChild(spoken);
+    var text = phrase.textContent;
+    var letters = document.createElement("span");
+    letters.setAttribute("aria-hidden", "true");
+    Array.from(text).forEach(function (letter) {
+      if (letter === " ") {
+        letters.appendChild(document.createTextNode(" "));
+        return;
+      }
+      var span = document.createElement("span");
+      span.className = "char";
+      span.textContent = letter;
+      span.style.setProperty("--i", index++);
+      letters.appendChild(span);
     });
+    var spoken = document.createElement("span");
+    spoken.className = "visually-hidden";
+    spoken.textContent = text;
+    phrase.textContent = "";
+    phrase.appendChild(letters);
+    phrase.appendChild(spoken);
 
     var chars = phrase.querySelectorAll(".char");
     var lastChar = chars[chars.length - 1];
@@ -346,6 +314,68 @@
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  /* --- Replay a short thumbnail after it finishes ----------------------- */
+
+  // Native `loop` restarts immediately. A delay keeps a short clip from
+  // repeating without a breath: the last frame holds, then playback starts over.
+  document.querySelectorAll("video[data-replay-delay]").forEach(function (video) {
+    var delay = Number(video.getAttribute("data-replay-delay")) * 1000;
+    if (!delay) return;
+
+    video.addEventListener("ended", function () {
+      window.setTimeout(function () {
+        if (!video.hasAttribute("data-inview")) return;
+        video.currentTime = 0;
+        var play = video.play();
+        if (play && typeof play.catch === "function") play.catch(function () {});
+      }, delay);
+    });
+  });
+
+  /* --- Play a thumbnail only while its tile is near the screen --------- */
+
+  var thumbs = document.querySelectorAll(".study__visual video");
+
+  var armThumb = function (video) {
+    var pending = video.getAttribute("data-src");
+    if (!pending || video.getAttribute("src")) return;
+    video.preload = "auto";
+    video.src = pending;
+    video.removeAttribute("data-src");
+  };
+
+  var playThumb = function (video) {
+    armThumb(video);
+    var play = video.play();
+    if (play && typeof play.catch === "function") play.catch(function () {});
+  };
+
+  if (thumbs.length && "IntersectionObserver" in window) {
+    // Half a screen ahead, so a fast connection has the next tile playing
+    // by the time it arrives. Anything further down stays unloaded.
+    var watch = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var video = entry.target;
+          if (entry.isIntersecting) {
+            video.setAttribute("data-inview", "");
+            playThumb(video);
+          } else {
+            video.removeAttribute("data-inview");
+            video.pause();
+          }
+        });
+      },
+      { rootMargin: "50% 0px" }
+    );
+
+    thumbs.forEach(function (video) {
+      watch.observe(video);
+    });
+  } else {
+    thumbs.forEach(playThumb);
   }
 
   /* --- Reveal on scroll ------------------------------------------------- */

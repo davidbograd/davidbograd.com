@@ -82,7 +82,7 @@
   --accent-told: #6c3ce9;
 }
 
-/* Palette: white page, black ink, and a single hot orange used sparingly. */
+/* Palette: white page, black ink, and a single pink used sparingly. */
 :root {
   --bg: #ffffff;
   --bg-raised: #ffffff;
@@ -95,7 +95,7 @@
   --shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.05);
   --shadow-lift: 0 1px 3px rgba(0, 0, 0, 0.1), 0 18px 40px -16px rgba(0, 0, 0, 0.22);
   --accent: #000000;
-  --hot: #fa4c03;
+  --hot: #e476b3;
 }
 
 ::selection {
@@ -241,8 +241,7 @@ p:last-child {
 
 .shell {
   width: min(100% - 2 * var(--gutter), var(--shell));
-  margin-left: var(--gutter);
-  margin-right: auto;
+  margin-inline: auto;
 }
 
 .prose {
@@ -298,6 +297,16 @@ p:last-child {
    menu is pinned so its first item shares a top edge with the hero. */
 .frame {
   min-height: 100vh;
+  animation: page-in 0.4s var(--ease) both;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .mast {
@@ -359,18 +368,20 @@ p:last-child {
 }
 
 @media (min-width: 900px) {
-  .frame {
-    display: grid;
-    grid-template-columns: var(--rail) minmax(0, 1fr);
-    align-items: start;
-  }
-
   .mast {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    z-index: 20;
+    width: var(--rail);
     height: 100vh;
     margin: 0;
     padding: 1.5rem 1rem 1.5rem var(--gutter);
+    pointer-events: none;
+  }
+
+  .mast a {
+    pointer-events: auto;
   }
 
   .mast__nav {
@@ -492,6 +503,12 @@ p:last-child {
   scale: 1;
 }
 
+.cursor-chip picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .cursor-chip img,
 .cursor-chip svg {
   width: 100%;
@@ -518,6 +535,29 @@ p:last-child {
 
 .cursor-chip--preview[data-active="true"] .cursor-chip__inner {
   opacity: 1;
+}
+
+/* "Coming soon" stands in for the pointer over a case study that isn't open yet. */
+.cursor-chip--label {
+  width: max-content;
+  height: auto;
+  margin: 0;
+}
+
+.cursor-chip--label .cursor-chip__inner {
+  width: auto;
+  height: auto;
+  padding: 0.4rem 0.55rem;
+  border-radius: 4px;
+  background: #14100c;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: var(--step-mono);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: none;
 }
 
 /* The portrait is a snapshot rather than a round badge. It swings upright
@@ -671,35 +711,6 @@ p:last-child {
   color: transparent;
   -webkit-text-fill-color: transparent;
   border-image: var(--canva-gradient) 1;
-}
-
-/* Word-by-word reveal on load. Splitting happens in JS so the text still
-   wraps naturally at any width. */
-.hero__title .word {
-  display: inline-block;
-  will-change: transform, opacity;
-}
-
-.js .hero__title[data-split-words] .word {
-  opacity: 0;
-  transform: translateY(0.45em);
-  animation: word-in 0.75s var(--ease) both;
-  animation-delay: var(--delay, 0ms);
-}
-
-@keyframes word-in {
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .js .hero__title[data-split-words] .word {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
 }
 
 /* Tick ring hanging off the top-right corner. Sized off `--d` so the label
@@ -1509,8 +1520,7 @@ p:last-child {
    image's width so every left edge lines up. */
 .work-shell {
   width: min(100% - 2 * var(--gutter), var(--shell));
-  margin-left: var(--gutter);
-  margin-right: auto;
+  margin-inline: auto;
 }
 
 .work-list {
@@ -1523,8 +1533,7 @@ p:last-child {
    name and years sit on one line, flush with the thumbnail's left edge. */
 .study {
   width: min(100% - 2 * var(--gutter), var(--shell));
-  margin-left: var(--gutter);
-  margin-right: auto;
+  margin-inline: auto;
 }
 
 .study__link {
@@ -1560,6 +1569,7 @@ p:last-child {
 }
 
 .study__visual {
+  position: relative;
   display: block;
   overflow: hidden;
   border-radius: 4px;
@@ -1567,6 +1577,12 @@ p:last-child {
   color: inherit;
   text-decoration: none;
   aspect-ratio: 16 / 9;
+  transform-origin: center center;
+  transition: transform 0.28s var(--ease);
+}
+
+.study__link:hover .study__visual {
+  transform: scale(1.012);
 }
 
 .study__visual img,
@@ -1581,6 +1597,18 @@ p:last-child {
   pointer-events: none;
 }
 
+.study__visual--logo {
+  display: grid;
+  place-items: center;
+  background: #fef4ea;
+}
+
+.study__visual--logo img {
+  width: 78%;
+  height: auto;
+  object-fit: contain;
+}
+
 .study__visual--empty {
   display: grid;
   place-items: center;
@@ -1593,8 +1621,7 @@ p:last-child {
 
 .work-item__media {
   width: min(100% - 2 * var(--gutter), var(--shell));
-  margin-left: var(--gutter);
-  margin-right: auto;
+  margin-inline: auto;
   overflow: hidden;
   border-radius: 4px;
   background: var(--case-accent, var(--bg-sunken));
@@ -1752,7 +1779,7 @@ p:last-child {
 }
 
 .about__ps {
-  margin-top: 1.1rem;
+  margin: 0;
   font-size: var(--step-sm);
   color: var(--text-faint);
 }
@@ -1799,15 +1826,27 @@ p:last-child {
   color: var(--text);
 }
 
-.about__text a {
+.about__text a:not(.pill) {
   color: var(--text);
   text-decoration: none;
   border-bottom: 1px solid var(--line);
   transition: border-color 0.2s var(--ease);
 }
 
-.about__text a:hover {
+.about__text a:not(.pill):hover {
   border-bottom-color: var(--text);
+}
+
+.about__reach {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.9rem;
+  margin-top: 1.35rem;
+}
+
+.about__reach p {
+  margin: 0;
 }
 
 /* --- Experience ---------------------------------------------------------- */
@@ -2009,18 +2048,60 @@ a.cv__company:hover .cv__arrow {
   color: var(--text-soft);
 }
 
+.side-projects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  margin-top: 1.25rem;
+}
+
+.side-project .study__company {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.side-project__arrow {
+  flex: none;
+  color: var(--text-faint);
+  transition: transform 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.side-project:hover .side-project__arrow {
+  color: var(--text);
+  transform: translate(1px, -1px);
+}
+
+.side-project__detail {
+  margin: 0.55rem 0 0;
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
 @media (max-width: 700px) {
   .cv__row {
     grid-template-columns: 1fr;
     gap: 0.35rem;
+  }
+
+  .side-projects {
+    grid-template-columns: 1fr;
   }
 }
 
 /* --- Footer -------------------------------------------------------------- */
 
 .footer {
+  margin-top: clamp(5rem, 14vw, 8rem);
   border-top: 1px solid var(--line-soft);
   padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+@media (min-width: 900px) {
+  .footer {
+    margin-top: 240px;
+  }
 }
 
 .footer__text {
@@ -2047,7 +2128,7 @@ a.cv__company:hover .cv__arrow {
   --styl: 0;
   font-family: var(--font-serif);
   width: min(100% - 2 * var(--gutter), var(--shell));
-  margin: 0 0 0 var(--gutter);
+  margin-inline: auto;
   padding: 1.5rem 0 0;
   line-height: 0.9;
 }

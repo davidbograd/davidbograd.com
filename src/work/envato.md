@@ -10,6 +10,8 @@ tags_display:
   - "Case study"
 accent: "#81b441"
 years: "2019 - 2021"
+thumb: designqc-thumbnail-2x.jpg
+coverAlt: "The Design QC review tool for Envato"
 logo: logo-envato.png
 logoHeight: 30px
 intro:
