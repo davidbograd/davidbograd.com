@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import markdownIt from "markdown-it";
 import Image from "@11ty/eleventy-img";
@@ -128,6 +129,14 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/static": "." });
 
   eleventyConfig.addWatchTarget("src/assets/css/");
+  eleventyConfig.addWatchTarget("src/assets/video/");
+
+  // Case study videos live in src/assets/video and are served from /assets/video.
+  eleventyConfig.addFilter("assetExists", (urlPath) => {
+    if (!urlPath || typeof urlPath !== "string") return false;
+    const rel = urlPath.replace(/^\/assets\//, "");
+    return fs.existsSync(path.join(process.cwd(), "src/assets", rel));
+  });
 
   // Case studies in reading order. `hidden` keeps the page built and reachable
   // by URL but drops it from every listing on the site.

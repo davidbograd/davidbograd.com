@@ -1566,18 +1566,24 @@ p:last-child {
   background: #f2f2f2;
   color: inherit;
   text-decoration: none;
+  aspect-ratio: 16 / 9;
 }
 
-.study__visual img {
+.study__visual img,
+.study__visual video {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+}
+
+.study__visual video {
+  pointer-events: none;
 }
 
 .study__visual--empty {
   display: grid;
   place-items: center;
-  aspect-ratio: 2212 / 1004;
 }
 
 .work-item__link {
@@ -1592,7 +1598,7 @@ p:last-child {
   overflow: hidden;
   border-radius: 4px;
   background: var(--case-accent, var(--bg-sunken));
-  aspect-ratio: 2212 / 1004;
+  aspect-ratio: 16 / 9;
 }
 
 .work-item__media img {
@@ -1630,17 +1636,11 @@ p:last-child {
 
 /* Once the images nearly touch the screen edge, the text steps back in to the
    usual page gutter. */
-@media (max-width: 720px) {
-  .work-item__media {
-    aspect-ratio: 4 / 3;
-  }
-}
-
 /* Empty case study card. Same frame as a finished image, with no picture yet. */
 .work-list .work-soon {
   display: grid;
   place-items: center;
-  aspect-ratio: 2212 / 1004;
+  aspect-ratio: 16 / 9;
   background: var(--bg-sunken);
 }
 
@@ -1654,18 +1654,10 @@ p:last-child {
   color: var(--text-soft);
 }
 
-@media (max-width: 720px) {
-  .work-list .work-soon,
-  .case-empty__panel,
-  .study__visual--empty {
-    aspect-ratio: 4 / 3;
-  }
-}
-
 .case-empty__panel {
   display: grid;
   place-items: center;
-  aspect-ratio: 2212 / 1004;
+  aspect-ratio: 16 / 9;
   border-radius: 4px;
   background: var(--bg-sunken);
 }
@@ -2402,7 +2394,7 @@ a.cv__company:hover .cv__arrow {
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--bg-sunken);
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
 }
 
 .more-card__media img {

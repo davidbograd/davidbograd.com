@@ -10,6 +10,7 @@ tags_display:
   - "Case study"
 accent: "#00c4cc"
 years: "2025 - 2026"
+video: /assets/video/canva.mp4
 logo: logo-canva-wordmark.png
 logoHeight: 34px
 intro:

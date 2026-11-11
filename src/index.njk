@@ -66,9 +66,13 @@ bodyClass: is-work
     {% set company = item.data.company or item.data.cardTitle %}
     <article class="study" id="{{ anchor }}" style="--case-accent: {{ item.data.accent }}">
       {% if item.url %}<a class="study__link" href="{{ item.url }}">{% endif %}
-        <span class="study__visual{% if not item.data.cover and not item.data.thumb %} study__visual--empty{% endif %}">
-          {% if item.data.cover or item.data.thumb %}
-          {% image item.data.cover or item.data.thumb, item.data.coverAlt or company, "work", loop.first %}
+        {% set media = item.data.cover or item.data.thumb %}
+        {% set video = item.data.video if (item.data.video and (item.data.video | assetExists)) else "" %}
+        <span class="study__visual{% if not video and not media %} study__visual--empty{% endif %}">
+          {% if video %}
+          <video src="{{ video }}" muted loop playsinline autoplay preload="metadata"></video>
+          {% elif media %}
+          {% image media, item.data.coverAlt or company, "work", loop.first %}
           {% else %}
           <p class="work-soon__label">Coming soon</p>
           {% endif %}
