@@ -2,8 +2,11 @@
   <div class="shell">
     <p class="footer__text">
       Copyright &copy; {{ "" | year }} {{ site.name }}. All rights reserved &middot;
-      <a href="mailto:{{ site.email }}">{{ site.email }}</a> &middot;
+      <button type="button" class="copy-email" data-cursor="copy-cursor" data-copy="{{ site.email }}">{{ site.email }}</button> &middot;
       Oh, and you look great today.
     </p>
   </div>
 </footer>
+<span class="cursor-chip cursor-chip--label" id="copy-cursor" aria-hidden="true">
+  <span class="cursor-chip__inner">Copy</span>
+</span>

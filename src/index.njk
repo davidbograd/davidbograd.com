@@ -20,7 +20,7 @@ bodyClass: is-work
   <div class="shell">
     <h1 class="hero__title">
       I&rsquo;m <span data-cursor="david-cursor">David</span>, a product designer<br>
-      making <em data-sparkle>beautiful software</em>.
+      making <em data-sparkle>beautiful software.</em>
     </h1>
 
     <div class="hero__roles">
@@ -38,6 +38,10 @@ bodyClass: is-work
         </p>
       </div>
     </div>
+
+    <p class="hero__reach">
+      Reach me at <button type="button" class="copy-email" data-cursor="copy-cursor" data-copy="{{ site.email }}">{{ site.email }}</button>{% for link in site.social %} or <a class="hero__out" href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}<svg class="side-project__arrow" width="11" height="11" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M3 7L7 3M3.5 3H7V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>{% endfor %}
+    </p>
   </div>
 
   {# These stand in for the pointer over "Perth, Australia" and the company
@@ -96,23 +100,18 @@ bodyClass: is-work
 <section class="section" id="about">
   <div class="shell">
     <div class="about__grid">
-      <div class="about__text">
+      <div class="about__copy">
         <h2 class="about__label">About me</h2>
         <p>
-          I most recently designed at <a class="link--canva" href="https://www.canva.com/" target="_blank" rel="noopener">Canva</a>, a design tool with over 265 million monthly users.
+          I most recently designed at Canva, a design tool with over 265 million monthly users.
         </p>
         <p>
-          Throughout my 12+ year of experience I&rsquo;ve worked for a handful of tech companies, designed websites and for clients such as Microsoft, and freelanced for more than 100 clients.
+          Throughout my 12+ year of experience I&rsquo;ve worked for a handful of tech companies and freelanced for more than 100 clients.
         </p>
+        <p>I&rsquo;m based in Perth, Australia and grew up in Copenhagen, Denmark.</p>
         <p>
           When not working, I like to stay active and spend time at the gym. If it&rsquo;s windy I&rsquo;ll be on the water kitesurfing.
         </p>
-        <p>I&rsquo;m based in Perth, Australia and grew up in Copenhagen, Denmark.</p>
-        <div class="about__reach">
-          <p>
-            Reach me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>{% for link in site.social %} or <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}</a>{% endfor %}
-          </p>
-        </div>
       </div>
 
       <div class="about__aside">
@@ -122,41 +121,36 @@ bodyClass: is-work
 
         <p class="about__ps">PS. I don&rsquo;t always pose awkwardly in front of walls.</p>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="section" id="experience">
-  <div class="shell">
-    <h2 class="about__label">Experience</h2>
-    <div class="jobs">
-      {% set roles = [
-        { company: "Canva", href: "https://www.canva.com/", years: "2025 - 2026", role: "Product Designer", logo: "logo-canva.png" },
-        { company: "Simply Wall St", href: "https://simplywall.st/", years: "2024 - 2025", role: "Senior Product Designer", logo: "logo-simplywallst.png" },
-        { company: "Betashares", href: "https://www.betashares.com.au/", years: "2021 - 2023", role: "Senior Product Designer", logo: "logo-betashares-icon.png" },
-        { company: "Envato", href: "https://www.envato.com/", years: "2019 - 2021", role: "Senior Product Designer", logo: "logo-envato-icon.png" },
-        { company: "Epidemic Sound", href: "https://www.epidemicsound.com/", years: "2017 - 2019", role: "Product Designer", logo: "logo-epidemic-icon.png" },
-        { company: "Various startups and agencies", years: "2014 - 2017", role: "Junior Designer" }
-      ] %}
-      {% for item in roles %}
-      <div class="job">
-        {% if item.logo %}
-        <span class="job__logo">{% image item.logo, "", "job" %}</span>
-        {% else %}
-        <span class="job__logo job__logo--mark" aria-hidden="true"><span></span><span></span><span></span></span>
-        {% endif %}
-        <div class="job__body">
-          <div class="job__line">
-            <p class="job__title">{{ item.role }}</p>
-            <span class="job__lead" aria-hidden="true"></span>
-            <p class="job__dates">{{ item.years }}</p>
+      <div class="jobs" id="experience">
+          {% set roles = [
+            { company: "Canva", href: "https://www.canva.com/", years: "2025 - 2026", role: "Product Designer", logo: "logo-canva.png" },
+            { company: "Simply Wall St", href: "https://simplywall.st/", years: "2024 - 2025", role: "Senior Product Designer", logo: "logo-simplywallst.png" },
+            { company: "Betashares", href: "https://www.betashares.com.au/", years: "2021 - 2023", role: "Senior Product Designer", logo: "logo-betashares-icon.png" },
+            { company: "Envato", href: "https://www.envato.com/", years: "2019 - 2021", role: "Senior Product Designer", logo: "logo-envato-icon.png" },
+            { company: "Epidemic Sound", href: "https://www.epidemicsound.com/", years: "2017 - 2019", role: "Product Designer", logo: "logo-epidemic-icon.png" },
+            { company: "Various startups and agencies", years: "2014 - 2017", role: "Junior Designer" }
+          ] %}
+          {% for item in roles %}
+          <div class="job">
+            {% if item.logo %}
+            <span class="job__logo">{% image item.logo, "", "job" %}</span>
+            {% else %}
+            <span class="job__logo job__logo--mark" aria-hidden="true"><span></span><span></span><span></span></span>
+            {% endif %}
+            <div class="job__body">
+              <div class="job__line">
+                <p class="job__title">{{ item.role }}</p>
+                <span class="job__lead" aria-hidden="true"></span>
+                <p class="job__dates">{{ item.years }}</p>
+              </div>
+              <p class="job__company">
+                {% if item.href %}<a href="{{ item.href }}" target="_blank" rel="noopener">{{ item.company }}</a>{% else %}{{ item.company }}{% endif %}
+              </p>
+            </div>
           </div>
-          <p class="job__company">
-            {% if item.href %}<a href="{{ item.href }}" target="_blank" rel="noopener">{{ item.company }}</a>{% else %}{{ item.company }}{% endif %}
-          </p>
-        </div>
+          {% endfor %}
       </div>
-      {% endfor %}
     </div>
   </div>
 </section>
@@ -166,7 +160,7 @@ bodyClass: is-work
     <h2 class="about__label">Side projects</h2>
     <div class="side-projects">
       {% set projects = [
-        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - today", detail: "Over 100,000 people has used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding.", video: "/assets/video/fysfinder-pingpong.mp4", poster: "/assets/img/poster-fysfinder.jpg" },
+        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - current", detail: "Over 100,000 people has used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding.", video: "/assets/video/fysfinder-pingpong.mp4", poster: "/assets/img/poster-fysfinder.jpg" },
         { name: "Do Good Movement", href: "https://dogoodmovement.earth/", years: "2022 - 2025", detail: "Co-founded a charity with two friends. A community of ~500 members donated over $65,000 AUD to help 14,702 people in need.", video: "/assets/video/compressed-dgm.mp4", poster: "/assets/img/poster-dgm.jpg" }
       ] %}
       {% for item in projects %}

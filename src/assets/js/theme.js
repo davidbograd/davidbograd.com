@@ -127,6 +127,58 @@
     });
   });
 
+  /* --- Copy the email address ------------------------------------------- */
+
+  var copyChip = document.getElementById("copy-cursor");
+  if (copyChip) {
+    var copyLabel = copyChip.querySelector(".cursor-chip__inner");
+    var copyTimer = 0;
+
+    function copyWithSelection(value) {
+      var area = document.createElement("textarea");
+      area.value = value;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.left = "-9999px";
+      document.body.appendChild(area);
+      area.select();
+      var ok = document.execCommand("copy");
+      area.remove();
+      return ok ? Promise.resolve() : Promise.reject();
+    }
+
+    function copyText(value) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(value).catch(function () {
+          return copyWithSelection(value);
+        });
+      }
+      return copyWithSelection(value);
+    }
+
+    document.querySelectorAll("[data-copy]").forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        var value = button.getAttribute("data-copy");
+        if (!value) return;
+        copyText(value).then(function () {
+          copyLabel.textContent = "Copied";
+          button.dispatchEvent(
+            new PointerEvent("pointermove", {
+              bubbles: true,
+              pointerType: "mouse",
+              clientX: event.clientX,
+              clientY: event.clientY,
+            })
+          );
+          clearTimeout(copyTimer);
+          copyTimer = setTimeout(function () {
+            copyLabel.textContent = "Copy";
+          }, 1200);
+        });
+      });
+    });
+  }
+
   /* --- Sparkles over a phrase ------------------------------------------- */
 
   var sparkleColours = ["#e476b3", "#ffb800", "#ff5fa2", "#3d7bff"];
@@ -138,16 +190,29 @@
     var text = phrase.textContent;
     var letters = document.createElement("span");
     letters.setAttribute("aria-hidden", "true");
+    var word = null;
     Array.from(text).forEach(function (letter) {
       if (letter === " ") {
         letters.appendChild(document.createTextNode(" "));
+        word = null;
+        return;
+      }
+      // Keep each word, including its punctuation, on one line. The letters
+      // inside can still hop on their own.
+      if (!word) {
+        word = document.createElement("span");
+        word.className = "word";
+        letters.appendChild(word);
+      }
+      if (".,!?;:".indexOf(letter) !== -1) {
+        word.appendChild(document.createTextNode(letter));
         return;
       }
       var span = document.createElement("span");
       span.className = "char";
       span.textContent = letter;
       span.style.setProperty("--i", index++);
-      letters.appendChild(span);
+      word.appendChild(span);
     });
     var spoken = document.createElement("span");
     spoken.className = "visually-hidden";
@@ -229,7 +294,7 @@
 
     var sectionLink = function () {
       var workLink = linkForHash("#top") || links[0];
-      var stops = ["#side-projects", "#experience", "#about"];
+      var stops = ["#side-projects", "#about"];
 
       for (var i = 0; i < stops.length; i++) {
         var id = stops[i].slice(1);
