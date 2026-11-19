@@ -1,0 +1,31 @@
+{# A case study thumbnail, as on the homepage. Set `item`, and `cardEager` for
+   the one card that should load and play straight away. #}
+{% set anchor = item.data.anchor or item.fileSlug %}
+{% set company = item.data.company or item.data.cardTitle %}
+<article class="study" id="{{ anchor }}" style="--case-accent: {{ item.data.accent }}">
+  {% if item.data.placeholder %}
+  <div class="study__link" data-cursor="soon-cursor">
+  {% else %}
+  <a class="study__link" href="{{ item.url }}">
+  {% endif %}
+    {% set media = item.data.homeImage or item.data.cover or item.data.thumb %}
+    {% set video = item.data.video if (item.data.video and (item.data.video | assetExists)) else "" %}
+    <span class="study__visual{% if not video and not media %} study__visual--empty{% endif %}">
+      {% if video %}
+      <video poster="{{ item.data.poster }}" muted playsinline{% if item.data.videoPause %} data-replay-delay="{{ item.data.videoPause }}"{% else %} loop{% endif %}{% if cardEager %} src="{{ video }}" autoplay preload="auto"{% else %} data-src="{{ video }}" preload="none"{% endif %}></video>
+      {% elif media %}
+      {% image media, item.data.coverAlt or company, "work", cardEager %}
+      {% else %}
+      <p class="work-soon__label">Coming soon</p>
+      {% endif %}
+    </span>
+    <p class="study__meta">
+      <span class="study__company">{{ company }}</span>
+      {% if item.data.years %}<span class="study__years">{{ item.data.years }}</span>{% endif %}
+    </p>
+  {% if item.data.placeholder %}
+  </div>
+  {% else %}
+  </a>
+  {% endif %}
+</article>

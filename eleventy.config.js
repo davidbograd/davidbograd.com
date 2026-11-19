@@ -25,6 +25,11 @@ const PRESETS = {
     widths: [640, 960, 1280, 1600],
     sizes: "(max-width: 1240px) 100vw, 1180px",
   },
+  // Figure that spans the content panel, past the 1100px column.
+  bleed: {
+    widths: [640, 960, 1280, 1600, 2000, 2400],
+    sizes: "100vw",
+  },
   // Figure constrained to the prose column.
   prose: {
     widths: [480, 704, 1024, 1408],
@@ -57,9 +62,11 @@ const PRESETS = {
     sizes: "(max-width: 620px) 40px, 80px",
     highQuality: true,
   },
+  // Full width on mobile, ~540px beside the copy on desktop. Up to 3x.
   aboutPhoto: {
-    widths: [300, 460, 600],
-    sizes: "(max-width: 820px) 100vw, 300px",
+    widths: [540, 800, 1080, 1620],
+    sizes: "(max-width: 700px) 100vw, 540px",
+    quality: 85,
   },
   moreCard: {
     widths: [320, 480, 640],
@@ -76,6 +83,20 @@ const PRESETS = {
   },
 };
 
+function browserBar() {
+  return `<div class="browser__bar"><span class="browser__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="browser__url"></span></div>`;
+}
+
+async function renderFig(src, alt = "", caption = "", size = "wide", frame = "") {
+  const picture = await renderImage(src, { alt, preset: size });
+  const cap = caption ? `<figcaption>${caption}</figcaption>` : "";
+  if (frame === "browser") {
+    return `<figure class="fig fig--${size} fig--browser"><div class="browser">${browserBar()}${picture}</div>${cap}</figure>`;
+  }
+  const plain = frame === "plain" ? " fig--plain" : "";
+  return `<figure class="fig fig--${size}${plain}">${picture}${cap}</figure>`;
+}
+
 async function renderImage(src, options = {}) {
   const {
     preset = "wide",
@@ -88,22 +109,22 @@ async function renderImage(src, options = {}) {
   const isPng = path.extname(src).toLowerCase() === ".png";
 
   const metadata = await Image(IMAGE_SOURCE + src, {
-    widths: config.widths,
+    // `null` keeps the original width, so a retina screen is never handed a
+    // smaller file than the one that was exported.
+    widths: [...config.widths, null],
     // PNG sources keep a PNG fallback so transparency survives.
     formats: ["webp", isPng ? "png" : "jpeg"],
     outputDir: "_site/assets/img/",
     urlPath: "/assets/img/",
-    ...(config.highQuality
-      ? {
-          sharpJpegOptions: { quality: 95, mozjpeg: true, chromaSubsampling: "4:4:4" },
-          sharpWebpOptions: isPng ? { lossless: true } : { quality: 95, smartSubsample: true },
-          sharpPngOptions: { compressionLevel: 9 },
-        }
-      : {
-          sharpJpegOptions: { quality: config.quality || 80, mozjpeg: true },
-          sharpWebpOptions: { quality: config.quality || 78 },
-          sharpPngOptions: { compressionLevel: 9, palette: true },
-        }),
+    // Sources are already compressed. Re-encoding here only softens them, so
+    // only presets with a `quality` (large photos) are compressed again.
+    sharpJpegOptions: {
+      quality: config.quality || 100,
+      mozjpeg: true,
+      chromaSubsampling: "4:4:4",
+    },
+    sharpWebpOptions: config.quality ? { quality: config.quality } : { lossless: true },
+    sharpPngOptions: { compressionLevel: 9 },
     // Keeps high-quality renders from colliding with cached default ones.
     filenameFormat: (id, source, width, format) =>
       `${path.basename(source, path.extname(source))}-${width}${
@@ -162,10 +183,10 @@ export default function (eleventyConfig) {
       .sort((a, b) => a.data.order - b.data.order)
   );
 
+  // The homepage's case list, minus the page being read. Hidden studies come
+  // through only when the homepage itself shows them.
   eleventyConfig.addFilter("otherCases", function (cases, currentUrl) {
-    return cases.filter(
-      (item) => item.url && item.url !== currentUrl && !item.data.hidden
-    );
+    return cases.filter((item) => item.url && item.url !== currentUrl);
   });
 
   // Bare responsive <picture>, for use inside templates.
@@ -194,12 +215,29 @@ export default function (eleventyConfig) {
   // Figure with optional caption. `size` sets both the measure and the preset.
   eleventyConfig.addAsyncShortcode(
     "fig",
-    async function (src, alt = "", caption = "", size = "wide") {
-      const picture = await renderImage(src, { alt, preset: size });
-      const cap = caption ? `<figcaption>${caption}</figcaption>` : "";
-      return `<figure class="fig fig--${size}">${picture}${cap}</figure>`;
+    async function (src, alt = "", caption = "", size = "wide", frame = "") {
+      return renderFig(src, alt, caption, size, frame);
     }
   );
+
+  // Full-width dark band. Nested `{% fig %}` tags are rendered here because
+  // Nunjucks does not expand shortcodes inside a paired shortcode body.
+  eleventyConfig.addPairedShortcode("band", async function (content) {
+    const pattern =
+      /\{%\s*fig\s+"([^"]*)"\s*,\s*"([^"]*)"\s*,\s*"([^"]*)"\s*(?:,\s*"([^"]*)")?\s*%\}/g;
+    let raw = dedent(content);
+    const matches = [...raw.matchAll(pattern)];
+    const figures = await Promise.all(
+      matches.map((match) =>
+        renderFig(match[1], match[2], match[3], match[4] || "bleed")
+      )
+    );
+    let index = 0;
+    raw = raw.replace(pattern, () => figures[index++]);
+    return `<section class="case-band"><div class="case-band__inner">${md.render(
+      raw
+    )}</div></section>`;
+  });
 
   // Tinted section that picks up the case study's accent colour. The body is
   // rendered here because markdown-it passes raw HTML blocks through untouched.
@@ -215,7 +253,7 @@ export default function (eleventyConfig) {
     function (src, ratio = "56.25", caption = "", size = "wide") {
       const cap = caption ? `<figcaption>${caption}</figcaption>` : "";
       return `<figure class="fig fig--${size}"><div class="embed" style="--ratio:${ratio}%"><iframe src="${src}" loading="lazy" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen title="${escapeAttr(
-        caption || "Embedded media"
+        plainText(caption) || "Embedded media"
       )}"></iframe></div>${cap}</figure>`;
     }
   );
@@ -237,6 +275,15 @@ export default function (eleventyConfig) {
 
 function escapeAttr(value) {
   return String(value).replace(/"/g, "&quot;");
+}
+
+// Captions may include markup. The iframe title has to be plain text.
+function plainText(value) {
+  return String(value)
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 // Strip the shared leading indentation so indented shortcode bodies are not

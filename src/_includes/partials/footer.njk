@@ -1,12 +1,14 @@
 <footer class="footer">
   <div class="shell">
-    <p class="footer__text">
-      Copyright &copy; {{ "" | year }} {{ site.name }}. All rights reserved &middot;
-      <button type="button" class="copy-email" data-cursor="copy-cursor" data-copy="{{ site.email }}">{{ site.email }}</button> &middot;
-      Oh, and you look great today.
-    </p>
+    <div class="footer__text">
+      <p>Copyright &copy; {{ "" | year }} {{ site.name }}</p>
+      <div class="footer__end">
+        <p>{% include "partials/copy-email.njk" %}</p>
+        <p>Oh, and you look great today.</p>
+      </div>
+    </div>
   </div>
 </footer>
-<span class="cursor-chip cursor-chip--label" id="copy-cursor" aria-hidden="true">
-  <span class="cursor-chip__inner">Copy</span>
+<span class="cursor-chip cursor-chip--label" id="soon-cursor" aria-hidden="true">
+  <span class="cursor-chip__inner">Coming soon</span>
 </span>

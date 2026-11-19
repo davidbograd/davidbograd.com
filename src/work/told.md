@@ -1,9 +1,10 @@
 ---
 order: 4
 hidden: true
-pageTitle: "Told"
+pageTitle: "Told case study"
 description: "A case study of Product Design work done on Told.ly - a social video app. By David Bograd."
 heading: "Told. Designing a new form of video app"
+titleSize: 103
 cardTitle: "Exploring a new type of social video."
 tags_display:
   - "Told.ly"

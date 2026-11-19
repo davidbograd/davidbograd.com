@@ -19,7 +19,7 @@ bodyClass: is-work
 
   <div class="shell">
     <h1 class="hero__title">
-      I&rsquo;m <span data-cursor="david-cursor">David</span>, a product designer<br>
+      I&rsquo;m <span class="hero__face" aria-hidden="true">{% image "david-avatar.jpg", "", "chip", true %}</span> <span data-cursor="david-cursor">David</span>, a product designer<br>
       making <em data-sparkle>beautiful software.</em>
     </h1>
 
@@ -40,7 +40,7 @@ bodyClass: is-work
     </div>
 
     <p class="hero__reach">
-      Reach me at <button type="button" class="copy-email" data-cursor="copy-cursor" data-copy="{{ site.email }}">{{ site.email }}</button>{% for link in site.social %} or <a class="hero__out" href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}<svg class="side-project__arrow" width="11" height="11" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M3 7L7 3M3.5 3H7V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>{% endfor %}
+      Reach me at {% include "partials/copy-email.njk" %}{% for link in site.social %} <span class="hero__alt"><span class="hero__or">or</span> <a class="hero__out" href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}<svg class="side-project__arrow" width="11" height="11" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M3 7L7 3M3.5 3H7V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>{% endfor %}
     </p>
   </div>
 
@@ -61,39 +61,16 @@ bodyClass: is-work
   <span class="cursor-chip cursor-chip--preview" id="betashares-preview" aria-hidden="true">
     <span class="cursor-chip__inner"><img src="/assets/img/preview-betashares.jpg" alt="" width="4058" height="2000"></span>
   </span>
-  <span class="cursor-chip cursor-chip--label" id="soon-cursor" aria-hidden="true">
-    <span class="cursor-chip__inner">Coming soon</span>
-  </span>
-
   {% if site.show.heroGraphics %}{% include "partials/collage.njk" %}{% endif %}
 </section>
 
 <section class="section work" id="work">
   <div class="work-list">
     {% set studies = collections.casesVisible if site.show.work else collections.casesPlaceholder %}
-    {% for item in studies %}
-    {% set anchor = item.data.anchor or item.fileSlug %}
-    {% set company = item.data.company or item.data.cardTitle %}
-    <article class="study" id="{{ anchor }}" style="--case-accent: {{ item.data.accent }}">
-      <div class="study__link" data-cursor="soon-cursor">
-        {% set media = item.data.cover or item.data.thumb %}
-        {% set video = item.data.video if (item.data.video and (item.data.video | assetExists)) else "" %}
-        <span class="study__visual{% if not video and not media %} study__visual--empty{% endif %}">
-          {% if video %}
-          <video poster="{{ item.data.poster }}" muted playsinline{% if item.data.videoPause %} data-replay-delay="{{ item.data.videoPause }}"{% else %} loop{% endif %}{% if loop.first %} src="{{ video }}" autoplay preload="auto"{% else %} data-src="{{ video }}" preload="none"{% endif %}></video>
-          {% elif media %}
-          {% image media, item.data.coverAlt or company, "work", loop.first %}
-          {% else %}
-          <p class="work-soon__label">Coming soon</p>
-          {% endif %}
-        </span>
-        <p class="study__meta">
-          <span class="study__company">{{ company }}</span>
-          {% if item.data.years %}<span class="study__years">{{ item.data.years }}</span>{% endif %}
-        </p>
-      </div>
-    </article>
-    {% endfor %}
+    {% asyncEach item in studies %}
+    {% set cardEager = loop.first %}
+    {% include "partials/study-card.njk" %}
+    {% endeach %}
   </div>
 </section>
 
@@ -106,7 +83,7 @@ bodyClass: is-work
           I most recently designed at Canva, a design tool with over 265 million monthly users.
         </p>
         <p>
-          Throughout my 12+ year of experience I&rsquo;ve worked for a handful of tech companies and freelanced for more than 100 clients.
+          Throughout my 12+ years of experience I&rsquo;ve worked for a handful of tech companies and freelanced for more than 100 clients.
         </p>
         <p>I&rsquo;m based in Perth, Australia and grew up in Copenhagen, Denmark.</p>
         <p>
@@ -116,10 +93,8 @@ bodyClass: is-work
 
       <div class="about__aside">
         <figure class="about__photo">
-          {% image "david-wall.jpg", "David Bograd", "aboutPhoto" %}
+          {% image "davidbograd.jpg", "David Bograd", "aboutPhoto" %}
         </figure>
-
-        <p class="about__ps">PS. I don&rsquo;t always pose awkwardly in front of walls.</p>
       </div>
 
       <div class="jobs" id="experience">
@@ -142,7 +117,8 @@ bodyClass: is-work
               <div class="job__line">
                 <p class="job__title">{{ item.role }}</p>
                 <span class="job__lead" aria-hidden="true"></span>
-                <p class="job__dates">{{ item.years }}</p>
+                {% set span = item.years.split(" - ") %}
+                <p class="job__dates"><span class="job__dates-full">{{ item.years }}</span><span class="job__dates-short" aria-hidden="true">{{ span[0] }} - {{ span[1].slice(-2) }}</span></p>
               </div>
               <p class="job__company">
                 {% if item.href %}<a href="{{ item.href }}" target="_blank" rel="noopener">{{ item.company }}</a>{% else %}{{ item.company }}{% endif %}
@@ -160,8 +136,8 @@ bodyClass: is-work
     <h2 class="about__label">Side projects</h2>
     <div class="side-projects">
       {% set projects = [
-        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - current", detail: "Over 100,000 people has used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding.", video: "/assets/video/fysfinder-pingpong.mp4", poster: "/assets/img/poster-fysfinder.jpg" },
-        { name: "Do Good Movement", href: "https://dogoodmovement.earth/", years: "2022 - 2025", detail: "Co-founded a charity with two friends. A community of ~500 members donated over $65,000 AUD to help 14,702 people in need.", video: "/assets/video/compressed-dgm.mp4", poster: "/assets/img/poster-dgm.jpg" }
+        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - current", detail: "Over 100,000 people have used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding.", video: "/assets/video/fysfinder-pingpong.mp4", poster: "/assets/img/poster-fysfinder.jpg" },
+        { name: "Do Good Movement", href: "https://dogoodmovement.earth/", years: "2022 - 2025", detail: "Co-founded a charity. A community of ~500 members donated over $65,000 AUD to help 14,702 people in need.", video: "/assets/video/compressed-dgm.mp4", poster: "/assets/img/poster-dgm.jpg" }
       ] %}
       {% for item in projects %}
       <a class="side-project study__link" href="{{ item.href }}" target="_blank" rel="noopener">

@@ -1,7 +1,6 @@
 (function () {
   var root = document.documentElement;
   root.classList.add("js");
-
   /* --- Drag to pan the hero collage ------------------------------------- */
 
   // Trackpads and touch scroll it natively; this adds click-and-drag for mice.
@@ -129,11 +128,8 @@
 
   /* --- Copy the email address ------------------------------------------- */
 
-  var copyChip = document.getElementById("copy-cursor");
-  if (copyChip) {
-    var copyLabel = copyChip.querySelector(".cursor-chip__inner");
-    var copyTimer = 0;
-
+  var copyButtons = document.querySelectorAll("[data-copy]");
+  if (copyButtons.length) {
     function copyWithSelection(value) {
       var area = document.createElement("textarea");
       area.value = value;
@@ -156,24 +152,24 @@
       return copyWithSelection(value);
     }
 
-    document.querySelectorAll("[data-copy]").forEach(function (button) {
-      button.addEventListener("click", function (event) {
+    copyButtons.forEach(function (button) {
+      var done = button.querySelector(".copy-email__done");
+      var status = button.querySelector(".copy-email__status");
+      var announce = button.querySelector("[aria-live]");
+      var resetTimer = 0;
+
+      button.addEventListener("click", function () {
         var value = button.getAttribute("data-copy");
-        if (!value) return;
+        if (!value || !status || !done) return;
         copyText(value).then(function () {
-          copyLabel.textContent = "Copied";
-          button.dispatchEvent(
-            new PointerEvent("pointermove", {
-              bubbles: true,
-              pointerType: "mouse",
-              clientX: event.clientX,
-              clientY: event.clientY,
-            })
-          );
-          clearTimeout(copyTimer);
-          copyTimer = setTimeout(function () {
-            copyLabel.textContent = "Copy";
-          }, 1200);
+          status.style.setProperty("--done-width", done.offsetWidth + "px");
+          button.classList.add("is-copied");
+          if (announce) announce.textContent = "Email copied";
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(function () {
+            button.classList.remove("is-copied");
+            if (announce) announce.textContent = "";
+          }, 2000);
         });
       });
     });
@@ -300,7 +296,10 @@
         var id = stops[i].slice(1);
         var section = document.getElementById(id);
         var link = linkForHash(stops[i]);
-        if (section && link && section.getBoundingClientRect().top < window.innerHeight * 0.45) {
+        var root = scrollRoot();
+        var edge = root ? root.getBoundingClientRect().top : 0;
+        var view = root ? root.clientHeight : window.innerHeight;
+        if (section && link && section.getBoundingClientRect().top < edge + view * 0.45) {
           return link;
         }
       }
@@ -322,12 +321,57 @@
       placeMarker(next, animate && moved);
     };
 
-    var lockScroll = window.scrollY;
+    var frameMain = document.querySelector(".frame__main");
+
+    var scrollRoot = function () {
+      if (!frameMain) return null;
+      var overflow = getComputedStyle(frameMain).overflowY;
+      if (overflow === "auto" || overflow === "scroll") return frameMain;
+      return null;
+    };
+
+    var scrollPos = function () {
+      var root = scrollRoot();
+      return root ? root.scrollTop : window.scrollY;
+    };
+
+    var scrollToId = function (id, smooth) {
+      var root = scrollRoot();
+      if (!root) return;
+      var target = id && id !== "top" ? document.getElementById(id) : null;
+      var top = 0;
+      if (target) {
+        top =
+          target.getBoundingClientRect().top -
+          root.getBoundingClientRect().top +
+          root.scrollTop;
+      }
+      root.scrollTo({ top: top, behavior: smooth ? "smooth" : "auto" });
+    };
+
+    var lockScroll = scrollPos();
 
     links.forEach(function (link) {
-      link.addEventListener("click", function () {
+      link.addEventListener("click", function (event) {
+        var hash = link.getAttribute("href") || "";
+        var id = hash.indexOf("#") >= 0 ? hash.slice(hash.indexOf("#") + 1) : "";
+        // The menu points at the homepage. Only steal the click when that
+        // target is already this document, so a case study can still navigate.
+        var samePage = false;
+        try {
+          samePage =
+            new URL(link.href, window.location.href).pathname ===
+            window.location.pathname;
+        } catch (e) {
+          samePage = false;
+        }
+        if (scrollRoot() && samePage) {
+          event.preventDefault();
+          scrollToId(id, true);
+          if (history.pushState) history.pushState(null, "", hash);
+        }
         lockedLink = link;
-        lockScroll = window.scrollY;
+        lockScroll = scrollPos();
         syncMarker(true);
       });
     });
@@ -336,25 +380,35 @@
       var link = linkForHash(window.location.hash);
       if (!link) return;
       lockedLink = link;
-      lockScroll = window.scrollY;
+      lockScroll = scrollPos();
       syncMarker(true);
     });
 
-    window.addEventListener("scroll", function () {
+    var onFrameScroll = function () {
       if (lockedLink) {
         var hash = lockedLink.getAttribute("href") || "";
         var id = hash.indexOf("#") >= 0 ? hash.slice(hash.indexOf("#") + 1) : "";
         var target = id && id !== "top" ? document.getElementById(id) : null;
-        var targetY = target ? window.scrollY + target.getBoundingClientRect().top : 0;
+        var root = scrollRoot();
+        var top = scrollPos();
+        var targetY = 0;
+        if (target) {
+          targetY = root
+            ? root.scrollTop +
+              target.getBoundingClientRect().top -
+              root.getBoundingClientRect().top
+            : window.scrollY + target.getBoundingClientRect().top;
+        }
         var goingDown = targetY >= lockScroll;
-        var reversed = goingDown
-          ? window.scrollY < lockScroll - 24
-          : window.scrollY > lockScroll + 24;
+        var reversed = goingDown ? top < lockScroll - 24 : top > lockScroll + 24;
         if (reversed) lockedLink = null;
-        else lockScroll = window.scrollY;
+        else lockScroll = top;
       }
       syncMarker(true);
-    }, { passive: true });
+    };
+
+    window.addEventListener("scroll", onFrameScroll, { passive: true });
+    if (frameMain) frameMain.addEventListener("scroll", onFrameScroll, { passive: true });
 
     window.addEventListener("resize", function () {
       if (!activeLink) return;
@@ -364,6 +418,8 @@
     if (window.location.hash) {
       var hashed = linkForHash(window.location.hash);
       if (hashed) lockedLink = hashed;
+      var startId = window.location.hash.slice(1);
+      if (scrollRoot()) scrollToId(startId, false);
     }
 
     syncMarker(false);
@@ -391,7 +447,8 @@
 
     video.addEventListener("ended", function () {
       window.setTimeout(function () {
-        if (!video.hasAttribute("data-inview")) return;
+        // Homepage tiles pause off screen. A case-study video always restarts.
+        if (video.closest(".study__visual") && !video.hasAttribute("data-inview")) return;
         video.currentTime = 0;
         var play = video.play();
         if (play && typeof play.catch === "function") play.catch(function () {});
@@ -420,6 +477,13 @@
   if (thumbs.length && "IntersectionObserver" in window) {
     // Half a screen ahead, so a fast connection has the next tile playing
     // by the time it arrives. Anything further down stays unloaded.
+    var thumbRoot = null;
+    var frameMain = document.querySelector(".frame__main");
+    if (frameMain) {
+      var overflow = getComputedStyle(frameMain).overflowY;
+      if (overflow === "auto" || overflow === "scroll") thumbRoot = frameMain;
+    }
+
     var watch = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -433,7 +497,7 @@
           }
         });
       },
-      { rootMargin: "50% 0px" }
+      { root: thumbRoot, rootMargin: "50% 0px" }
     );
 
     thumbs.forEach(function (video) {

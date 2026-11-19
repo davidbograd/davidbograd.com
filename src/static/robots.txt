@@ -1,8 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /work/told/
+Disallow: /work/epidemic-sound/
 Disallow: /work/canva/
-Disallow: /work/betashares/
 Disallow: /work/envato/
 
 Sitemap: https://www.davidbograd.com/sitemap.xml

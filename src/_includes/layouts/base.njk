@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PF31JMFXBS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PF31JMFXBS');
+</script>
+
 <title>{{ title }}</title>
 <meta name="description" content="{{ description or site.description }}">
 {% if hidden %}<meta name="robots" content="noindex, nofollow">{% endif %}
@@ -19,8 +27,8 @@
 {% if socialImage %}<meta name="twitter:image" content="{{ site.url }}{{ socialImage | ogImage }}">{% endif %}
 
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
-<link rel="icon" href="/assets/img/favicon-portfolio.png">
-<link rel="apple-touch-icon" href="/assets/img/favicon-portfolio.png">
+<link rel="icon" href="/favicon-portfolio.png">
+<link rel="apple-touch-icon" href="/favicon-portfolio.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

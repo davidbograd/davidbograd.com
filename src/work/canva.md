@@ -2,9 +2,10 @@
 order: 1
 placeholder: true
 hidden: true
-pageTitle: "Canva"
+pageTitle: "Canva case study"
 description: "A case study of product design work at Canva. Coming soon."
 heading: "Canva"
+titleSize: 260
 cardTitle: "Canva"
 tags_display:
   - "Case study"

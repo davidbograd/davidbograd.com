@@ -1,25 +1,30 @@
 ---
-order: 1
-pageTitle: "Review Tool for Envato: Case Study"
+order: 3
+home: true
+company: Envato
+titleSize: 233
+years: "2019 - 2021"
+pageTitle: "Envato case study"
 description: "Designing better review tools for Envato. Millions of items get uploaded to Envato marketplaces every year. This tool makes it efficient to review them."
-heading: "Review tool for one of the worlds leading creative marketplaces"
+heading: "Review tool for one of the world's leading creative marketplaces"
 cardTitle: "Review tool for leading creative marketplace."
 tags_display:
   - "Review tool"
   - "Envato"
 accent: "#0f8a83"
 thumb: designqc-thumbnail-2x.jpg
-cover: designqc-mainimage-2x.jpg
+homeImage: designqc-mainimage-2x.jpg
+cover: designqc-screen.jpg
+coverBrowser: true
 coverAlt: "The Design QC Review tool for Envato"
 socialImage: designqc-thumbnail-2x.jpg
 intro:
   - "Over 100 million people visit Envato's marketplaces every year. It's one of the world’s leading marketplaces for selling digital assets – everything from website themes, music tracks to illustrations and photos. You might have heard of them: ThemeForest, AudioJungle and GraphicRiver to name a few."
   - "Big marketplaces need a lot of content. To keep a level of quality the marketplaces have content guidelines. But when getting over 2 million pieces of unique content a year, how do you review them all?"
-  - "This is where the review team comes in. They review every single item, to make sure it meets the quality bar, before letting the item being published for sale."
+  - "This is where the review team comes in. They review every single item, to make sure it meets the quality bar, before letting the item be published for sale."
   - "To do this, without hiring hundreds of people, Envato needed a really efficient review tool."
 ---
 
-{% accent %}
 ## The quick overview
 
 ### Problem
@@ -30,19 +35,14 @@ To keep up with the growing influx of items, Envato needed to greatly improve re
 
 ### Solution
 
-We built and shipped a new review tool from scratch in 6 months. The tool is focused on *speed*, and that focus really paid off: **Reviewers now get through 4 times as many items a day.**
+We built and shipped a new review tool from scratch in 6 months. The tool is focused on *speed*, and that focus really paid off: **Reviewers now get through 4 times as many items a day.** The effect of the improvements was **savings of +$1 million for Envato every year**.
 
 Besides the added speed the tool also...
 
-- Increased reviewer job satisfaction, by building the tool for all-day use. The reviewers eyes are not tired after work, as they were previously.
-- Made reviewers make fewer mistakes. A built-in undo feature, lets reviewers correct mistakes as they happen.
-- Made contributors more happy to provide content, as it is easier for them to have a dialogue with Envato and faster for them to get feedback if their items are accepted.
-- Guards Envato for legal risks, by better screening for technical issues.
-
-Below is a prototype of the tool.
-{% endaccent %}
-
-{% embed "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FQAmnwSZRSRmzbFbDseHnih%2FDesign-QC-Personal-portfolio%3Fnode-id%3D1%253A6625%26viewport%3D-6173%252C-394%252C0.8085748553276062%26scaling%3Dmin-zoom&chrome=DOCUMENTATION", "50", "<em>The tool (and prototype) are not responsive. The reviewers always work from a big desktop.<br>If you're on a mobile, try a desktop computer to play with the prototype.</em>", "wide" %}
+- Increased reviewer job satisfaction, by building the tool for all-day use. The reviewers' eyes are not tired after work, as they were previously.
+- Made reviewers make fewer mistakes. A built-in undo feature lets reviewers correct mistakes as they happen.
+- Made contributors happier to provide content, as it is easier for them to have a dialogue with Envato and faster for them to get feedback if their items are accepted.
+- Guards Envato against legal risks, by better screening for technical issues.
 
 ### My role
 
@@ -107,7 +107,7 @@ Contributors experienced very long wait times, before knowing if their item had 
 
 The previous tool had a legal problem as well. The tool didn't allow doing the required technical check. It meant content with a legal risk could be published on Envato's marketplaces. Getting rid of this risk would be a big win.
 
-{% fig "awesomeproofing.jpg", "The previous review tool", "<em>The previous review tool. It's very busy and had a lot of functionality the team did not need.</em>", "wide" %}
+{% fig "awesomeproofing.jpg", "The previous review tool", "<em>The previous review tool. It's very busy and had a lot of functionality the team did not need.</em>", "wide", "browser" %}
 
 ## Outcome
 
@@ -130,7 +130,7 @@ When the reviewer has made up their mind, they need to be able to action that it
 3. Hard reject: The item is not a good fit for Envato’s marketplace
 4. Escalate: The reviewer is unsure about the item and needs an opinion from a senior reviewer.
 
-{% fig "singleview-designqc-2x.jpg", "Reviewing a single item in the new tool", "<em>The main part of the tool - reviewing an item.</em>", "wide" %}
+{% fig "singleview-designqc-2x.jpg", "Reviewing a single item in the new tool", "<em>The main part of the tool - reviewing an item.</em>", "wide", "browser" %}
 
 **2. Bulk reviewing to increase speed**
 
@@ -140,9 +140,9 @@ Reviewers often only need a quick glance at a preview image, to tell if the item
 
 Instead of reviewing one by one, the reviewer sees a grid of images. In this view, they can reject batches of items. The reviewer uses this to quickly deal with the clear rejections, so they can focus most of their time on the good and great items.
 
-{% fig "bulkview-designqc-2x.jpg", "Bulk review grid", "<em>Bulk reviewing is used to quickly deal with the clear rejections, so the reviewer can spend most of their time on good and great items.</em>", "wide" %}
+{% fig "bulkview-designqc-2x.jpg", "Bulk review grid", "<em>Bulk reviewing is used to quickly deal with the clear rejections, so the reviewer can spend most of their time on good and great items.</em>", "wide", "browser" %}
 
-{% fig "bulkview2-designqc-2x.jpg", "Providing feedback to creators", "<em>Reviewer can ask creators to do small changes by providing feedback. After the feedback is implemented the item can be published.</em>", "wide" %}
+{% fig "bulkview2-designqc-2x.jpg", "Providing feedback to creators", "<em>Reviewers can ask creators to do small changes by providing feedback. After the feedback is implemented the item can be published.</em>", "wide", "browser" %}
 
 **3. Revising a review**
 
@@ -150,20 +150,22 @@ We're human and we all make mistakes. That's why the next feature we implemented
 
 It's quite simple. We implemented review history so the reviewers could look through the work they've done. If they see an item they want to change the decision on, they simply click it, and redo the review of that specific item.
 
-{% fig "reviewhistory-designqc-2x.jpg", "Review history", "<em>Review history, for reviewers to check their work and correct mistakes.</em>", "wide" %}
+{% fig "reviewhistory-designqc-2x.jpg", "Review history", "<em>Review history, for reviewers to check their work and correct mistakes.</em>", "wide", "browser" %}
 
-{% fig "revisereview-designqc-2x.jpg", "Revising a past review", "<em>Reviewer can see past review decision in bottom right corner, and revise the review if a mistake was made.</em>", "wide" %}
+{% fig "revisereview-designqc-2x.jpg", "Revising a past review", "<em>Reviewers can see the past decision in the bottom right corner, and revise the review if a mistake was made.</em>", "wide", "browser" %}
 
 ## Results and next steps
 
-### Conclusion: 4x increase in review speed
+### Conclusion
+
+<p class="result"><span class="result__value">+$1 million</span> <span class="result__label">saved every year</span></p>
 
 We built and shipped the new review tool in 6 months. We achieved our goal and much more:
 
-- **Increased review speed by x4**
+- **Increased review speed 4×**
 - Increased reviewer job satisfaction
-- Support reviewers in making less mistakes
+- Helped reviewers make fewer mistakes
 - Contributors are happier to provide content
-- Guard Envato for legal risks
+- Guarded Envato against legal risks
 
 The next step is to support other item types. The tool is specifically built for Graphic items. We're in the process of building a similar tool for stock video.

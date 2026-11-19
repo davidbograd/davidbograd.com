@@ -1,8 +1,11 @@
 ---
+# Archived. Outdated design-system write-up, kept for reference and not published.
 order: 3
-pageTitle: "Epidemic Sound Design System"
+hidden: true
+pageTitle: "Epidemic Sound case study"
 description: "A case study of Product Design work done on Epidemic Sounds Design System. By David Bograd."
 heading: "Building a design system for millions of creators"
+titleSize: 100
 cardTitle: "Soundtracking millions of creators."
 tags_display:
   - "Design system"

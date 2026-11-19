@@ -4,7 +4,8 @@ layout: layouts/base.njk
 {% set companyName = company or (tags_display[1] if (tags_display | length) > 1 else cardTitle) %}
 {% if placeholder %}
 <article class="case case--empty" style="--case-accent: {{ accent }}">
-  <h1 class="case-name"><span>{{ companyName }}</span></h1>
+  <h1 class="case-name"{% if titleSize %} style="--title-size: {{ titleSize }}"{% endif %}><span>{{ companyName }}</span></h1>
+  {% if years %}<p class="case-years">{{ years }}</p>{% endif %}
   <header class="case-hero">
     <div class="shell">
       <p class="case-empty__note">This write-up is on its way.</p>
@@ -18,16 +19,13 @@ layout: layouts/base.njk
   </div>
 </article>
 {% else %}
-<article class="case" style="--case-accent: {{ accent }}">
+<article class="case{% if bleed %} case--bleed{% endif %}" style="--case-accent: {{ accent }}">
 
-  <h1 class="case-name"><span>{{ companyName }}</span></h1>
+  <h1 class="case-name"{% if titleSize %} style="--title-size: {{ titleSize }}"{% endif %}><span>{{ companyName }}</span></h1>
+  {% if years %}<p class="case-years">{{ years }}</p>{% endif %}
 
   <header class="case-hero">
     <div class="shell">
-      {% if heading != companyName %}
-      <h2 class="case-hero__title">{{ heading }}</h2>
-      {% endif %}
-
       <div class="case-hero__intro">
         {% for paragraph in intro %}<p>{{ paragraph | safe }}</p>{% endfor %}
       </div>
@@ -47,8 +45,14 @@ layout: layouts/base.njk
 
   {% if cover %}
   <div class="shell">
-    <figure class="case-cover reveal">
-      {% image cover, coverAlt or "", "cover", true %}
+    <figure class="case-cover reveal{% if coverBrowser %} browser{% endif %}">
+      {% if coverBrowser %}
+      <div class="browser__bar">
+        <span class="browser__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="browser__url"></span>
+      </div>
+      {% endif %}
+      {% image cover, coverAlt or "", "bleed" if bleed else "cover", true %}
     </figure>
   </div>
   {% endif %}
@@ -64,7 +68,8 @@ layout: layouts/base.njk
 </article>
 {% endif %}
 
-{% set others = collections.cases | otherCases(page.url) %}
+{% set studies = collections.casesVisible if site.show.work else collections.casesPlaceholder %}
+{% set others = studies | otherCases(page.url) %}
 {% if others.length and not placeholder %}
 <aside class="more-cases">
   <div class="shell">
@@ -73,20 +78,10 @@ layout: layouts/base.njk
     </div>
 
     <div class="more-cases__grid">
-      {% for item in others %}
-      <a class="more-card reveal" href="{{ item.url }}">
-        <div class="more-card__media">
-          {% image item.data.thumb, "", "moreCard" %}
-        </div>
-        <div class="more-card__body">
-          <span class="eyebrow case-card__tag">
-            <span class="case-card__dot" style="background: {{ item.data.accent }}"></span>
-            {{ item.data.tags_display[0] }}
-          </span>
-          <span class="more-card__title">{{ item.data.cardTitle }}</span>
-        </div>
-      </a>
-      {% endfor %}
+      {% asyncEach item in others %}
+      {% set cardEager = false %}
+      {% include "partials/study-card.njk" %}
+      {% endeach %}
     </div>
   </div>
 </aside>

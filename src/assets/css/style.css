@@ -118,7 +118,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: linear-gradient(to bottom right, #f4f4fa, #f1f5f8) fixed;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: var(--step-base);
@@ -294,7 +294,8 @@ p:last-child {
 /* --- Mast ---------------------------------------------------------------- */
 
 /* Name in the top-left corner, menu directly beneath it. From 900px up the
-   menu is pinned so its first item shares a top edge with the hero. */
+   menu sits in a tall rounded panel, and the page scrolls in the panel
+   beside it. */
 .frame {
   min-height: 100vh;
   animation: page-in 0.4s var(--ease) both;
@@ -359,36 +360,123 @@ p:last-child {
   color: var(--text);
 }
 
-@media (max-width: 699px) {
+/* Below the sidebar layout, the desktop frame turns on its side: the menu is
+   a fixed strip along the top, sharing the name's line, and the page scrolls
+   in the panel beneath it. No marker dot or side projects link. */
+@media (max-width: 899px) {
+  body {
+    overflow: hidden;
+  }
+
+  .frame {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 4px;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0 4px;
+  }
+
+  .mast,
+  .frame__main {
+    background: #fff;
+  }
+
+  .mast {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 16px var(--gutter);
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+
+  /* Positioned so visually hidden text inside stays in the panel instead of
+     stretching the page, which iOS would then let scroll behind it. */
+  .frame__main {
+    position: relative;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
   .mast__nav {
     flex-direction: row;
-    flex-wrap: wrap;
     gap: 1.25rem;
+    margin-top: 0;
+  }
+
+  .mast__marker,
+  .mast__extra {
+    display: none;
+  }
+
+  .mast__nav a:hover,
+  .mast__nav a[aria-current="page"] {
+    color: var(--text-faint);
   }
 }
 
 @media (min-width: 900px) {
-  .mast {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 20;
-    width: var(--rail);
-    height: 100vh;
-    margin: 0;
-    padding: 1.5rem 1rem 1.5rem var(--gutter);
-    pointer-events: none;
+  body {
+    overflow: hidden;
   }
 
-  .mast a {
+  .frame {
+    display: grid;
+    grid-template-columns: 10.5rem minmax(0, 1fr);
+    gap: 10px;
+    height: 100vh;
+    padding: 10px 0;
+  }
+
+  .mast,
+  .frame__main {
+    min-height: 0;
+    height: 100%;
+    background: #fff;
+  }
+
+  .mast {
+    position: relative;
+    z-index: 20;
+    width: auto;
+    margin: 0;
+    padding: 1.35rem 1rem 1.35rem 24px;
+    border-radius: 0 20px 20px 0;
     pointer-events: auto;
   }
 
   .mast__nav {
     position: absolute;
     top: var(--content-start);
-    left: var(--gutter);
+    left: 24px;
     margin-top: 0;
+  }
+
+  .frame__main {
+    overflow: auto;
+    scroll-behavior: smooth;
+    border-radius: 20px 0 0 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--hot) transparent;
+  }
+
+  .frame__main::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .frame__main::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .frame__main::-webkit-scrollbar-thumb {
+    background-color: var(--hot);
+    border-radius: 999px;
+    border: 3px solid #fff;
+    background-clip: padding-box;
   }
 }
 
@@ -426,6 +514,33 @@ p:last-child {
   letter-spacing: -0.02em;
 }
 
+/* Touch screens can't hover my name to see the portrait, so it sits in the
+   sentence instead, tilted like the hover card. */
+.hero__face {
+  display: none;
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .hero__face {
+    display: inline-block;
+    width: 0.72em;
+    height: 0.9em;
+    vertical-align: -0.12em;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 0.15rem 0.4rem rgba(0, 0, 0, 0.14);
+    rotate: -6deg;
+  }
+
+  .hero__face picture,
+  .hero__face img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 .hero__roles {
   --styl: 100;
   position: relative;
@@ -455,10 +570,13 @@ p:last-child {
   text-wrap: pretty;
 }
 
-.hero__role-text [data-preview] {
-  font-weight: 500;
-  text-decoration: underline dotted;
-  text-underline-offset: 3px;
+/* The underline hints at the hover preview, which only exists with a mouse. */
+@media (hover: hover) and (pointer: fine) {
+  .hero__role-text [data-preview] {
+    font-weight: 500;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -484,6 +602,20 @@ p:last-child {
   border-bottom: 0;
 }
 
+/* "or LinkedIn" wraps as one piece. The gap before it sits on the email, so a
+   wrapped line starts flush instead of indented. */
+.hero__reach .copy-email {
+  margin-right: 0.3em;
+}
+
+.hero__alt {
+  white-space: nowrap;
+}
+
+.hero__or {
+  margin-right: 0.3em;
+}
+
 .hero__out {
   display: inline-flex;
   align-items: center;
@@ -504,6 +636,68 @@ p:last-child {
   border-top: 0;
   border-right: 0;
   border-left: 0;
+}
+
+/* The icon and "Copied" share one slot. The slot's width eases between the
+   two; --done-width is the label's measured width, set from JS. "Copied"
+   stays in the text flow so it sits on the same baseline as the sentence. */
+.copy-email__status {
+  position: relative;
+  display: inline-block;
+  width: 0.8em;
+  margin-left: 0.35em;
+  vertical-align: baseline;
+  color: var(--text-faint);
+  transition: width 0.32s var(--ease), color 0.2s var(--ease);
+}
+
+.copy-email:hover .copy-email__status {
+  color: var(--text);
+}
+
+.copy-email__icon,
+.copy-email__done {
+  transition: opacity 0.22s var(--ease), transform 0.32s var(--ease),
+    filter 0.22s var(--ease);
+}
+
+.copy-email__icon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.8em;
+  height: 0.8em;
+  transform: translateY(-50%);
+}
+
+.copy-email:hover:not(.is-copied) .copy-email__icon {
+  transform: translateY(-50%) scale(1.12);
+}
+
+.copy-email__done {
+  display: inline-block;
+  white-space: nowrap;
+  color: #e476b3;
+  opacity: 0;
+  filter: blur(3px);
+  transform: scale(0.85);
+  transform-origin: left center;
+}
+
+.copy-email.is-copied .copy-email__status {
+  width: var(--done-width, 3.4em);
+}
+
+.copy-email.is-copied .copy-email__icon {
+  opacity: 0;
+  filter: blur(3px);
+  transform: translateY(-50%) scale(0.5) rotate(-20deg);
+}
+
+.copy-email.is-copied .copy-email__done {
+  opacity: 1;
+  filter: none;
+  transform: none;
 }
 
 /* A round logo that replaces the pointer over a word. The outer element
@@ -576,6 +770,7 @@ p:last-child {
   opacity: 1;
 }
 
+/* A heart over the footer sign-off. */
 /* "Coming soon" stands in for the pointer over a case study that isn't open yet. */
 .cursor-chip--label {
   width: max-content;
@@ -1573,6 +1768,12 @@ p:last-child {
   gap: clamp(4.5rem, 9vw, 8rem);
 }
 
+@media (max-width: 700px) {
+  .work-list {
+    gap: 3.75rem;
+  }
+}
+
 /* A case study on the homepage. The thumbnail is the shell width. The company
    name and years sit on one line, flush with the thumbnail's left edge. */
 .study {
@@ -1595,7 +1796,8 @@ p:last-child {
 }
 
 .study__company,
-.study__years {
+.study__years,
+.case-years {
   margin: 0;
   font-size: 0.9375rem;
   line-height: 1.3;
@@ -1606,7 +1808,8 @@ p:last-child {
   font-weight: 500;
 }
 
-.study__years {
+.study__years,
+.case-years {
   color: var(--text-faint);
   font-weight: 400;
   font-variant-numeric: tabular-nums;
@@ -1763,6 +1966,9 @@ p:last-child {
 .about__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  /* The jobs row takes whatever height the photo leaves, and the list sits at
+     its bottom so the last role lines up with the bottom of the photo. */
+  grid-template-rows: auto 1fr;
   grid-template-areas:
     "copy aside"
     "jobs aside";
@@ -1771,12 +1977,16 @@ p:last-child {
   align-items: start;
 }
 
+.about__grid .jobs {
+  align-self: end;
+}
+
 @media (max-width: 700px) {
   .about__grid {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
     grid-template-areas:
       "copy"
-      "aside"
       "jobs";
   }
 }
@@ -1791,7 +2001,7 @@ p:last-child {
 
 @media (max-width: 700px) {
   .about__aside {
-    position: static;
+    display: none;
   }
 }
 
@@ -1831,12 +2041,6 @@ p:last-child {
 
 .about__email:hover {
   border-bottom-color: var(--text);
-}
-
-.about__ps {
-  margin: 0;
-  font-size: var(--step-sm);
-  color: var(--text-faint);
 }
 
 .about__social {
@@ -1985,6 +2189,10 @@ p:last-child {
   white-space: nowrap;
 }
 
+.job__dates-short {
+  display: none;
+}
+
 .job__company {
   color: var(--text-faint);
 }
@@ -1998,29 +2206,40 @@ p:last-child {
   color: var(--text);
 }
 
+/* Keeps title, leader and years on one line down to ~360px wide. Narrower
+   than that, the title wraps rather than pushing the years off screen. */
 @media (max-width: 640px) {
-  .job__body {
-    display: grid;
-  }
-
   .job__line {
-    display: contents;
+    gap: 0.5rem;
   }
 
-  .job__lead {
-    display: none;
+  .job__title,
+  .job__company,
+  .job__dates {
+    font-size: 14px;
   }
 
   .job__title {
-    order: 1;
+    flex: 0 1 auto;
   }
 
-  .job__company {
-    order: 2;
+  .job__lead {
+    min-width: 0.5rem;
   }
 
-  .job__dates {
-    order: 3;
+  /* Shortened end year: "2024 - 2025" reads as "2024 - 25". Screen readers
+     keep the full years. */
+  .job__dates-full {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .job__dates-short {
+    display: inline;
   }
 }
 
@@ -2150,31 +2369,41 @@ a.cv__company:hover .cv__arrow {
 }
 
 .footer__text {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
   font-size: var(--step-sm);
   color: var(--text-faint);
-  text-wrap: pretty;
 }
 
-.footer__text a,
+.footer__text p {
+  margin: 0;
+}
+
+.footer__end {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2.5rem;
+}
+
 .footer__text .copy-email {
   color: var(--text-soft);
-  text-decoration: none;
-  border-bottom: 1px solid var(--line-soft);
+  border-bottom: 0;
 }
 
-.footer__text a:hover,
-.footer__text .copy-email:hover {
+.footer__text .copy-email:hover .copy-email__text {
   color: var(--text);
-  border-bottom-color: var(--text);
 }
 
 /* --- Case study page ----------------------------------------------------- */
 
-/* Company name. A fixed size, in the same column as the images. */
+/* Company name, in the same column as the intro text. */
 .case-name {
   --styl: 0;
+  container-type: inline-size;
   font-family: var(--font-serif);
-  width: min(100% - 2 * var(--gutter), var(--shell));
+  width: min(100% - 2 * var(--gutter), var(--prose));
   margin-inline: auto;
   padding: 1.5rem 0 0;
   line-height: 0.9;
@@ -2186,26 +2415,32 @@ a.cv__company:hover .cv__arrow {
   }
 }
 
+/* --title-size is the px size at the full 704px column, set per case study so
+   each name spans the column. It scales down with the column. */
 .case-name span {
   display: inline-block;
   max-width: 100%;
-  /* Pull the cap height up to the Work link. The line box sits above the letters. */
-  margin-top: -0.18em;
-  font-size: 140px;
+  /* Room for descenders such as the p in Epidemic, which overhang line-height 0.9. */
+  margin-bottom: 12px;
+  font-size: calc(100cqi * var(--title-size, 140) / 704);
   line-height: 0.9;
   letter-spacing: -0.045em;
+  white-space: nowrap;
 }
 
-@media (max-width: 900px) {
+/* Pull the cap height up to the Work link in the sidebar. The line box sits
+   above the letters. On mobile the nav sits on top, so the title keeps its gap. */
+@media (min-width: 900px) {
   .case-name span {
-    font-size: 88px;
+    margin-top: -0.18em;
   }
 }
 
-@media (max-width: 640px) {
-  .case-name span {
-    font-size: 52px;
-  }
+/* Same year treatment as the homepage cards, tucked under the company name. */
+.case-years {
+  width: min(100% - 2 * var(--gutter), var(--prose));
+  margin-inline: auto;
+  margin-top: 0.7rem;
 }
 
 .case-hero {
@@ -2218,27 +2453,30 @@ a.cv__company:hover .cv__arrow {
     padding-top: var(--content-start);
   }
 
-  .case-name + .case-hero {
+  .case-name + .case-hero,
+  .case-years + .case-hero {
     padding-top: clamp(1.75rem, 4vw, 2.75rem);
   }
 }
 
-.case-hero__title {
-  font-size: var(--step-h1);
-  line-height: 1.06;
-  max-width: 24ch;
-}
-
 .case-hero__intro {
-  max-width: 52ch;
-  margin-top: clamp(1.5rem, 3vw, 2rem);
-  font-size: var(--step-lg);
-  line-height: 1.58;
+  max-width: var(--prose);
+  margin-inline: auto;
   color: var(--text-soft);
+  line-height: 1.68;
 }
 
-.case-hero__intro p + p {
-  margin-top: 0.9em;
+.case-hero__intro p {
+  margin: 0 0 1.15em;
+}
+
+.case-hero__intro p:last-child {
+  margin-bottom: 0;
+}
+
+.case-hero__intro strong {
+  color: var(--text);
+  font-weight: 600;
 }
 
 /* Key/value strip under the case study intro. */
@@ -2304,12 +2542,64 @@ a.cv__company:hover .cv__arrow {
   grid-column: 1 / -1;
 }
 
+/* Stand-in for a full-width case image: the 1100px shell, 700px tall. */
+.case-body__inner > .fig-slot {
+  grid-column: 1 / -1;
+  aspect-ratio: 1100 / 700;
+  background: #f0edeb;
+  margin-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.case-body__inner > .fig-slot:first-child {
+  margin-top: 0;
+}
+
+
+.case-body__inner > .fig-slot--video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Sampled from the video's own canvas, as the browser displays it. */
+  background: #f0f2f6;
+}
+
+.fig-slot--video video {
+  height: 88%;
+  width: auto;
+  max-width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  /* The export's outer pixels are a darker ring. Crop past them. The phone
+     sits high in the frame, so nudge the clip down until it looks centered. */
+  clip-path: inset(3px);
+  translate: 0 10px;
+}
+
+/* The flows are portrait, so a wide frame leaves them tiny on a phone. Here
+   the video sets the size and the frame just pads it. */
+@media (max-width: 700px) {
+  .case-body__inner > .fig-slot--video {
+    aspect-ratio: auto;
+    padding-block: 1rem 1.625rem;
+  }
+
+  .fig-slot--video video {
+    width: 72%;
+    height: auto;
+  }
+}
+
+.case-body__inner > .fig-slot--video + .fig {
+  margin-top: 0;
+}
+
 .case-body__inner > .accent-block {
   grid-column: 1 / -1;
 }
 
 .case-body h2 {
-  margin-top: clamp(3rem, 6vw, 4.5rem);
+  margin-top: clamp(5.5rem, 10vw, 8rem);
   font-size: var(--step-h2);
 }
 
@@ -2342,9 +2632,38 @@ a.cv__company:hover .cv__arrow {
   margin-top: 0.9rem;
 }
 
+.case-body .result,
+.case-body h3 + .result {
+  margin: 1.75rem 0 2rem;
+}
+
+.case-body .result__value {
+  display: block;
+  --styl: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(3.25rem, 2rem + 4vw, 5.25rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.case-body .result__label {
+  display: block;
+  margin-top: 0.7rem;
+  color: var(--text-soft);
+}
+
 .case-body strong {
   color: var(--text);
   font-weight: 600;
+}
+
+/* Lead-in labels such as "User interviews" sit above the sentence. */
+.case--bleed .case-body li > strong:first-child,
+.case--bleed .case-body p > strong:first-child {
+  display: block;
+  margin-bottom: 0.35rem;
 }
 
 .case-body em {
@@ -2401,6 +2720,11 @@ a.cv__company:hover .cv__arrow {
   border-radius: var(--radius-lg);
 }
 
+.fig--plain img {
+  border: 0;
+  background: none;
+}
+
 .fig img {
   width: 100%;
 }
@@ -2433,6 +2757,7 @@ a.cv__company:hover .cv__arrow {
   font-size: 0.875rem;
   line-height: 1.55;
   color: var(--text-faint);
+  text-align: center;
   text-wrap: pretty;
 }
 
@@ -2485,6 +2810,426 @@ a.cv__company:hover .cv__arrow {
   margin-top: 0;
 }
 
+/* Soundry: photographs span the content panel, and two stretches of the
+   page sit on a dark blue ground. */
+.case--bleed {
+  container-type: inline-size;
+}
+
+.case--bleed .case-cover,
+.case--bleed .case-body__inner > .fig--bleed,
+.case--bleed .case-body__inner > .case-band,
+.case--bleed .case-body__inner > .case-wash {
+  width: 100cqi;
+  max-width: none;
+  margin-left: calc(50% - 50cqi);
+}
+
+.case--bleed .case-body__inner > .fig--bleed,
+.case--bleed .case-body__inner > .case-band,
+.case--bleed .case-body__inner > .case-wash {
+  grid-column: 1 / -1;
+}
+
+.case--bleed .case-cover,
+.fig--bleed img,
+.fig--bleed .embed {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.case-band .fig--bleed {
+  width: 100cqi;
+  max-width: none;
+  margin-left: calc(50% - 50cqi);
+}
+
+.case-band {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+  background: #150022;
+  color: #fff;
+}
+
+/* Only the opening band sits flush with the photo above it. Later bands
+   keep their top margin so the heading is not stuck to the previous image. */
+.case--bleed .fig--bleed:has(+ .case-band:first-of-type) {
+  margin-bottom: 0;
+}
+
+.case--bleed .fig--bleed + .case-band:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.case-band__inner {
+  width: min(100% - 2 * var(--gutter), var(--prose));
+  margin-inline: auto;
+}
+
+.case-band h2,
+.case-band h3,
+.case-band p,
+.case-band li,
+.case-band strong,
+.case-band .fig figcaption {
+  color: #fff;
+}
+
+.case-band li::marker {
+  color: #fff;
+}
+
+.case-band__inner > :first-child {
+  margin-top: 0;
+}
+
+.case-band:has(.fig-pair) {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.case-wash {
+  margin-top: clamp(2.25rem, 5vw, 3.5rem);
+  margin-bottom: clamp(2.25rem, 5vw, 3.5rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+  background: #cfcfcf;
+}
+
+.case-wash .fig {
+  margin: 0;
+}
+
+.case--bleed .case-body__inner > .fig-stack {
+  grid-column: 1 / -1;
+  width: 100cqi;
+  max-width: none;
+  margin-left: calc(50% - 50cqi);
+  margin-block: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+.fig-stack .fig {
+  width: 100%;
+  margin: 0;
+}
+
+.case-body .fig-follow {
+  margin: 0.9rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-faint);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.case-body .fig-follow em {
+  font-style: italic;
+}
+
+.case-body__inner > .fig:has(.embed):has(+ .fig .embed) {
+  margin-bottom: 1rem;
+}
+
+.case-body__inner > .fig:has(.embed) + .fig:has(.embed) {
+  margin-top: 0;
+}
+
+.fig-pair .fig {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.case--bleed .case-body:has(> .shell > .case-body__inner > .device-row:first-child) {
+  padding-top: clamp(2.75rem, 5vw, 4rem);
+}
+
+/* The row is wider than the text column. A plain auto margin can't pull a
+   grid item back when it overflows, so the offset is set by hand. */
+.case--bleed .case-body__inner > .device-row {
+  grid-column: 1 / -1;
+  width: min(100cqi - 4rem, 72rem);
+  max-width: none;
+  margin-inline: 0;
+  margin-left: calc(50% - min(100cqi - 4rem, 72rem) / 2);
+  margin-block: 0 clamp(3.25rem, 6vw, 4.75rem);
+}
+
+.device-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+.device-row .browser {
+  width: 100%;
+  margin: 0;
+}
+
+.device-row .phone-row {
+  margin: 0;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.device-row .phone {
+  width: clamp(12rem, 22vw, 16.5rem);
+}
+
+.case-body__inner > .device-row + h3 {
+  margin-top: 0;
+}
+
+.browser {
+  margin-block: clamp(2.25rem, 5vw, 3.5rem);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0.8rem;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(16, 10, 22, 0.12);
+}
+
+.browser__bar {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr 4.5rem;
+  align-items: center;
+  height: 2.75rem;
+  padding: 0 0.9rem;
+  background: #f2f2f4;
+  border-bottom: 1px solid #e3e3e6;
+}
+
+.browser__dots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.browser__dots i {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 50%;
+}
+
+.browser__dots i:nth-child(1) { background: #ff5f57; }
+.browser__dots i:nth-child(2) { background: #febc2e; }
+.browser__dots i:nth-child(3) { background: #28c840; }
+
+.browser__url:empty {
+  display: none;
+}
+
+.browser__url {
+  justify-self: center;
+  width: min(18rem, 46%);
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #6d6d72;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.browser video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: #110020;
+}
+
+.browser img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.fig > .browser {
+  margin: 0;
+}
+
+.case-cover.browser {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0.8rem;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(16, 10, 22, 0.12);
+}
+
+.phone-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin: clamp(2.25rem, 5vw, 3.5rem) 0;
+}
+
+/* iPhone 15 proportions: 71.6mm by 147.6mm. The recording is a shorter
+   screen, so a fixed status bar and home indicator make up the difference. */
+.phone {
+  --phone-top: #11001e;
+  --phone-bottom: #110020;
+  width: min(16.5rem, 46%);
+  margin: 0;
+}
+
+.phone--player {
+  --phone-top: #070c0f;
+  --phone-bottom: #141414;
+}
+
+.phone__body {
+  position: relative;
+  aspect-ratio: 71.6 / 147.6;
+  padding: 0.42rem;
+  border-radius: 2.45rem;
+  background: #1a1a1c;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    inset 0 0 0 0.28rem #0b0b0d,
+    0 20px 44px rgba(16, 10, 22, 0.2);
+}
+
+.phone__key {
+  position: absolute;
+  left: -0.14rem;
+  width: 0.18rem;
+  border-radius: 0.12rem 0 0 0.12rem;
+  background: linear-gradient(#4a4a4e, #2a2a2e 40%, #1a1a1c);
+}
+
+.phone__key--silent {
+  top: 16%;
+  height: 3.2%;
+}
+
+.phone__key--up {
+  top: 23%;
+  height: 7.4%;
+}
+
+.phone__key--down {
+  top: 32%;
+  height: 7.4%;
+}
+
+.phone__key--power {
+  top: 26%;
+  right: -0.14rem;
+  left: auto;
+  height: 11%;
+  border-radius: 0 0.12rem 0.12rem 0;
+}
+
+.phone__screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2.05rem;
+  background: var(--phone-top);
+}
+
+.phone__status {
+  position: relative;
+  display: flex;
+  flex: 0 0 2.85rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 0.85rem 0.35rem;
+  color: #fff;
+  background: var(--phone-top);
+}
+
+.phone__time {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  z-index: 1;
+}
+
+.phone__island {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  width: 34%;
+  height: 1.25rem;
+  border-radius: 999px;
+  background: #000;
+  transform: translateX(-50%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.phone__island::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.45rem;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #1d2430, #05070c 60%);
+  transform: translateY(-50%);
+}
+
+.phone__glyphs {
+  width: 4.15rem;
+  height: 0.78rem;
+  z-index: 1;
+}
+
+.phone__screen video {
+  display: block;
+  width: 100%;
+  height: auto;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.phone__chin {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 1.15rem;
+  padding-bottom: 0.42rem;
+  background: var(--phone-bottom);
+}
+
+.phone__bar {
+  width: 34%;
+  height: 0.28rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+@media (max-width: 640px) {
+  .phone-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .phone,
+  .device-row .phone {
+    width: min(16.5rem, 72%);
+  }
+}
+
+.fig-pair .fig img {
+  display: block;
+  border: 0;
+  border-radius: 0;
+}
+
 /* --- More case studies --------------------------------------------------- */
 
 .more-cases {
@@ -2494,58 +3239,20 @@ a.cv__company:hover .cv__arrow {
 
 .more-cases__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
-  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
   padding-top: clamp(1.5rem, 3vw, 2.25rem);
 }
 
-.more-card {
-  position: relative;
-  display: grid;
-  gap: 0.85rem;
-  padding: 0.85rem;
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
-  background: var(--bg-raised);
-  text-decoration: none;
-  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease),
-    border-color 0.3s var(--ease);
+.more-cases__grid .study {
+  width: auto;
+  margin: 0;
 }
 
-.more-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lift);
-  border-color: var(--line);
-}
-
-.more-card__media {
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  background: var(--bg-sunken);
-  aspect-ratio: 16 / 9;
-}
-
-.more-card__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s var(--ease);
-}
-
-.more-card:hover .more-card__media img {
-  transform: scale(1.03);
-}
-
-.more-card__body {
-  display: grid;
-  gap: 0.5rem;
-  padding: 0 0.5rem 0.5rem;
-}
-
-.more-card__title {
-  font-size: var(--step-lg);
-  line-height: 1.3;
-  text-wrap: pretty;
+@media (max-width: 700px) {
+  .more-cases__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* --- Reveal on scroll ---------------------------------------------------- */

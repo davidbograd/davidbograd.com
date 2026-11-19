@@ -1,10 +1,10 @@
 ---
 order: 3
-placeholder: true
 hidden: true
-pageTitle: "Envato"
+pageTitle: "Envato case study"
 description: "A case study of product design work at Envato. Coming soon."
 heading: "Envato"
+titleSize: 233
 cardTitle: "Envato"
 tags_display:
   - "Case study"
