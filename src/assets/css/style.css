@@ -401,7 +401,6 @@ p:last-child {
     scroll-behavior: smooth;
     border-radius: var(--radius) var(--radius) 0 0;
   }
-
   .mast__nav {
     flex-direction: row;
     gap: 1.25rem;
@@ -770,7 +769,6 @@ p:last-child {
   opacity: 1;
 }
 
-/* A heart over the footer sign-off. */
 /* "Coming soon" stands in for the pointer over a case study that isn't open yet. */
 .cursor-chip--label {
   width: max-content;
@@ -1812,8 +1810,28 @@ p:last-child {
 .case-years {
   color: var(--text-faint);
   font-weight: 400;
-  font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+/* Touch screens can't hover to see the "Coming soon" label, so it sits in
+   the title line instead. */
+.study__soon {
+  display: none;
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .study__soon {
+    display: inline-block;
+    align-self: center;
+    margin-left: auto;
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: var(--step-mono);
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
 }
 
 .study__visual {
@@ -2365,6 +2383,14 @@ a.cv__company:hover .cv__arrow {
 @media (min-width: 900px) {
   .footer {
     margin-top: 240px;
+  }
+}
+
+/* Mobile browsers float their toolbar over the bottom of the content panel,
+   so the footer needs room to scroll clear of it. */
+@media (max-width: 899px) {
+  .footer {
+    padding-bottom: calc(clamp(2rem, 4vw, 3rem) + 5rem);
   }
 }
 

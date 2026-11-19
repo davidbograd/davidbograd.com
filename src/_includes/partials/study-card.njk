@@ -22,6 +22,7 @@
     <p class="study__meta">
       <span class="study__company">{{ company }}</span>
       {% if item.data.years %}<span class="study__years">{{ item.data.years }}</span>{% endif %}
+      {% if item.data.placeholder %}<span class="study__soon">Coming soon</span>{% endif %}
     </p>
   {% if item.data.placeholder %}
   </div>
