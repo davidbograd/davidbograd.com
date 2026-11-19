@@ -136,8 +136,8 @@ bodyClass: is-work
     <h2 class="about__label">Side projects</h2>
     <div class="side-projects">
       {% set projects = [
-        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - current", detail: "Over 100,000 people have used Fysfinder to find a physio in Denmark. I’ve designed and built it from scratch using AI coding.", video: "/assets/video/fysfinder-pingpong.mp4", poster: "/assets/img/poster-fysfinder.jpg" },
-        { name: "Do Good Movement", href: "https://dogoodmovement.earth/", years: "2022 - 2025", detail: "Co-founded a charity. A community of ~500 members donated over $65,000 AUD to help 14,702 people in need.", video: "/assets/video/compressed-dgm.mp4", poster: "/assets/img/poster-dgm.jpg" }
+        { name: "Fysfinder", href: "https://www.fysfinder.dk/", years: "2025 - current", detail: "Built Fysfinder.dk from scratch using AI-assisted development. Used by over 100,000+ people to find physiotherapists across Denmark.", video: "/assets/video/fysfinder-pingpong.mp4", poster: "/assets/img/poster-fysfinder.jpg" },
+        { name: "Do Good Movement", href: "https://dogoodmovement.earth/", years: "2022 - 2025", detail: "Co-founded a charity that grew to 500 members. Raised and donated over $65,000 AUD, helping 14,702 people in need.", video: "/assets/video/compressed-dgm.mp4", poster: "/assets/img/poster-dgm.jpg" }
       ] %}
       {% for item in projects %}
       <a class="side-project study__link" href="{{ item.href }}" target="_blank" rel="noopener">
